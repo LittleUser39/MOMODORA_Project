@@ -3,6 +3,7 @@
 
 #include "CGameObject.h"
 #include "CPlayer.h"
+#include "CKaho.h"
 #include "CMonster.h"
 #include "Map_Start.h"
 
@@ -46,7 +47,7 @@ void CScene_Start::Enter()
 	//LoadTile(path);
 
 	// Player Ãß°¡
-	CGameObject* pPlayer = new CPlayer;
+	CGameObject* pPlayer = new CKaho;
 	pPlayer->SetPos(fPoint(200, 200));
 	AddObject(pPlayer, GROUP_GAMEOBJ::PLAYER);
 

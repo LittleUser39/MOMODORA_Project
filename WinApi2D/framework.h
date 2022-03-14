@@ -100,9 +100,9 @@ enum class TYPE_EVENT
 #define DT				CTimeManager::getInst()->GetDT()
 #define fDT				CTimeManager::getInst()->GetfDT()
 
-#define Key(key)		CKeyManager::getInst()->GetButton(key)
-#define KeyUp(key)		CKeyManager::getInst()->GetButtonUP(key)
-#define KeyDown(key)	CKeyManager::getInst()->GetButtonDOWN(key)
+#define Key(key)		CKeyManager::getInst()->GetButton(key)		//이전과 현재키가 같이 눌림
+#define KeyUp(key)		CKeyManager::getInst()->GetButtonUP(key)	//이전은 눌리고 현재는 안눌림
+#define KeyDown(key)	CKeyManager::getInst()->GetButtonDOWN(key)  //이전은 안눌리고 현재 눌림
 
 #define MousePos()		CKeyManager::getInst()->GetMousePos()
 

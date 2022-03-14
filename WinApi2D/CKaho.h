@@ -4,7 +4,8 @@ class CKaho : public CPlayer
 {
 private:
 	CD2DImage* m_pImg;
-	float m_fVelocity = 300;
+	CD2DImage* m_pImg2;
+	float m_fVelocity = 200;
 public:
 	CKaho();
 	~CKaho();
