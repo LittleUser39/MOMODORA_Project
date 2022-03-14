@@ -4,8 +4,7 @@
 
 Map_Start::Map_Start()
 {
-    pimg = new CD2DImage;
-    pimg = CResourceManager::getInst()->LoadD2DImage(L"test", L"texture\\map\\Test.png");
+  
 }
 
 Map_Start::~Map_Start()

@@ -28,7 +28,7 @@ void CScene_Start::update()
 
 	if (KeyDown('Z'))
 	{
-		CSoundManager::getInst()->AddSound(L"bgm", L"sound\\drumloop.wav", true);
+		CSoundManager::getInst()->AddSound(L"bgm", L"sound\\th06_01.wav", true);
 		CSoundManager::getInst()->Play(L"bgm");
 	}
 
@@ -42,7 +42,7 @@ void CScene_Start::Enter()
 {
 	// 타일 로딩
 	wstring path = CPathManager::getInst()->GetContentPath();
-	path += L"tile\\Start.tile";
+	path += L"\\Tile\\test.tile";
 	//LoadTile(path);
 
 	// Player 추가
