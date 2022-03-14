@@ -28,7 +28,7 @@ void CScene_Start::update()
 
 	if (KeyDown('Z'))
 	{
-		CSoundManager::getInst()->AddSound(L"bgm", L"sound\\th06_01.wav", true);
+		CSoundManager::getInst()->AddSound(L"bgm", L"sound\\drumloop.wav", true);
 		CSoundManager::getInst()->Play(L"bgm");
 	}
 
@@ -42,7 +42,7 @@ void CScene_Start::Enter()
 {
 	// 타일 로딩
 	wstring path = CPathManager::getInst()->GetContentPath();
-	path += L"\\Tile\\test.tile";
+	path += L"tile\\Start.tile";
 	//LoadTile(path);
 
 	// Player 추가
@@ -57,15 +57,14 @@ void CScene_Start::Enter()
 	AddObject(pMonster, GROUP_GAMEOBJ::MONSTER);
 
 	Map_Start* map = new Map_Start;
-	map->SetPos(fPoint(100, 100));
-	map->SetScale(fPoint(100, 100));
-	AddObject(map, GROUP_GAMEOBJ::MONSTER);
+	AddObject(map, GROUP_GAMEOBJ::MAP);
 
 	CCollisionManager::getInst()->CheckGroup(GROUP_GAMEOBJ::PLAYER, GROUP_GAMEOBJ::MONSTER);
 	CCollisionManager::getInst()->CheckGroup(GROUP_GAMEOBJ::MISSILE_PLAYER, GROUP_GAMEOBJ::MONSTER);
 
 	// Camera Look 지정
 	CCameraManager::getInst()->SetLookAt(fPoint(WINSIZEX / 2.f, WINSIZEY / 2.f));
+	CCameraManager::getInst()->SetTargetObj(pPlayer);
 }
 
 void CScene_Start::Exit()

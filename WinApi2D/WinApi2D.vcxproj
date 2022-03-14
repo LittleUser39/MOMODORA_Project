@@ -159,6 +159,7 @@
     <ClInclude Include="CD2DImage.h" />
     <ClInclude Include="CEventManager.h" />
     <ClInclude Include="CGameObject.h" />
+    <ClInclude Include="CKaho.h" />
     <ClInclude Include="CKeyManager.h" />
     <ClInclude Include="CMissile.h" />
     <ClInclude Include="CMonster.h" />
@@ -199,6 +200,7 @@
     <ClCompile Include="CD2DImage.cpp" />
     <ClCompile Include="CEventManager.cpp" />
     <ClCompile Include="CGameObject.cpp" />
+    <ClCompile Include="CKaho.cpp" />
     <ClCompile Include="CKeyManager.cpp" />
     <ClCompile Include="CMissile.cpp" />
     <ClCompile Include="CMonster.cpp" />

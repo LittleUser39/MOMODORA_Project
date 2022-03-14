@@ -33,7 +33,7 @@ void CScene_Tool::update()
 
 	if (Key('A'))
 	{
-		CCameraManager::getInst()->Scroll(fVec2(-1, 0),  m_velocity);
+		CCameraManager::getInst()->Scroll(fVec2(-1, 0), m_velocity);
 	}
 	if (Key('D'))
 	{
