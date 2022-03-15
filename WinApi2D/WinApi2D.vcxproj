@@ -151,6 +151,7 @@
   <ItemGroup>
     <ClInclude Include="CAnimation.h" />
     <ClInclude Include="CAnimator.h" />
+    <ClInclude Include="CBackGround.h" />
     <ClInclude Include="CButtonUI.h" />
     <ClInclude Include="CCameraManager.h" />
     <ClInclude Include="CCollisionManager.h" />
@@ -161,6 +162,7 @@
     <ClInclude Include="CGameObject.h" />
     <ClInclude Include="CKaho.h" />
     <ClInclude Include="CKeyManager.h" />
+    <ClInclude Include="CMap.h" />
     <ClInclude Include="CMissile.h" />
     <ClInclude Include="CMonster.h" />
     <ClInclude Include="CPanelUI.h" />
@@ -182,7 +184,6 @@
     <ClInclude Include="CUIManager.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="Logger.h" />
-    <ClInclude Include="Map_Start.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="SingleTon.h" />
     <ClInclude Include="struct.h" />
@@ -192,6 +193,7 @@
   <ItemGroup>
     <ClCompile Include="CAnimation.cpp" />
     <ClCompile Include="CAnimator.cpp" />
+    <ClCompile Include="CBackGround.cpp" />
     <ClCompile Include="CButtonUI.cpp" />
     <ClCompile Include="CCameraManager.cpp" />
     <ClCompile Include="CCollisionManager.cpp" />
@@ -202,6 +204,7 @@
     <ClCompile Include="CGameObject.cpp" />
     <ClCompile Include="CKaho.cpp" />
     <ClCompile Include="CKeyManager.cpp" />
+    <ClCompile Include="CMap.cpp" />
     <ClCompile Include="CMissile.cpp" />
     <ClCompile Include="CMonster.cpp" />
     <ClCompile Include="CPanelUI.cpp" />
@@ -221,7 +224,6 @@
     <ClCompile Include="CTimeManager.cpp" />
     <ClCompile Include="CUI.cpp" />
     <ClCompile Include="CUIManager.cpp" />
-    <ClCompile Include="Map_Start.cpp" />
     <ClCompile Include="WinApi2D.cpp" />
   </ItemGroup>
   <ItemGroup>

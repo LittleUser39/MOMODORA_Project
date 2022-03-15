@@ -114,15 +114,18 @@ void CKaho::update()
 		//todo 활공격 - 여기에 create 미사일 넣기 충전 공격넣기
 		GetAnimator()->Play(L"KahoBow");
 	}
-	if (false == m_rolldis)
-	{
-		//todo 구르기 - 좌우로 조금 이동 하면서 플레이어는 무적
-		pos.x += m_velocity * DT;
-		if (pos.x > pos.x + m_rollCount)
-			m_rolldis = true;
-		GetAnimator()->Play(L"KahoRoll");
-		
-	}
+
+	//구르기
+	//if (false == m_rolldis)
+	//{
+	//	//todo 구르기 - 좌우로 조금 이동 하면서 플레이어는 무적
+	//	pos.x += m_velocity * DT;
+	//	if (pos.x > pos.x + m_rollCount)
+	//		m_rolldis = true;
+	//	GetAnimator()->Play(L"KahoRoll");
+	//	
+	//}
+	// 
 	//대기상태 (점프상태 아니고 바닥일때)
 //if (false == m_Fjump&& true == m_onfloor)
 //{

@@ -54,7 +54,7 @@ CTexture* CResourceManager::FindTexture(const wstring& strKey)
 	return iter->second;
 }
 
-CTexture* CResourceManager::LoadTextrue(const wstring& strKey, const wstring& strRelativePath)
+CTexture* CResourceManager::LoadTexture(const wstring& strKey, const wstring& strRelativePath)
 {
 	// Texture를 불러오기 전 자료구조에 이미 Texture가 있는지 확인
 	CTexture* pTex = FindTexture(strKey);

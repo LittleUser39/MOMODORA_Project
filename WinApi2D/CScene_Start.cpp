@@ -5,7 +5,8 @@
 #include "CPlayer.h"
 #include "CKaho.h"
 #include "CMonster.h"
-#include "Map_Start.h"
+#include "CMap.h"
+#include "CBackGround.h"
 
 #include "CSound.h"
 #include "CD2DImage.h"
@@ -24,7 +25,7 @@ void CScene_Start::update()
 
 	if (KeyDown(VK_TAB))
 	{
-		//ChangeScn(GROUP_SCENE::TOOL);
+		ChangeScn(GROUP_SCENE::TOOL);
 	}
 
 	if (KeyDown('Z'))
@@ -57,15 +58,27 @@ void CScene_Start::Enter()
 	pMonster->SetCenterPos(pMonster->GetPos());
 	AddObject(pMonster, GROUP_GAMEOBJ::MONSTER);
 
-	Map_Start* map = new Map_Start;
+	//맵 생성
+	CMap* map = new CMap;
+	map->Load(L"Map_Start", L"texture\\map\\Yoshis Island 2.png");
+	map->SetPos(fPoint(-200.f, -300.f));
 	AddObject(map, GROUP_GAMEOBJ::MAP);
+
+	//뒷 배경 생성
+	CBackGround* backGround = new CBackGround;
+	backGround->Load(L"BackGround_Start", L"texture\\background\\stage1_background.png");
+	backGround->SetPos(fPoint(-100.f,0.f));
+	AddObject(backGround, GROUP_GAMEOBJ::BACKGROUND);
 
 	CCollisionManager::getInst()->CheckGroup(GROUP_GAMEOBJ::PLAYER, GROUP_GAMEOBJ::MONSTER);
 	CCollisionManager::getInst()->CheckGroup(GROUP_GAMEOBJ::MISSILE_PLAYER, GROUP_GAMEOBJ::MONSTER);
 
 	// Camera Look 지정
 	CCameraManager::getInst()->SetLookAt(fPoint(WINSIZEX / 2.f, WINSIZEY / 2.f));
-	//CCameraManager::getInst()->SetTargetObj(pPlayer);
+	CCameraManager::getInst()->SetTargetObj(pPlayer);
+	//화면 전환시 검정색
+	CCameraManager::getInst()->FadeOut(5.f);
+	CCameraManager::getInst()->FadeIn(5.f);
 }
 
 void CScene_Start::Exit()

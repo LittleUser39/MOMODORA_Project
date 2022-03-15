@@ -64,6 +64,9 @@
     <Filter Include="Resouce\CD2DImage">
       <UniqueIdentifier>{7be60d72-5b7b-4f9d-b116-6bc827b05510}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Object\Map">
+      <UniqueIdentifier>{898d6952-7bda-4d62-82dd-e3f967070b8d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -174,14 +177,17 @@
     <ClInclude Include="CD2DImage.h">
       <Filter>Resouce\CD2DImage</Filter>
     </ClInclude>
-    <ClInclude Include="Map_Start.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="CRenderManager.h">
       <Filter>Engine\Manager</Filter>
     </ClInclude>
     <ClInclude Include="CKaho.h">
       <Filter>Object\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="CBackGround.h">
+      <Filter>Object\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="CMap.h">
+      <Filter>Object\Map</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -275,14 +281,17 @@
     <ClCompile Include="CD2DImage.cpp">
       <Filter>Resouce\CD2DImage</Filter>
     </ClCompile>
-    <ClCompile Include="Map_Start.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="CRenderManager.cpp">
       <Filter>Engine\Manager</Filter>
     </ClCompile>
     <ClCompile Include="CKaho.cpp">
       <Filter>Object\Character</Filter>
+    </ClCompile>
+    <ClCompile Include="CBackGround.cpp">
+      <Filter>Object\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="CMap.cpp">
+      <Filter>Object\Map</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

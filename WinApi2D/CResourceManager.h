@@ -16,7 +16,7 @@ private:
 
 public:
 	CTexture* FindTexture(const wstring& strKey);	// 저장된 Texture 탐색
-	CTexture* LoadTextrue(const wstring& strKey, const wstring& strRelativePath);	// Texture 불러오기 이미 있는 경우 있던 Texture 반환
+	CTexture* LoadTexture(const wstring& strKey, const wstring& strRelativePath);	// Texture 불러오기 이미 있는 경우 있던 Texture 반환
 	CTexture* CreateTexture(const wstring& strKey, UINT width, UINT height);
 
 	CSound* FindSound(const wstring& strKey);		// 저장된 Sound 탐색
