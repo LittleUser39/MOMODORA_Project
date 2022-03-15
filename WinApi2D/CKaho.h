@@ -1,16 +1,21 @@
 #pragma once
-#include "CPlayer.h"
-class CKaho : public CPlayer
+#include "CGameObject.h"
+class CKaho : public CGameObject
 {
 private:
 	CD2DImage* m_pImg;	//캐릭터 이미지
 	CD2DImage* m_pImg2;
 	CD2DImage* m_pImg3;
+	CD2DImage* m_pImg4;
+	CD2DImage* m_pImg5;
+
+	CD2DImage* m_pImg7;
 
 	float m_velocity;	//캐릭터 속도
 	float m_jumpforce;	//캐릭터 점프력
 	float m_gravity;	//중력
 	float m_HP;			//캐릭터의 체력
+	UINT m_AttackCount; //공격 콤보
 
 	bool m_onfloor;		//캐릭터가 바닥에 있는가
 	bool m_idle;		//캐릭터가 가만히 있는가
