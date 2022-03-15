@@ -7,10 +7,13 @@ private:
 	CD2DImage* m_pImg2;
 	CD2DImage* m_pImg3;
 	CD2DImage* m_pImg4;
-	CD2DImage* m_pImg5;
-
+	CD2DImage* m_pImg5; 
+	CD2DImage* m_pImg6;
 	CD2DImage* m_pImg7;
-
+	CD2DImage* m_pImg8;
+	
+	bool m_rolldis;		//캐릭터 구르고 있나
+	float m_rollCount;
 	float m_velocity;	//캐릭터 속도
 	float m_jumpforce;	//캐릭터 점프력
 	float m_gravity;	//중력
