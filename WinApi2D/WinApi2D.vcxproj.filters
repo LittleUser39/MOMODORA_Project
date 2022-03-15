@@ -181,7 +181,7 @@
       <Filter>Engine\Manager</Filter>
     </ClInclude>
     <ClInclude Include="CKaho.h">
-      <Filter>헤더 파일</Filter>
+      <Filter>Object\Character</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -282,7 +282,7 @@
       <Filter>Engine\Manager</Filter>
     </ClCompile>
     <ClCompile Include="CKaho.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>Object\Character</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

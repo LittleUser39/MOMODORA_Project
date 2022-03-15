@@ -105,6 +105,7 @@ void CCollisionManager::CollisionGroupUpdate(GROUP_GAMEOBJ objLeft, GROUP_GAMEOB
 
 bool CCollisionManager::IsCollision(CCollider* pLeftCollider, CCollider* pRightCollider)
 {
+	//두 사각형의 중심에서 부터 끝까지의 거리를 더한값을 기준으로 거리가 크면 충돌x 거리가 작으면 충돌 o
 	// 사각 충돌
 	fPoint fptLeftPos = pLeftCollider->GetFinalPos();
 	fPoint fptLeftScale = pLeftCollider->GetScale();

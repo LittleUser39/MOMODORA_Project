@@ -52,5 +52,5 @@ void CMonster::SetCenterPos(fPoint point)
 
 void CMonster::OnCollisionEnter(CCollider* pOther)
 {
-
+		
 }

@@ -24,7 +24,7 @@ void CScene_Start::update()
 
 	if (KeyDown(VK_TAB))
 	{
-		ChangeScn(GROUP_SCENE::TOOL);
+		//ChangeScn(GROUP_SCENE::TOOL);
 	}
 
 	if (KeyDown('Z'))
@@ -53,7 +53,7 @@ void CScene_Start::Enter()
 
 	// Monster Ãß°¡
 	CMonster* pMonster = new CMonster;
-	pMonster->SetPos(fPoint(1100, 350));
+	pMonster->SetPos(fPoint(200, 600));
 	pMonster->SetCenterPos(pMonster->GetPos());
 	AddObject(pMonster, GROUP_GAMEOBJ::MONSTER);
 
