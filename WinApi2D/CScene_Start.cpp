@@ -65,10 +65,10 @@ void CScene_Start::Enter()
 	AddObject(map, GROUP_GAMEOBJ::MAP);
 
 	//µÞ ¹è°æ »ý¼º
-	CBackGround* backGround = new CBackGround;
-	backGround->Load(L"BackGround_Start", L"texture\\background\\stage1_background.png");
-	backGround->SetPos(fPoint(-100.f,0.f));
-	AddObject(backGround, GROUP_GAMEOBJ::BACKGROUND);
+	CBackGround* stage1 = new CBackGround;
+	stage1->Load(L"stage1", L"texture\\background\\stage1_background.png");
+	stage1->SetPos(fPoint(-100.f,0.f));
+	AddObject(stage1, GROUP_GAMEOBJ::BACKGROUND);
 
 	CCollisionManager::getInst()->CheckGroup(GROUP_GAMEOBJ::PLAYER, GROUP_GAMEOBJ::MONSTER);
 	CCollisionManager::getInst()->CheckGroup(GROUP_GAMEOBJ::MISSILE_PLAYER, GROUP_GAMEOBJ::MONSTER);

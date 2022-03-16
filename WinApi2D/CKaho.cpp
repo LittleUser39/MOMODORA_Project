@@ -11,19 +11,19 @@ CKaho::CKaho()
 {
 	m_idle = true;		//가만히 있는상태
 	m_Fjump = false;	//점프 상태(공중)
-	m_Djump = false;	//2단점프 상태(공중)
+	
 	m_dead = false;		//죽은 상태
 	m_onfloor = true;	//바닥에 있는 상태
 	m_HP = 100;			//캐릭터 체력
 	m_rolldis = false;		//캐릭터가 구르고있나
 	m_rollCount = 100;		//거리
-	m_AttackCount = 0;
 	m_velocity = 150;
 	m_gravity = GRAVITY;
 	m_jumpforce = JUMPFORCE;
-
+	
 	//img 1= 기본, 2 = 걷기, 3 = 점프, 4 = 공격, 5 = 공격2,6 = 공격3, 7 = 활쏘기(지상), 8 = 구르기 9 = 활쏘기(앉아)
-    m_pImg = CResourceManager::getInst()->LoadD2DImage(L"KahoImage", L"texture\\sKahoidle_Full.png");
+    
+	m_pImg = CResourceManager::getInst()->LoadD2DImage(L"KahoImage", L"texture\\sKahoidle_Full.png");
     SetName(L"Kaho");
     SetScale(fPoint(70.f, 70.f));
 
@@ -37,6 +37,7 @@ CKaho::CKaho()
 	m_pImg3 = CResourceManager::getInst()->LoadD2DImage(L"KahoJump", L"texture\\sKahoJump_Full.png");
 	m_pImg4 = CResourceManager::getInst()->LoadD2DImage(L"KahoAttack1", L"texture\\sKahoAttack_Full1.png");
 	m_pImg5 = CResourceManager::getInst()->LoadD2DImage(L"KahoAttack2", L"texture\\sKahoAttack_Full2.png");
+	m_pImg6 = CResourceManager::getInst()->LoadD2DImage(L"KahoAttack3", L"texture\\sKahoAttack_Full3.png");
 	m_pImg7 = CResourceManager::getInst()->LoadD2DImage(L"KahoBow", L"texture\\sKahoBow_Full.png");
 	m_pImg8 = CResourceManager::getInst()->LoadD2DImage(L"KahoRoll", L"texture\\sKahoRoll_Full.png");
 	m_pImg9 = CResourceManager::getInst()->LoadD2DImage(L"KahoCrouchBow", L"texture\\sKahoCrouchBow_Full.png");
@@ -52,6 +53,7 @@ CKaho::CKaho()
 	GetAnimator()->CreateAnimation(L"KahoJump", m_pImg3, fPoint(0.f, 0.f), fPoint(48.f, 48.f), fPoint(48.f, 0.f), 0.1f, 2, false);
 	GetAnimator()->CreateAnimation(L"KahoAttack1", m_pImg4, fPoint(0.f, 0.f), fPoint(48.f, 48.f), fPoint(48.f, 0.f), 0.1f, 6, false);
 	GetAnimator()->CreateAnimation(L"KahoAttack2", m_pImg5, fPoint(0.f, 0.f), fPoint(48.f, 48.f), fPoint(48.f, 0.f), 0.1f, 6, false);
+	GetAnimator()->CreateAnimation(L"KahoAttack3", m_pImg6, fPoint(0.f, 0.f), fPoint(48.f, 48.f), fPoint(48.f, 0.f), 0.1f, 6, false);
 	GetAnimator()->CreateAnimation(L"KahoBow", m_pImg7, fPoint(0.f, 0.f), fPoint(48.f, 48.f), fPoint(48.f, 0.f), 0.2f, 5, false);
 	GetAnimator()->CreateAnimation(L"KahoRoll",m_pImg8,fPoint(0.f,0.f), fPoint(48.f, 48.f), fPoint(48.f, 0.f), 0.2f, 7, false);
 	GetAnimator()->CreateAnimation(L"KahoCrouchBow", m_pImg9, fPoint(0.f, 0.f), fPoint(48.f, 48.f), fPoint(48.f, 0.f), 0.2f, 5, false);
@@ -107,21 +109,38 @@ void CKaho::update()
 		//todo 사다리있으면 사다리 오르기
 	}
 
-	if (KeyDown('A')&& 0 == m_AttackCount)
-	{
-		//todo 공격 - 여기에 충돌체 만들어서 공격판정 만들어야함
-		GetAnimator()->Play(L"KahoAttack1");
-		m_AttackCount++;
-		
-	}
-	if (KeyUp('A'))
-		m_AttackCount--;
-	/*if (Key('A') && 1 == m_AttackCount)
-	{
-		GetAnimator()->Play(L"KahoAttack2");
-		m_AttackCount--;
-	}*/
+	//딜레이 구현
+	delay += fDT;
 	
+	//연속 공격이 아닐때 콤보0으로 
+	if (!IsComboAttck())
+		combo = 0;
+	
+	if (CanAttack())
+	{
+		if (KeyDown('A'))
+		{
+			//콤보가 없을때 1번째 공격
+			if (0 == combo)
+			{
+				Attack();
+				GetAnimator()->Play(L"KahoAttack1");
+			}
+			//콤보가 1일때 2번째 공격
+			else if (IsComboAttck()&& combo == 1)
+			{
+				ComboAttack2();
+				GetAnimator()->Play(L"KahoAttack2");
+			}
+			//콤보가 2일때 3번째 공격
+			else if (IsComboAttck() &&combo == 2)
+			{
+				ComboAttack3();
+				GetAnimator()->Play(L"KahoAttack3");
+			}
+		}
+	}
+
 	if (KeyDown('S'))
 	{
 		//todo 활공격 - 여기에 create 미사일 넣기 충전 공격넣기
@@ -142,15 +161,6 @@ void CKaho::update()
 		
 	}
 	 
-	//대기상태 (점프상태 아니고 바닥일때)
-//if (false == m_Fjump&& true == m_onfloor)
-//{
-//	GetAnimator()->Play(L"Kahoidle");
-//	m_gravity = 0;
-//	m_jumpforce = JUMPFORCE;
-//
-//}
-
 	//점프 하는 상태
 	if (KeyDown('D'))
 	{
@@ -172,7 +182,6 @@ void CKaho::update()
 			pos.y += m_gravity * fDT;	//중력으로 떨어짐
 		}
 	}
-	
 	
 	SetPos(pos);
 
@@ -214,7 +223,6 @@ void CKaho::OnCollisionEnter(CCollider* pOther)
 	{
 		m_onfloor = true;
 		m_Fjump = false;
-		m_Djump = false;
 	}
 }
 
@@ -226,4 +234,32 @@ void CKaho::OnCollisionExit(CCollider* pOther)
 	{
 		m_onfloor = false;
 	}
+}
+
+bool CKaho::CanAttack()
+{
+	return fdealy < delay;
+}
+bool CKaho::Attack()
+{
+	delay = 0;
+	combo++;
+	return fdealy < delay;
+}
+bool CKaho::ComboAttack2()
+{
+	delay = 0;
+	combo++;
+	return fdealy < delay;
+}
+bool CKaho::ComboAttack3()
+{
+	delay = 0;
+	combo = 0;
+	return fdealy < delay;
+}
+
+bool CKaho::IsComboAttck()
+{
+	return fcombo > delay;
 }
