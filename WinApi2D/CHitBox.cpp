@@ -1,33 +1,30 @@
 #include "framework.h"
-#include "CMissile.h"
-#include "CArrow.h"
+#include "CHitBox.h"
 #include "CCollider.h"
 
-CArrow* CArrow::Clone()
+CHitBox* CHitBox::Clone()
 {
-	return new CArrow(*this);
+	return new CHitBox(*this);
 }
 
-CArrow::CArrow()
+CHitBox::CHitBox()
 {
-	SetScale(fPoint(20.f, 20.f));
+	SetScale(fPoint(50.f, 50.f));
 	m_fvDir = fVec2(0, 0);
-	SetName(L"Missile_Player");
+	SetName(L"HitBox_Player");
 
 	CreateCollider();
-	GetCollider()->SetScale(fPoint(15.f, 15.f));
+	GetCollider()->SetScale(fPoint(50.f, 50.f));
 }
 
-CArrow::~CArrow()
+CHitBox::~CHitBox()
 {
+	
 }
 
-void CArrow::update()
+void CHitBox::update()
 {
 	fPoint pos = GetPos();
-
-	pos.x += m_fVelocity * m_fvDir.x * fDT;
-	pos.y += m_fVelocity * m_fvDir.y * fDT;
 
 	SetPos(pos);
 
@@ -36,7 +33,7 @@ void CArrow::update()
 		DeleteObj(this);
 }
 
-void CArrow::render()
+void CHitBox::render()
 {
 	fPoint pos = GetPos();
 	fPoint scale = GetScale();
@@ -44,26 +41,26 @@ void CArrow::render()
 	fPoint fptRenderPos = CCameraManager::getInst()->GetRenderPos(pos);
 
 	CRenderManager::getInst()->RenderEllipse(
-		fptRenderPos.x,
-		fptRenderPos.y,
-		scale.x / 2.f,
-		scale.y / 2.f);
+		(fptRenderPos.x),
+		(fptRenderPos.y),
+		(scale.x / 2.f),
+		(scale.y / 2.f));
 
 	component_render();
 }
 
-void CArrow::SetDir(fVec2 vec)
+void CHitBox::SetDir(fVec2 vec)
 {
 	m_fvDir = vec.normalize();
 }
 
-void CArrow::SetDir(float theta)
+void CHitBox::SetDir(float theta)
 {
 	m_fvDir.x = (float)cos(theta);
 	m_fvDir.y = (float)sin(theta);
 }
 
-void CArrow::OnCollisionEnter(CCollider* pOther)
+void CHitBox::OnCollisionEnter(CCollider* pOther)
 {
 	CGameObject* pOtherObj = pOther->GetObj();
 	if (pOtherObj->GetName() == L"Monster")

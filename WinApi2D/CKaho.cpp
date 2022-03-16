@@ -3,6 +3,7 @@
 #include "CCollider.h"
 #include "CAnimator.h"
 #include "CArrow.h"
+#include "CHitBox.h"
 
 #define GRAVITY 130
 #define JUMPFORCE 100
@@ -115,7 +116,7 @@ void CKaho::update()
 	//연속 공격이 아닐때 콤보0으로 
 	if (!IsComboAttck())
 		combo = 0;
-	
+	//공격 구현 여기다가 히트박스(충돌체) 구현
 	if (CanAttack())
 	{
 		if (KeyDown('A'))
@@ -124,6 +125,7 @@ void CKaho::update()
 			if (0 == combo)
 			{
 				Attack();
+				CreateHitBox();
 				GetAnimator()->Play(L"KahoAttack1");
 			}
 			//콤보가 1일때 2번째 공격
@@ -195,15 +197,28 @@ void CKaho::render()
 
 void CKaho::CreateArrow()
 {
-	fPoint fpMissilePos = GetPos();
-	fpMissilePos.x += GetScale().x / 2.f;
+	fPoint fpArrowpos = GetPos();
+	fpArrowpos.x += GetScale().x / 2.f;
 
-	// Misiile Object
+	//화살 오브젝트
 	CArrow* pArrow = new CArrow;
-	pArrow->SetPos(fpMissilePos);
+	pArrow->SetPos(fpArrowpos);
 	pArrow->SetDir(fVec2(1, 0));
 
 	CreateObj(pArrow, GROUP_GAMEOBJ::MISSILE_PLAYER);
+}
+
+void CKaho::CreateHitBox()
+{
+	fPoint fpHitBoxPos = GetPos();
+	fpHitBoxPos.x += GetScale().x / 2.f;
+
+	// 히트박스 오브젝트
+	CHitBox* pHitBox = new CHitBox;
+	pHitBox->SetPos(fpHitBoxPos);
+	pHitBox->SetDir(fVec2(1, 0));
+
+	CreateObj(pHitBox, GROUP_GAMEOBJ::HITBOX_PLAYER);
 }
 
 void CKaho::OnCollision(CCollider* pOther)

@@ -195,6 +195,9 @@
     <ClInclude Include="CArrow.h">
       <Filter>Object\Character</Filter>
     </ClInclude>
+    <ClInclude Include="CHitBox.h">
+      <Filter>Object\Character</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WinApi2D.cpp">
@@ -303,6 +306,9 @@
       <Filter>Scene</Filter>
     </ClCompile>
     <ClCompile Include="CArrow.cpp">
+      <Filter>Object\Character</Filter>
+    </ClCompile>
+    <ClCompile Include="CHitBox.cpp">
       <Filter>Object\Character</Filter>
     </ClCompile>
   </ItemGroup>
