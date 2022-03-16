@@ -355,7 +355,7 @@ INT_PTR CALLBACK TileWinProc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lPar
 
 			return (INT_PTR)TRUE;
 		}
-		else if (LOWORD(wParam) == IDCANCEL)
+		else if (LOWORD(wParam) == IDLOAD)
 		{
 			CScene* pCurScene = CSceneManager::getInst()->GetCurScene();
 
@@ -387,8 +387,13 @@ INT_PTR CALLBACK TileWinProc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lPar
 
 			CScene_Tool* pToolScene = dynamic_cast<CScene_Tool*>(pCurScene);
 			assert(pToolScene);
-
+		
 			pToolScene->SetIdx(m_iIdx);
+		}
+		else if (LOWORD(wParam) == IDCANCEL)
+		{
+			EndDialog(hDlg, LOWORD(wParam));
+			return (INT_PTR)TRUE;
 		}
 		break;
 	}
