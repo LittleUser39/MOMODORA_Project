@@ -25,7 +25,7 @@ private:
 
 public:
 	void init();
-
+	// cd2dimage: 이미지(리소스 불러온것을 사용) 좌측상단 x,y,길이,높이
 	void RenderImage(CD2DImage* img, float dstX, float dstY, float dstW, float dstH, float alpha = 1.f); void RenderFrame(CD2DImage* img, float dstX, float dstY, float dstW, float dstH,   // 이미지에서 시작위치를 골라서 잘라서 그려줌 - 이미지의 일부
 		float srcX, float srcY, float srcW, float srcH);
 	void RenderRevFrame(CD2DImage* img, float dstX, float dstY, float dstW, float dstH, // 이미지 반대로 그려지는거 - 그려야할 대상의 위치 - 소스의 x,y,w,h

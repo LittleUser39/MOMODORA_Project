@@ -11,6 +11,7 @@ private:
 	CD2DImage* m_pImg6;
 	CD2DImage* m_pImg7;
 	CD2DImage* m_pImg8;
+	CD2DImage* m_pImg9;
 	
 	bool m_rolldis;		//캐릭터 구르고 있나
 	float m_rollCount;
@@ -33,6 +34,8 @@ public:
 
 	virtual void update();
 	virtual void render();
+
+	void CreateArrow();
 
 	virtual void OnCollision(CCollider* pOther);		//충돌중 일때
 	virtual void OnCollisionEnter(CCollider* pOther);	//층돌에 들어갈때

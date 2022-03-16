@@ -2,6 +2,7 @@
 #include "CKaho.h"
 #include "CCollider.h"
 #include "CAnimator.h"
+#include "CArrow.h"
 
 #define GRAVITY 130
 #define JUMPFORCE 100
@@ -21,15 +22,16 @@ CKaho::CKaho()
 	m_gravity = GRAVITY;
 	m_jumpforce = JUMPFORCE;
 
-	//img 1= 기본, 2 = 걷기, 3 = 점프, 4 = 공격, 5 = 공격2,6 = 공격3, 7 = 활쏘기(지상), 8 = 구르기
+	//img 1= 기본, 2 = 걷기, 3 = 점프, 4 = 공격, 5 = 공격2,6 = 공격3, 7 = 활쏘기(지상), 8 = 구르기 9 = 활쏘기(앉아)
     m_pImg = CResourceManager::getInst()->LoadD2DImage(L"KahoImage", L"texture\\sKahoidle_Full.png");
     SetName(L"Kaho");
     SetScale(fPoint(70.f, 70.f));
 
+	//충돌체 생성 및 충돌체 크기,오프셋
     CreateCollider();
     GetCollider()->SetScale(fPoint(40.f, 40.f));
-    GetCollider()->SetOffsetPos(fPoint(0.f, 10.f));
-
+    GetCollider()->SetOffsetPos(fPoint(0.f, 5.f));
+	
 	//변수 이름 바꾸기
 	m_pImg2 = CResourceManager::getInst()->LoadD2DImage(L"KahoWalk", L"texture\\sKahoWalk_Full.png");
 	m_pImg3 = CResourceManager::getInst()->LoadD2DImage(L"KahoJump", L"texture\\sKahoJump_Full.png");
@@ -37,6 +39,7 @@ CKaho::CKaho()
 	m_pImg5 = CResourceManager::getInst()->LoadD2DImage(L"KahoAttack2", L"texture\\sKahoAttack_Full2.png");
 	m_pImg7 = CResourceManager::getInst()->LoadD2DImage(L"KahoBow", L"texture\\sKahoBow_Full.png");
 	m_pImg8 = CResourceManager::getInst()->LoadD2DImage(L"KahoRoll", L"texture\\sKahoRoll_Full.png");
+	m_pImg9 = CResourceManager::getInst()->LoadD2DImage(L"KahoCrouchBow", L"texture\\sKahoCrouchBow_Full.png");
 	CreateAnimator();
     //이름 속성(대상 사진) 시작위치 자를위치 자른후이동할위치 속도,애니메 갯수
 	GetAnimator()->CreateAnimation(L"Kahoidle", m_pImg, fPoint(0.f, 0.f), fPoint(48.f, 48.f), fPoint(48.f, 0.f), 0.1f, 5, false);
@@ -51,8 +54,9 @@ CKaho::CKaho()
 	GetAnimator()->CreateAnimation(L"KahoAttack2", m_pImg5, fPoint(0.f, 0.f), fPoint(48.f, 48.f), fPoint(48.f, 0.f), 0.1f, 6, false);
 	GetAnimator()->CreateAnimation(L"KahoBow", m_pImg7, fPoint(0.f, 0.f), fPoint(48.f, 48.f), fPoint(48.f, 0.f), 0.2f, 5, false);
 	GetAnimator()->CreateAnimation(L"KahoRoll",m_pImg8,fPoint(0.f,0.f), fPoint(48.f, 48.f), fPoint(48.f, 0.f), 0.2f, 7, false);
-	
-	GetAnimator()->Play(L"KahoidleL");
+	GetAnimator()->CreateAnimation(L"KahoCrouchBow", m_pImg9, fPoint(0.f, 0.f), fPoint(48.f, 48.f), fPoint(48.f, 0.f), 0.2f, 5, false);
+
+	GetAnimator()->Play(L"Kahoidle");
 	
 }
 
@@ -68,10 +72,12 @@ CKaho* CKaho::Clone()
 void CKaho::update()
 {
 	fPoint pos = GetPos();
-	if(KeyUp(VK_RIGHT))
+	//바닥일때 좌우 애니메
+	if(KeyUp(VK_RIGHT)&& m_onfloor)
 		GetAnimator()->Play(L"Kahoidle");
-	if (KeyUp(VK_LEFT))
+	if (KeyUp(VK_LEFT)&& m_onfloor)
 		GetAnimator()->Play(L"KahoidleL");
+
 	if (Key(VK_LEFT))
 	{
 		pos.x -= m_velocity * fDT;
@@ -93,7 +99,7 @@ void CKaho::update()
 	if (Key(VK_DOWN))
 	{
 		//todo 앉기랑 사다리 있으면 사다리 내려가기
-		pos.y += m_velocity * fDT;
+		//pos.y += m_velocity * fDT;
 	}
 
 	if (Key(VK_UP))
@@ -119,20 +125,23 @@ void CKaho::update()
 	if (KeyDown('S'))
 	{
 		//todo 활공격 - 여기에 create 미사일 넣기 충전 공격넣기
+		CreateArrow();
 		GetAnimator()->Play(L"KahoBow");
 	}
-
+	if (Key(VK_DOWN) && Key('S'))
+		GetAnimator()->Play(L"KahoCrouchBow");
 	//구르기
-	//if (false == m_rolldis)
-	//{
-	//	//todo 구르기 - 좌우로 조금 이동 하면서 플레이어는 무적
-	//	pos.x += m_velocity * DT;
-	//	if (pos.x > pos.x + m_rollCount)
-	//		m_rolldis = true;
-	//	GetAnimator()->Play(L"KahoRoll");
-	//	
-	//}
-	// 
+	if (Key('F') && false == m_rolldis)
+	{
+		//todo 구르기 - 좌우로 조금 이동 하면서 플레이어는 무적
+		pos.x += m_velocity * DT;
+		
+		if (pos.x > pos.x + m_rollCount)
+			m_rolldis = true;
+		GetAnimator()->Play(L"KahoRoll");
+		
+	}
+	 
 	//대기상태 (점프상태 아니고 바닥일때)
 //if (false == m_Fjump&& true == m_onfloor)
 //{
@@ -173,6 +182,19 @@ void CKaho::update()
 void CKaho::render()
 {
 	component_render();
+}
+
+void CKaho::CreateArrow()
+{
+	fPoint fpMissilePos = GetPos();
+	fpMissilePos.x += GetScale().x / 2.f;
+
+	// Misiile Object
+	CArrow* pArrow = new CArrow;
+	pArrow->SetPos(fpMissilePos);
+	pArrow->SetDir(fVec2(1, 0));
+
+	CreateObj(pArrow, GROUP_GAMEOBJ::MISSILE_PLAYER);
 }
 
 void CKaho::OnCollision(CCollider* pOther)

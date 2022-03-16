@@ -189,6 +189,12 @@
     <ClInclude Include="CMap.h">
       <Filter>Object\Map</Filter>
     </ClInclude>
+    <ClInclude Include="CScene_Title.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="CArrow.h">
+      <Filter>Object\Character</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WinApi2D.cpp">
@@ -292,6 +298,12 @@
     </ClCompile>
     <ClCompile Include="CMap.cpp">
       <Filter>Object\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="CScene_Title.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="CArrow.cpp">
+      <Filter>Object\Character</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
