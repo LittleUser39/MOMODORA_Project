@@ -65,6 +65,13 @@ void CUI::render()
 
 	if (m_bLbtnDown)
 	{
+		CRenderManager::getInst()->RenderFillRectangle(
+			fptPos.x,
+			fptPos.y,
+			fptPos.x + fptScale.x,
+			fptPos.y + fptScale.y,
+			RGB(255, 255, 255)
+		);
 		CRenderManager::getInst()->RenderRectangle(
 			fptPos.x,
 			fptPos.y,
@@ -74,6 +81,13 @@ void CUI::render()
 	}
 	else
 	{
+		CRenderManager::getInst()->RenderFillRectangle(
+			fptPos.x,
+			fptPos.y,
+			fptPos.x + fptScale.x,
+			fptPos.y + fptScale.y,
+			RGB(255, 255, 255)
+		);
 		CRenderManager::getInst()->RenderRectangle(
 			fptPos.x,
 			fptPos.y,

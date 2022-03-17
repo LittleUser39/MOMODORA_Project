@@ -1,8 +1,10 @@
 #include "framework.h"
-#include "CAnimator.h"
 #include "CScene_Title.h"
 #include "CBackGround.h"
+#include "CGameObject.h"
+#include "CAnimator.h"
 #include "CAnimation.h"
+#include "CImageObject.h"
 
 void CScene_Title::update()
 {
@@ -33,12 +35,7 @@ void CScene_Title::Enter()
 	AddObject(title, GROUP_GAMEOBJ::BACKGROUND);
 	
 	//todo 타이틀 애니 구현해야함
-	/*CBackGround* titleA = new CBackGround;
-	titleA->Load(L"TitleKaho", L"texture\\background\\sTitleKaho_Full.png");
-	titleA->SetPos(fPoint(300, 300));
-	titleA->SetScale(fPoint(200.f, 200.f));
-	AddObject(titleA, GROUP_GAMEOBJ::BACKGROUND);*/
-
+	//생각 네모 박스 객체 하나 만들어서 위치 구현후 거기다가 애니메이션 덮어씀
 }
 
 

@@ -3,7 +3,8 @@
 
 class CD2DImage;
 
-class CScene_Title : public CScene
+
+class CScene_Title : public CScene 
 {
     
     CD2DImage* m_pTitleImage;

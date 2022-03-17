@@ -8,7 +8,7 @@ CTile::CTile()
 	m_iIdx = 0;
 	m_iX = 0;
 	m_iY = 0;
-	m_group = GROUP_TILE::GROUND;
+	m_group = GROUP_TILE::NONE;
 	SetScale(fPoint(SIZE_TILE, SIZE_TILE));
 }
 

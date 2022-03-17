@@ -162,6 +162,7 @@
     <ClInclude Include="CEventManager.h" />
     <ClInclude Include="CGameObject.h" />
     <ClInclude Include="CHitBox.h" />
+    <ClInclude Include="CImageObject.h" />
     <ClInclude Include="CKaho.h" />
     <ClInclude Include="CKeyManager.h" />
     <ClInclude Include="CMap.h" />
@@ -182,6 +183,7 @@
     <ClInclude Include="CSoundManager.h" />
     <ClInclude Include="CTexture.h" />
     <ClInclude Include="CTile.h" />
+    <ClInclude Include="CTileButtonUI.h" />
     <ClInclude Include="CTimeManager.h" />
     <ClInclude Include="CUI.h" />
     <ClInclude Include="CUIManager.h" />
@@ -207,6 +209,7 @@
     <ClCompile Include="CEventManager.cpp" />
     <ClCompile Include="CGameObject.cpp" />
     <ClCompile Include="CHitBox.cpp" />
+    <ClCompile Include="CImageObject.cpp" />
     <ClCompile Include="CKaho.cpp" />
     <ClCompile Include="CKeyManager.cpp" />
     <ClCompile Include="CMap.cpp" />
@@ -227,6 +230,7 @@
     <ClCompile Include="CSoundManager.cpp" />
     <ClCompile Include="CTexture.cpp" />
     <ClCompile Include="CTile.cpp" />
+    <ClCompile Include="CTileButtonUI.cpp" />
     <ClCompile Include="CTimeManager.cpp" />
     <ClCompile Include="CUI.cpp" />
     <ClCompile Include="CUIManager.cpp" />

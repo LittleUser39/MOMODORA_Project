@@ -198,6 +198,12 @@
     <ClInclude Include="CHitBox.h">
       <Filter>Object\Character</Filter>
     </ClInclude>
+    <ClInclude Include="CImageObject.h">
+      <Filter>Object\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="CTileButtonUI.h">
+      <Filter>Object\UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WinApi2D.cpp">
@@ -310,6 +316,12 @@
     </ClCompile>
     <ClCompile Include="CHitBox.cpp">
       <Filter>Object\Character</Filter>
+    </ClCompile>
+    <ClCompile Include="CImageObject.cpp">
+      <Filter>Object\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="CTileButtonUI.cpp">
+      <Filter>Object\UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

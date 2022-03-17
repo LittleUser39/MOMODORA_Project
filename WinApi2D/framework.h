@@ -64,9 +64,10 @@ enum class GROUP_SCENE
 
 enum class GROUP_TILE
 {
-	NONE,
-	GROUND,
-	WALL,
+	NONE,		//없음
+	GROUND,		//땅
+	PLATFORM,	//아래에서 뚫고감 위에서 아래키 누를시 내려감
+	WALL,		//벽
 
 	SIZE,
 };
