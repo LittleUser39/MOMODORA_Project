@@ -23,6 +23,8 @@ private:
 	int				m_iCurFrm;		// 현재 프레임의 index
 	float			m_fAccTime;		// 다음 프레임까지 축적시간
 
+	bool			m_bFinish;
+	bool			m_Loop;
 	bool			m_bReverse;		//반전상태
 
 public:
@@ -31,6 +33,9 @@ public:
 
 	void SetName(const wstring& strName);
 	const wstring& GetName();
+
+	void SetLoop(bool isLoop);
+	bool GetAniFinish();
 
 	void SetFrame(int frmIndex);
 	tAniFrm& GetFrame(int frmIndex);

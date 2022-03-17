@@ -12,9 +12,10 @@ private:
 	CD2DImage* m_pImg7;
 	CD2DImage* m_pImg8;
 	CD2DImage* m_pImg9;
-	
+	CD2DImage* m_pImg10;
+
 	const float fdealy = 0.5f; //딜레이 
-	const float fcombo = 1.5f; //콤보 시간 - 이안에 눌러야 연결
+	const float fcombo = 1.f; //콤보 시간 - 이안에 눌러야 연결
 
 	bool m_rolldis;		//캐릭터 구르고 있나
 	float m_rollCount;

@@ -11,6 +11,7 @@ CAnimation::CAnimation()
     m_pImg = nullptr;
     m_iCurFrm = 0;
     m_fAccTime = 0;
+    m_bFinish = false;
 }
 
 CAnimation::~CAnimation()
@@ -27,6 +28,16 @@ const wstring& CAnimation::GetName()
     return m_strName;
 }
 
+void CAnimation::SetLoop(bool isLoop)
+{
+    m_Loop = isLoop;
+}
+
+bool CAnimation::GetAniFinish()
+{
+    return m_bFinish;
+}
+
 void CAnimation::SetFrame(int frmIndex)
 {
     m_iCurFrm = frmIndex;
@@ -41,11 +52,26 @@ void CAnimation::update()
 {
     m_fAccTime += fDT;
 
-    if (m_vecFrm[m_iCurFrm].fDuration < m_fAccTime)
+    if (m_fAccTime >= m_vecFrm[m_iCurFrm].fDuration)
     {
-        m_iCurFrm++;
-        m_iCurFrm %= m_vecFrm.size();
+        // 축적 시간 -> fDuration 만큼 다시 빼줌 -> 0으로 초기화보다는 정확
         m_fAccTime -= m_vecFrm[m_iCurFrm].fDuration;
+
+        m_iCurFrm++;
+
+        if (m_Loop)
+        {
+            // 애니메이션에 끝에 도달했으면 처음 프레임으로 돌아감
+            m_iCurFrm %= m_vecFrm.size();
+        }
+        else
+        {
+            if (m_iCurFrm == m_vecFrm.size())
+            {
+                m_iCurFrm = (int)m_vecFrm.size() - 1;
+                m_bFinish = true;
+            }
+        }
     }
 }
 
