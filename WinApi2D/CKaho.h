@@ -1,5 +1,17 @@
 #pragma once
 #include "CGameObject.h"
+
+enum class PLAYER_STATE
+{
+	IDLE,
+	WALK,
+	ATTACK1,
+	ATTACK2,
+	ATTACK3,
+	DEAD,
+	END
+};
+
 class CKaho : public CGameObject
 {
 private:
@@ -14,18 +26,21 @@ private:
 	CD2DImage* m_pImg9;
 	CD2DImage* m_pImg10;
 
-	const float fdealy = 0.5f; //딜레이 
-	const float fcombo = 1.f; //콤보 시간 - 이안에 눌러야 연결
+	PLAYER_STATE m_eCurState; //캐릭터 현재상태
+	PLAYER_STATE m_ePreState; //캐릭터 이전상태
+	int          m_iCurDir;	  //현재방향
+	int          m_iPreDir;	  //이전방향
 
-	bool m_rolldis;		//캐릭터 구르고 있나
-	float m_rollCount;
+	const float m_fDelaytime = 0.5f; //딜레이 
+	const float m_fCombotime = 1.f; //콤보 시간 - 이안에 눌러야 연결
+
 	float m_velocity;	//캐릭터 속도
 	float m_jumpforce;	//캐릭터 점프력
 	float m_gravity;	//중력
 	float m_HP;			//캐릭터의 체력
 	
-	float delay = 0; //공격 딜레이
-	int combo = 0;
+	float m_fDelay = 0; //공격 딜레이
+	int	  m_iCombo = 0;
 	
 	bool m_onfloor;			//캐릭터가 바닥에 있는가
 	bool m_idle;			//캐릭터가 가만히 있는가
@@ -43,6 +58,10 @@ public:
 	CKaho();
 	~CKaho();
 	virtual CKaho* Clone();
+
+	void update_move();
+	void update_state();
+	void update_animation();
 
 	virtual void update();
 	virtual void render();

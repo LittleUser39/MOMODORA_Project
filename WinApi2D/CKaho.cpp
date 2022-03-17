@@ -2,13 +2,17 @@
 #include "CKaho.h"
 #include "CCollider.h"
 #include "CAnimator.h"
+#include "CAnimation.h"
 #include "CArrow.h"
 #include "CHitBox.h"
 
 #define GRAVITY 130
 #define JUMPFORCE 100
 
-CKaho::CKaho()
+CKaho::CKaho() : m_eCurState(PLAYER_STATE::IDLE)
+				, m_ePreState(PLAYER_STATE::WALK)
+				, m_iCurDir(1)
+				, m_iPreDir(1)
 {
 	m_idle = true;		//가만히 있는상태
 	m_Fjump = false;	//점프 상태(공중)
@@ -16,8 +20,7 @@ CKaho::CKaho()
 	m_dead = false;		//죽은 상태
 	m_onfloor = true;	//바닥에 있는 상태
 	m_HP = 100;			//캐릭터 체력
-	m_rolldis = false;		//캐릭터가 구르고있나
-	m_rollCount = 100;		//거리
+	
 	m_velocity = 150;
 	m_gravity = GRAVITY;
 	m_jumpforce = JUMPFORCE;
@@ -75,80 +78,84 @@ CKaho* CKaho::Clone()
     return nullptr;
 }
 
-void CKaho::update()
+void CKaho::update() //플레이어 업데이트
 {
 	fPoint pos = GetPos();
+	update_move();
+	update_state();
+	update_animation();
+
 	//바닥일때 좌우 애니메
-	if(KeyUp(VK_RIGHT)&& m_onfloor)
+	/*if(KeyUp(VK_RIGHT)&& m_onfloor)
 		GetAnimator()->Play(L"Kahoidle");
 	if (KeyUp(VK_LEFT)&& m_onfloor)
-		GetAnimator()->Play(L"KahoidleL");
+		GetAnimator()->Play(L"KahoidleL");*/
 
-	if (Key(VK_LEFT))
-	{
-		pos.x -= m_velocity * fDT;
-		if (m_onfloor)
-		{
-			GetAnimator()->Play(L"LeftWalkFull");
-		}
-	}
+	//if (Key(VK_LEFT))
+	//{
+	//	pos.x -= m_velocity * fDT;
+	//	if (m_onfloor)
+	//	{
+	//		GetAnimator()->Play(L"LeftWalkFull");
+	//	}
+	//}
 
-	if (Key(VK_RIGHT))
-	{
-		pos.x += m_velocity * fDT;
-		if (m_onfloor)
-		{
-			GetAnimator()->Play(L"RightWalkFull");
-		}
-	}
+	//if (Key(VK_RIGHT))
+	//{
+	//	pos.x += m_velocity * fDT;
+	//	if (m_onfloor)
+	//	{
+	//		GetAnimator()->Play(L"RightWalkFull");
+	//	}
+	//}
 
-	if (Key(VK_DOWN))
-	{
-		//todo 앉기랑 사다리 있으면 사다리 내려가기
-		//pos.y += m_velocity * fDT;
-		if (m_onfloor)
-		{
-			GetAnimator()->Play(L"KahoCrouch");
-		}
-	}
+	//if (Key(VK_DOWN))
+	//{
+	//	//todo 앉기랑 사다리 있으면 사다리 내려가기
+	//	//pos.y += m_velocity * fDT;
+	//	if (m_onfloor)
+	//	{
+	//		GetAnimator()->Play(L"KahoCrouch");
+	//	}
+	//}
 
-	if (Key(VK_UP))
-	{
-		//todo 사다리있으면 사다리 오르기
-	}
+	//if (Key(VK_UP))
+	//{
+	//	//todo 사다리있으면 사다리 오르기
+	//}
 
 	//딜레이 구현
-	delay += fDT;
-	
-	//연속 공격이 아닐때 콤보0으로 
-	if (!IsComboAttck())
-		combo = 0;
-	//공격 구현 여기다가 히트박스(충돌체) 구현
-	if (CanAttack())
-	{
-		if (KeyDown('A'))
-		{
-			//콤보가 없을때 1번째 공격
-			if (0 == combo)
-			{
-				Attack();
-				CreateHitBox();
-				GetAnimator()->Play(L"KahoAttack1");
-			}
-			//콤보가 1일때 2번째 공격
-			else if (IsComboAttck()&& combo == 1)
-			{
-				ComboAttack2();
-				GetAnimator()->Play(L"KahoAttack2");
-			}
-			//콤보가 2일때 3번째 공격
-			else if (IsComboAttck() &&combo == 2)
-			{
-				ComboAttack3();
-				GetAnimator()->Play(L"KahoAttack3");
-			}
-		}
-	}
+	//delay += fDT;
+	//
+	////연속 공격이 아닐때 콤보0으로 
+	//if (!IsComboAttck())
+	//	combo = 0;
+	////공격 구현 여기다가 히트박스(충돌체) 구현
+	//if (CanAttack())
+	//{
+	//	if (KeyDown('A'))
+	//	{
+	//		//콤보가 없을때 1번째 공격
+	//		if (0 == combo)
+	//		{
+	//			Attack();
+	//			CreateHitBox();
+	//			GetAnimator()->Play(L"KahoAttack1");
+	//		}
+	//		//콤보가 1일때 2번째 공격
+	//		else if (IsComboAttck()&& combo == 1)
+	//		{
+	//			ComboAttack2();
+	//			GetAnimator()->Play(L"KahoAttack2");
+	//		}
+	//		//콤보가 2일때 3번째 공격
+	//		else if (IsComboAttck() &&combo == 2)
+	//		{
+	//			ComboAttack3();
+	//			GetAnimator()->Play(L"KahoAttack3");
+	//		}
+	//	}
+	//}
 
 	if (KeyDown('S'))
 	{
@@ -156,18 +163,13 @@ void CKaho::update()
 		CreateArrow();
 		GetAnimator()->Play(L"KahoBow");
 	}
+
 	if (Key(VK_DOWN) && Key('S'))
 		GetAnimator()->Play(L"KahoCrouchBow");
-	//구르기
-	if (Key('F') && false == m_rolldis)
+	
+	if (Key('F'))
 	{
-		//todo 구르기 - 좌우로 조금 이동 하면서 플레이어는 무적
-		pos.x += m_velocity * DT;
-		
-		if (pos.x > pos.x + m_rollCount)
-			m_rolldis = true;
-		GetAnimator()->Play(L"KahoRoll");
-		
+		//todo 구르기 구현
 	}
 	 
 	//점프 하는 상태
@@ -195,6 +197,104 @@ void CKaho::update()
 	SetPos(pos);
 
 	GetAnimator()->update();
+	m_ePreState = m_eCurState;
+	m_iPreDir = m_iCurDir;
+}
+
+void CKaho::update_state() //현재 상태에 관한거
+{
+	m_fDelay += fDT;
+	if (KeyDown(VK_LEFT))
+	{
+		m_iCurDir = -1;
+		m_eCurState = PLAYER_STATE::WALK;
+	}
+
+	if (KeyDown(VK_RIGHT))
+	{
+		m_iCurDir = 1;
+		m_eCurState = PLAYER_STATE::WALK;
+	}
+	if (KeyUp(VK_LEFT) || KeyUp(VK_RIGHT))
+	{
+		m_eCurState = PLAYER_STATE::IDLE;
+	}
+	if (KeyDown('A') && CanAttack())
+	{
+		m_eCurState = PLAYER_STATE::ATTACK1;
+		GetAnimator()->FindAnimation(L"KahoAttack1")->SetFrame(0);
+	
+		if (IsComboAttck() && m_iCombo == 1)
+		{
+			m_eCurState = PLAYER_STATE::ATTACK2;
+		}
+
+		//콤보가 2일때 3번째 공격
+		else if (IsComboAttck() && m_iCombo == 2)
+		{
+			m_eCurState = PLAYER_STATE::ATTACK3;
+		}
+	}
+
+}
+
+void CKaho::update_move() //행동에 관한거
+{
+
+}
+
+void CKaho::update_animation()	//애니메이션에 관한거 - 상태에 따른 애니메이션 출력
+{
+	if (m_ePreState == m_eCurState)
+	{
+		return;
+	}
+
+	switch (m_eCurState)
+	{
+	case PLAYER_STATE::IDLE:
+	{	if (-1 == m_iCurDir && m_onfloor)
+	{
+		GetAnimator()->Play(L"KahoidleL");
+	}
+	else if (1 == m_iCurDir && m_onfloor)
+	{
+		GetAnimator()->Play(L"Kahoidle");
+	}
+	}
+	break;
+
+	case PLAYER_STATE::WALK:
+	{
+		if (-1 == m_iCurDir && m_onfloor)
+		{
+			GetAnimator()->Play(L"LeftWalkFull");
+		}
+		else if (1 == m_iCurDir && m_onfloor)
+		{
+			GetAnimator()->Play(L"RightWalkFull");
+		}
+	}
+	break;
+
+	case PLAYER_STATE::ATTACK1:
+	{
+		if (-1 == m_iCurDir && m_onfloor)
+		{
+			GetAnimator()->Play(L"KahoAttack1");
+		}
+		else if (1 == m_iCurDir && m_onfloor)
+		{
+			GetAnimator()->Play(L"KahoAttack1R");
+		}
+	}
+	break;
+
+	case PLAYER_STATE::DEAD:
+	{}
+	break;
+
+	}
 }
 
 void CKaho::render()
@@ -260,28 +360,28 @@ void CKaho::OnCollisionExit(CCollider* pOther)
 
 bool CKaho::CanAttack()
 {
-	return fdealy < delay;
+	return m_fDelaytime < m_fDelay;
 }
 bool CKaho::Attack()
 {
-	delay = 0;
-	combo++;
-	return fdealy < delay;
+	m_fDelay = 0;
+	m_iCombo++;
+	return m_fDelaytime < m_fDelay;
 }
 bool CKaho::ComboAttack2()
 {
-	delay = 0;
-	combo++;
-	return fdealy < delay;
+	m_fDelay = 0;
+	m_iCombo++;
+	return m_fDelaytime < m_fDelay;
 }
 bool CKaho::ComboAttack3()
 {
-	delay = 0;
-	combo = 0;
-	return fdealy < delay;
+	m_fDelay = 0;
+	m_iCombo = 0;
+	return m_fDelaytime < m_fDelay;
 }
 
 bool CKaho::IsComboAttck()
 {
-	return fcombo > delay;
+	return m_fCombotime > m_fDelay;
 }
