@@ -1,5 +1,18 @@
 #pragma once
 #include "CGameObject.h"
+
+enum class PLAYER_STATE
+{
+	IDLE,
+	WALK,
+	ATTACK1,
+	ATTACK2,
+	ATTACK3,
+	DEAD,
+	END
+};
+
+
 class CKaho : public CGameObject
 {
 private:
@@ -12,7 +25,12 @@ private:
 	CD2DImage* m_pImg7;
 	CD2DImage* m_pImg8;
 	CD2DImage* m_pImg9;
-	
+
+	PLAYER_STATE m_eCurState; //캐릭터 현재상태
+	PLAYER_STATE m_ePreState; //캐릭터 이전상태
+	int          m_iCurDir;	  //현재방향
+	int          m_iPreDir;	  //이전방향
+		
 	const float fdealy = 0.5f; //딜레이 
 	const float fcombo = 1.5f; //콤보 시간 - 이안에 눌러야 연결
 
@@ -45,6 +63,10 @@ public:
 
 	virtual void update();
 	virtual void render();
+
+	void update_state();	 //상태 업데이트 - 이걸 이용해서 애니메이션 전환
+	void update_move();		 //움직임 업데이트
+	void update_animation(); //상태에 따른 애니메이션 업데이트
 
 	void CreateArrow();		//화살 충돌체 만듦
 	void CreateHitBox();	//플레이어가 공격하면 그곳에 히트박스만듦

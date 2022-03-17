@@ -8,7 +8,10 @@
 #define GRAVITY 130
 #define JUMPFORCE 100
 
-CKaho::CKaho()
+CKaho::CKaho() : m_eCurState(PLAYER_STATE::IDLE)
+			   , m_ePreState(PLAYER_STATE::WALK)
+			   , m_iCurDir(1)
+			   , m_iPreDir(1)
 {
 	m_idle = true;		//가만히 있는상태
 	m_Fjump = false;	//점프 상태(공중)
@@ -52,7 +55,9 @@ CKaho::CKaho()
 	GetAnimator()->CreateAnimation(L"LeftWalkFull", m_pImg2, fPoint(96.f, 0.f), fPoint(48.f, 48.f), fPoint(48.f, 0.f), 0.1f, 7, true);
 	
 	GetAnimator()->CreateAnimation(L"KahoJump", m_pImg3, fPoint(0.f, 0.f), fPoint(48.f, 48.f), fPoint(48.f, 0.f), 0.1f, 2, false);
-	GetAnimator()->CreateAnimation(L"KahoAttack1", m_pImg4, fPoint(0.f, 0.f), fPoint(48.f, 48.f), fPoint(48.f, 0.f), 0.1f, 6, false);
+	GetAnimator()->CreateAnimation(L"KahoAttack1R", m_pImg4, fPoint(0.f, 0.f), fPoint(48.f, 48.f), fPoint(48.f, 0.f), 0.1f, 6, false);
+	GetAnimator()->CreateAnimation(L"KahoAttack1L", m_pImg4, fPoint(0.f, 0.f), fPoint(48.f, 48.f), fPoint(48.f, 0.f), 0.1f, 6, true);
+
 	GetAnimator()->CreateAnimation(L"KahoAttack2", m_pImg5, fPoint(0.f, 0.f), fPoint(48.f, 48.f), fPoint(48.f, 0.f), 0.1f, 6, false);
 	GetAnimator()->CreateAnimation(L"KahoAttack3", m_pImg6, fPoint(0.f, 0.f), fPoint(48.f, 48.f), fPoint(48.f, 0.f), 0.1f, 6, false);
 	GetAnimator()->CreateAnimation(L"KahoBow", m_pImg7, fPoint(0.f, 0.f), fPoint(48.f, 48.f), fPoint(48.f, 0.f), 0.2f, 5, false);
@@ -75,28 +80,23 @@ CKaho* CKaho::Clone()
 void CKaho::update()
 {
 	fPoint pos = GetPos();
+	
+
 	//바닥일때 좌우 애니메
-	if(KeyUp(VK_RIGHT)&& m_onfloor)
+	
+	/*if(KeyUp(VK_RIGHT)&& m_onfloor)
 		GetAnimator()->Play(L"Kahoidle");
 	if (KeyUp(VK_LEFT)&& m_onfloor)
-		GetAnimator()->Play(L"KahoidleL");
+		GetAnimator()->Play(L"KahoidleL");*/
 
 	if (Key(VK_LEFT))
 	{
 		pos.x -= m_velocity * fDT;
-		if (m_onfloor)
-		{
-			GetAnimator()->Play(L"LeftWalkFull");
-		}
 	}
 
 	if (Key(VK_RIGHT))
 	{
 		pos.x += m_velocity * fDT;
-		if (m_onfloor)
-		{
-			GetAnimator()->Play(L"RightWalkFull");
-		}
 	}
 
 	if (Key(VK_DOWN))
@@ -125,8 +125,8 @@ void CKaho::update()
 			if (0 == combo)
 			{
 				Attack();
-				CreateHitBox();
-				GetAnimator()->Play(L"KahoAttack1");
+				//CreateHitBox();
+				GetAnimator()->Play(L"KahoAttack1R");
 			}
 			//콤보가 1일때 2번째 공격
 			else if (IsComboAttck()&& combo == 1)
@@ -142,6 +142,8 @@ void CKaho::update()
 			}
 		}
 	}
+
+		
 
 	if (KeyDown('S'))
 	{
@@ -185,9 +187,15 @@ void CKaho::update()
 		}
 	}
 	
+	update_move();
+	update_state();
+	update_animation();
+	
 	SetPos(pos);
 
 	GetAnimator()->update();
+	m_ePreState = m_eCurState;
+	m_iPreDir = m_iCurDir;
 }
 
 void CKaho::render()
@@ -219,6 +227,86 @@ void CKaho::CreateHitBox()
 	pHitBox->SetDir(fVec2(1, 0));
 
 	CreateObj(pHitBox, GROUP_GAMEOBJ::HITBOX_PLAYER);
+}
+
+void CKaho::update_state()
+{
+	if (KeyDown(VK_LEFT))
+	{
+		m_iCurDir = -1;
+		m_eCurState = PLAYER_STATE::WALK;
+	}
+
+	if (KeyDown(VK_RIGHT))
+	{
+		m_iCurDir = 1;
+		m_eCurState = PLAYER_STATE::WALK;
+	}
+	if (KeyUp(VK_LEFT) || KeyUp(VK_RIGHT))
+	{
+		m_eCurState = PLAYER_STATE::IDLE;
+	}
+	
+	
+}
+
+void CKaho::update_move()
+{
+	
+}
+
+void CKaho::update_animation()
+{
+	if (m_ePreState == m_eCurState)
+	{
+		return;
+	}
+
+	switch (m_eCurState)
+	{
+	case PLAYER_STATE::IDLE:
+	{	if (-1 == m_iCurDir && m_onfloor)
+		{
+			GetAnimator()->Play(L"KahoidleL");
+		}
+	else if (1 == m_iCurDir && m_onfloor)
+		{
+			GetAnimator()->Play(L"Kahoidle");
+		}
+	}
+	break;
+
+    case PLAYER_STATE::WALK:
+	{
+		if (-1 == m_iCurDir && m_onfloor)
+		{
+			GetAnimator()->Play(L"LeftWalkFull");
+		}
+		else if(1 == m_iCurDir && m_onfloor)
+		{
+			GetAnimator()->Play(L"RightWalkFull");
+		}
+	}
+	break;
+	
+	case PLAYER_STATE::ATTACK1:
+	{
+		if (-1 == m_iCurDir && m_onfloor)
+		{
+			GetAnimator()->Play(L"KahoAttack1L");
+		}
+		else if (1 == m_iCurDir && m_onfloor)
+		{
+			GetAnimator()->Play(L"KahoAttack1R");
+		}
+	}
+	break;
+
+	case PLAYER_STATE::DEAD:
+	{}
+	break;
+
+	}
 }
 
 void CKaho::OnCollision(CCollider* pOther)
