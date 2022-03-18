@@ -1,10 +1,13 @@
 #pragma once
 #include "CGameObject.h"
 
+class CHitBox;
+
 enum class PLAYER_STATE
 {
 	IDLE,
 	WALK,
+	BRAKE,
 	ATTACK1,
 	ATTACK2,
 	ATTACK3,
@@ -25,9 +28,11 @@ private:
 	CD2DImage* m_pImg8;
 	CD2DImage* m_pImg9;
 	CD2DImage* m_pImg10;
+	CD2DImage* m_pImg11;
 
 	PLAYER_STATE m_eCurState; //캐릭터 현재상태
 	PLAYER_STATE m_ePreState; //캐릭터 이전상태
+	
 	int          m_iCurDir;	  //현재방향
 	int          m_iPreDir;	  //이전방향
 
@@ -38,7 +43,7 @@ private:
 	float m_jumpforce;	//캐릭터 점프력
 	float m_gravity;	//중력
 	float m_HP;			//캐릭터의 체력
-	
+
 	float m_fDelay = 0; //공격 딜레이
 	int	  m_iCombo = 0;
 	
@@ -48,12 +53,8 @@ private:
 	
 	bool m_dead;			//캐릭터가 죽어있는가
 
-	bool CanAttack();		//공격할수 있다
-	bool Attack();			//1번째 공격
-	bool ComboAttack2();	//2번째
-	bool ComboAttack3();	//3번째
+	CHitBox* m_cPHitbox;	//히트박스
 
-	bool IsComboAttck();	//연속공격이다
 public:
 	CKaho();
 	~CKaho();
@@ -66,9 +67,10 @@ public:
 	virtual void update();
 	virtual void render();
 
-	void CreateArrow();		//화살 충돌체 만듦
-	void CreateHitBox();	//플레이어가 공격하면 그곳에 히트박스만듦
+	float GetDirect();
 
+	void CreateArrow();		//화살 충돌체 만듦
+	
 	virtual void OnCollision(CCollider* pOther);		//충돌중 일때
 	virtual void OnCollisionEnter(CCollider* pOther);	//층돌에 들어갈때
 	virtual void OnCollisionExit(CCollider* pOther);	//충돌에서 나갈때 

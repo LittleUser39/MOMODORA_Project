@@ -1,6 +1,7 @@
 #include "framework.h"
 #include "CHitBox.h"
 #include "CCollider.h"
+#include "CKaho.h"
 
 CHitBox* CHitBox::Clone()
 {
@@ -9,12 +10,12 @@ CHitBox* CHitBox::Clone()
 
 CHitBox::CHitBox()
 {
-	SetScale(fPoint(50.f, 50.f));
 	m_fvDir = fVec2(0, 0);
+	m_pOwner = nullptr;
 	SetName(L"HitBox_Player");
 
 	CreateCollider();
-	GetCollider()->SetScale(fPoint(50.f, 50.f));
+	GetCollider()->SetScale(fPoint(30.f, 50.f));
 }
 
 CHitBox::~CHitBox()
@@ -24,13 +25,7 @@ CHitBox::~CHitBox()
 
 void CHitBox::update()
 {
-	fPoint pos = GetPos();
 
-	SetPos(pos);
-
-	if (pos.x < 0 || pos.x > WINSIZEX
-		|| pos.y < 0 || pos.y > WINSIZEY)
-		DeleteObj(this);
 }
 
 void CHitBox::render()
@@ -49,15 +44,43 @@ void CHitBox::render()
 	component_render();
 }
 
-void CHitBox::SetDir(fVec2 vec)
+CGameObject* CHitBox::GetOwnerObj()
 {
-	m_fvDir = vec.normalize();
+	return m_pOwner;
 }
 
-void CHitBox::SetDir(float theta)
+void CHitBox::SetOwnerObj(CGameObject* pOwner)
 {
-	m_fvDir.x = (float)cos(theta);
-	m_fvDir.y = (float)sin(theta);
+	m_pOwner = pOwner;
+}
+
+
+
+void CHitBox::create()
+{
+	CGameObject* ownerObj = GetOwnerObj();
+	if (ownerObj == nullptr) return;
+
+	
+	CKaho* user = dynamic_cast<CKaho*>(ownerObj);
+
+	if (nullptr != user)
+	{
+		//히트박스 유저위치로 방향 설정
+		SetPos(user->GetPos());
+		//오른쪽
+		if (user->GetDirect() > 0)
+		{
+			GetCollider()->SetFinalPos(GetPos());
+			GetCollider()->SetOffsetPos(fPoint(30.f, 10.f));
+		}
+		//왼쪽
+		else
+		{
+			GetCollider()->SetFinalPos(GetPos());
+			GetCollider()->SetOffsetPos(fPoint(-30.f, 10.f));
+		}
+	}
 }
 
 void CHitBox::OnCollisionEnter(CCollider* pOther)

@@ -3,6 +3,7 @@
 class CHitBox : public CGameObject
 {
 	fVec2 m_fvDir;
+	CGameObject* m_pOwner;
 
 public:
 	CHitBox();
@@ -12,9 +13,10 @@ public:
 	virtual void update();
 	virtual void render();
 
-	void SetDir(fVec2 vec);
-	void SetDir(float theta);
+	CGameObject* GetOwnerObj();
+	void SetOwnerObj(CGameObject* pOwner);
 
+	void create();
 	void OnCollisionEnter(CCollider* pOther);
 };
 
