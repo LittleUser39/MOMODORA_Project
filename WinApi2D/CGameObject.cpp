@@ -2,6 +2,7 @@
 #include "CGameObject.h"
 #include "CCollider.h"
 #include "CAnimator.h"
+#include "CRigidBody.h"
 
 CGameObject::CGameObject()
 {
@@ -9,6 +10,7 @@ CGameObject::CGameObject()
 	m_fptScale = {};
 	m_pCollider = nullptr;
 	m_pAnimator = nullptr;
+	m_pRigidBody = nullptr;
 	m_bAlive = true;
 }
 
@@ -19,6 +21,7 @@ CGameObject::CGameObject(const CGameObject& other)
 	m_fptScale	= other.m_fptScale;
 	m_pCollider = nullptr;
 	m_pAnimator = nullptr;
+	m_pRigidBody = nullptr;
 	m_bAlive	= true;
 
 	if (nullptr != other.m_pCollider)
@@ -31,6 +34,11 @@ CGameObject::CGameObject(const CGameObject& other)
 		m_pAnimator = new CAnimator(*other.m_pAnimator);
 		m_pAnimator->m_pOwner = this;
 	}
+	if (other.m_pRigidBody)
+	{
+		m_pRigidBody = new CRigidBody(*other.m_pRigidBody);
+		m_pRigidBody->m_pOwner = this;
+	}
 }
 
 CGameObject::~CGameObject()
@@ -42,6 +50,11 @@ CGameObject::~CGameObject()
 	if (nullptr != m_pAnimator)
 	{
 		delete m_pAnimator;
+	}
+	if (nullptr != m_pRigidBody)
+	{
+		delete m_pRigidBody;
+
 	}
 }
 
@@ -90,6 +103,10 @@ void CGameObject::finalupdate()
 	if (nullptr != m_pCollider)
 	{
 		m_pCollider->finalupdate();
+	}
+	if (nullptr != m_pRigidBody)
+	{
+		m_pRigidBody->finalupdate();
 	}
 }
 
@@ -140,4 +157,15 @@ void CGameObject::CreateAnimator()
 {
 	m_pAnimator = new CAnimator;
 	m_pAnimator->m_pOwner = this;
+}
+
+CRigidBody* CGameObject::GetRigidBody()
+{
+	 return m_pRigidBody;
+}
+
+void CGameObject::CreateRigidBody()
+{
+	m_pRigidBody = new CRigidBody;
+	m_pRigidBody->m_pOwner = this;
 }

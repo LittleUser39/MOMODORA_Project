@@ -80,6 +80,11 @@ struct fPoint
 		return *this;
 	}
 
+	bool isZero() //일단 만들어봄 x와 y가 0이면 트루를 출력
+	{
+		return x == 0 && y == 0;
+	}
+
 	float Length()
 	{
 		return (float)sqrt((double)x * x + (double)y * y);

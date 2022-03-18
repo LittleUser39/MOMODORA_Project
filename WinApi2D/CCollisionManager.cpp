@@ -141,6 +141,7 @@ void CCollisionManager::update()
 	}
 }
 
+
 void CCollisionManager::CheckGroup(GROUP_GAMEOBJ objLeft, GROUP_GAMEOBJ objRight)
 {
 	// [За][·Д]

@@ -204,6 +204,9 @@
     <ClInclude Include="CTileButtonUI.h">
       <Filter>Object\UI</Filter>
     </ClInclude>
+    <ClInclude Include="CRigidBody.h">
+      <Filter>Engine\Component</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WinApi2D.cpp">
@@ -322,6 +325,9 @@
     </ClCompile>
     <ClCompile Include="CTileButtonUI.cpp">
       <Filter>Object\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="CRigidBody.cpp">
+      <Filter>Engine\Component</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -2,6 +2,7 @@
 
 class CCollider;
 class CAnimator;
+class CRigidBody;
 
 class CGameObject
 {
@@ -15,6 +16,7 @@ private:
 	// Component
 	CCollider* m_pCollider;
 	CAnimator* m_pAnimator;
+	CRigidBody* m_pRigidBody; //힘과 토크를 받아옴
 
 	bool m_bAlive;
 	void SetDead();
@@ -49,5 +51,8 @@ public:
 
 	CAnimator* GetAnimator();				// 애니메이터 반환
 	void CreateAnimator();					// 애니메이터 생성
+
+	CRigidBody* GetRigidBody();	//강체 컴포넌트 가져오기
+	void CreateRigidBody();		//강체 컴포넌트 생성
 };
 

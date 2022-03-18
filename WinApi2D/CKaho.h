@@ -40,6 +40,8 @@ private:
 	const float m_fCombotime = 1.f; //콤보 시간 - 이안에 눌러야 연결
 
 	float m_velocity;	//캐릭터 속도
+	float m_Maxvelocity; //캐릭터 최고 속도
+	float m_fFriction;	//멈출 속도
 	float m_jumpforce;	//캐릭터 점프력
 	float m_gravity;	//중력
 	float m_HP;			//캐릭터의 체력
@@ -49,7 +51,7 @@ private:
 	
 	bool m_onfloor;			//캐릭터가 바닥에 있는가
 	bool m_idle;			//캐릭터가 가만히 있는가
-	bool m_Fjump;			//캐릭터가 첫번째점프상태 인가
+	bool m_bAttacking;		//캐릭터가 공격중 인가
 	
 	bool m_dead;			//캐릭터가 죽어있는가
 
