@@ -40,7 +40,7 @@ CKaho::CKaho() : m_eCurState(PLAYER_STATE::IDLE)
 	//강체 만들기
 	CreateRigidBody();
 	//중력 생성
-	CreateGravity();
+	/*CreateGravity();*/
 
 	//변수 이름 바꾸기
 	m_pImg2 = CResourceManager::getInst()->LoadD2DImage(L"KahoWalk", L"texture\\sKahoWalk_Full.png");
@@ -159,6 +159,14 @@ void CKaho::update_state() //현재 상태에 관한거
 		m_eCurState = PLAYER_STATE::BRAKE;
 		GetAnimator()->FindAnimation(L"KahoBrake")->SetFrame(0);
 	}
+	if (KeyDown('S'))
+	{
+		m_eCurState = PLAYER_STATE::JUMP;
+		if (GetRigidBody())
+		{
+			GetRigidBody()->SetVelocity(fPoint(GetRigidBody()->GetVelocity().x, -300.f));
+		}
+	}
 	
 	if (KeyDown('A'))
 	{
@@ -223,7 +231,7 @@ void CKaho::update_move() //행동에 관한거
 
 	if (KeyDown(VK_LEFT) && !m_bAttacking)
 	{
-		pRigid->AddVelocity(fPoint(-200.f, 0.f));
+		pRigid->AddVelocity(fPoint(-100.f, 0.f));
 	}
 
 	if (Key(VK_RIGHT) && !m_bAttacking)
@@ -232,7 +240,7 @@ void CKaho::update_move() //행동에 관한거
 	}
 	if (KeyDown(VK_RIGHT) && !m_bAttacking)
 	{
-		pRigid->AddVelocity(fPoint(200.f, 0.f));
+		pRigid->AddVelocity(fPoint(100.f, 0.f));
 	}
 
 	if (Key(VK_DOWN) && !m_bAttacking)
@@ -399,11 +407,14 @@ void CKaho::OnCollision(CCollider* pOther)
 
 void CKaho::OnCollisionEnter(CCollider* pOther)
 {
-	//일단 몬스터로 타일을 구현해서 점프를 구현함
 	CGameObject* pOtherObj = pOther->GetObj();
-	if (pOtherObj->GetName() == L"Monster")
+	if (L"tile" == pOtherObj->GetName())
 	{
-		m_onfloor = true;
+		fPoint vPos = GetPos();
+		if (vPos.y < pOtherObj->GetPos().y)
+		{
+			m_eCurState = PLAYER_STATE::IDLE;
+		}
 	}
 }
 

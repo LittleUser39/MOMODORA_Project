@@ -57,6 +57,7 @@ public:
 	CRigidBody* GetRigidBody();	//강체 컴포넌트 가져오기
 	void CreateRigidBody();		//강체 컴포넌트 생성
 
+	CGravity* GetGravity() { return m_pGravity; }	//중력 가져오기
 	void CreateGravity();  // 중력 개체 생성 함수
 };
 

@@ -7,7 +7,7 @@ CRigidBody::CRigidBody()
 	m_pOwner = nullptr;
 	m_fMass = { 1.f };
 	m_fFricCoeff = 200.f; // 마찰력
-	m_fMaxSpeed = 100.f;  // 최고속도
+	m_vMaxVelocity = (fPoint(200.f, 600.f));
 }
 
 CRigidBody::~CRigidBody()
@@ -51,10 +51,14 @@ void CRigidBody::finalupdate()
 	}
 
 	// 속도 제한 검사
-	if (m_fMaxSpeed < m_vVelocity.Length())
+	if (abs(m_vMaxVelocity.x) < abs(m_vVelocity.x))
 	{
-		m_vVelocity.normalize();
-		m_vVelocity = m_vVelocity * m_fMaxSpeed;
+		m_vVelocity.x = (m_vVelocity.x / abs(m_vVelocity.x)) * abs(m_vMaxVelocity.x);
+	}
+
+	if (abs(m_vMaxVelocity.y) < abs(m_vVelocity.y))
+	{
+		m_vVelocity.y = (m_vVelocity.y / abs(m_vVelocity.y)) * abs(m_vMaxVelocity.y);
 	}
 
 	Move();
@@ -106,11 +110,6 @@ void CRigidBody::SetVelocity(fPoint _vVelocity)
 void CRigidBody::AddVelocity(fPoint _vVelocity)
 {
 	m_vVelocity += _vVelocity;
-}
-
-void CRigidBody::SetMaxSpeed(float _fMaxSpeed)
-{
-	m_fMaxSpeed = _fMaxSpeed;
 }
 
 float CRigidBody::GetSpeed()

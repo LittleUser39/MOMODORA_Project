@@ -1,6 +1,9 @@
 #include "framework.h"
 #include "CTile.h"
 #include "CD2DImage.h"
+#include "CGameObject.h"
+#include "CCollider.h"
+#include "CGravity.h"
 
 CTile::CTile()
 {
@@ -124,4 +127,61 @@ void CTile::Load(FILE* pFile)
 	int group;
 	fread(&group, sizeof(int), 1, pFile);
 	m_group = (GROUP_TILE)group;
+}
+
+
+
+void CTile::OnCollision(CCollider* _pOther)
+{
+	CGameObject* pOtherObj = _pOther->GetObj();
+	if (pOtherObj->GetName() == L"Kaho")
+	{
+		pOtherObj->GetGravity()->SetGround(true);
+
+		fPoint vObjPos = _pOther->GetFinalPos();
+		fPoint vObjScale = _pOther->GetScale();
+		
+		fPoint vPos = GetCollider()->GetFinalPos();
+		fPoint vScale = GetCollider()->GetScale();
+
+
+		float fLen = abs(vObjPos.y - vPos.y);
+		float fValue = (vObjScale.y / 2.f + vScale.y / 2.f) - fLen;
+
+		vObjPos = pOtherObj->GetPos();
+		vObjPos.y -= fValue;
+		pOtherObj->SetPos(vObjPos);
+	}
+}
+
+void CTile::OnCollisionEnter(CCollider* _pOther)
+{
+	CGameObject* pOtherObj = _pOther->GetObj();
+	if (pOtherObj->GetName() == L"Kaho")
+	{
+		pOtherObj->GetGravity()->SetGround(true);
+
+		fPoint vObjPos = _pOther->GetFinalPos();
+		fPoint vObjScale = _pOther->GetScale();
+
+		fPoint vPos = GetCollider()->GetFinalPos();
+		fPoint vScale = GetCollider()->GetScale();
+
+
+		float fLen = abs(vObjPos.y - vPos.y);
+		float fValue = (vObjScale.y / 2.f + vScale.y / 2.f) - fLen;
+
+		vObjPos = pOtherObj->GetPos();
+		vObjPos.y -= fValue;
+		pOtherObj->SetPos(vObjPos);
+	}
+}
+
+void CTile::OnCollisionExit(CCollider* _pOther)
+{
+	CGameObject* pOtherObj = _pOther->GetObj();
+	if (pOtherObj->GetName() == L"Kaho")
+	{
+		pOtherObj->GetGravity()->SetGround(false);
+	}
 }
