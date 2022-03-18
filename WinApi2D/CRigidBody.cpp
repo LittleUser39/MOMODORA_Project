@@ -26,8 +26,12 @@ void CRigidBody::finalupdate()
 
 		m_vAccel = m_vForce * m_fAccel;
 
-		m_vVelocity += m_vAccel * fDT;
+
 	}
+	m_vAccel += m_vAccelA;
+
+	m_vVelocity += m_vAccel * fDT;
+
 	// 마찰력에 의한 반대 방향으로의 가속도
 	if (!m_vVelocity.isZero())
 	{
@@ -56,6 +60,8 @@ void CRigidBody::finalupdate()
 	Move();
 
 	m_vForce = fPoint(0.f, 0.f);
+	m_vAccel = fPoint(0.f, 0.f);
+	m_vAccelA = fPoint(0.f, 0.f);
 }
 
 void CRigidBody::AddForce(fPoint _vForce)

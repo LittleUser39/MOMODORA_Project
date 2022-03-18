@@ -3,6 +3,7 @@
 #include "CCollider.h"
 #include "CAnimator.h"
 #include "CRigidBody.h"
+#include "CGravity.h"
 
 CGameObject::CGameObject()
 {
@@ -39,6 +40,11 @@ CGameObject::CGameObject(const CGameObject& other)
 		m_pRigidBody = new CRigidBody(*other.m_pRigidBody);
 		m_pRigidBody->m_pOwner = this;
 	}
+	if (other.m_pGravity)
+	{
+		m_pGravity = new CGravity(*other.m_pGravity);
+		m_pGravity->m_pOwner = this;
+	}
 }
 
 CGameObject::~CGameObject()
@@ -54,7 +60,10 @@ CGameObject::~CGameObject()
 	if (nullptr != m_pRigidBody)
 	{
 		delete m_pRigidBody;
-
+	}
+	if (nullptr != m_pGravity)
+	{
+		delete m_pGravity;
 	}
 }
 
@@ -103,6 +112,10 @@ void CGameObject::finalupdate()
 	if (nullptr != m_pCollider)
 	{
 		m_pCollider->finalupdate();
+	}
+	if (m_pGravity)
+	{
+		m_pGravity->finalupdate();
 	}
 	if (nullptr != m_pRigidBody)
 	{
@@ -168,4 +181,10 @@ void CGameObject::CreateRigidBody()
 {
 	m_pRigidBody = new CRigidBody;
 	m_pRigidBody->m_pOwner = this;
+}
+
+void CGameObject::CreateGravity()
+{
+	m_pGravity = new CGravity;
+	m_pGravity->m_pOwner = this;
 }

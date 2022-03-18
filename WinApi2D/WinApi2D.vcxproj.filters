@@ -67,6 +67,12 @@
     <Filter Include="Object\Map">
       <UniqueIdentifier>{898d6952-7bda-4d62-82dd-e3f967070b8d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\Component\CRigidBody">
+      <UniqueIdentifier>{b8b749e2-8c1e-4290-9ef5-7373ffc97272}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Component\CGravity">
+      <UniqueIdentifier>{505b061b-fe1e-48bf-893b-3db9c4242fd7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -205,7 +211,10 @@
       <Filter>Object\UI</Filter>
     </ClInclude>
     <ClInclude Include="CRigidBody.h">
-      <Filter>Engine\Component</Filter>
+      <Filter>Engine\Component\CRigidBody</Filter>
+    </ClInclude>
+    <ClInclude Include="CGravity.h">
+      <Filter>Engine\Component\CGravity</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -327,7 +336,10 @@
       <Filter>Object\UI</Filter>
     </ClCompile>
     <ClCompile Include="CRigidBody.cpp">
-      <Filter>Engine\Component</Filter>
+      <Filter>Engine\Component\CRigidBody</Filter>
+    </ClCompile>
+    <ClCompile Include="CGravity.cpp">
+      <Filter>Engine\Component\CGravity</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

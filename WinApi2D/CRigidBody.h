@@ -8,11 +8,13 @@ private:
 
 	fPoint	 m_vForce;	//강체에 누적된 힘
 	fPoint	 m_vAccel;		//가속도
+	fPoint	 m_vAccelA;		//중력 가속도
 	fPoint	 m_vVelocity;	//속력
 	float	 m_fMass;	
 
 	float	 m_fFricCoeff;
 	float	 m_fMaxSpeed;
+
 public:
 	CRigidBody();
 	~CRigidBody();

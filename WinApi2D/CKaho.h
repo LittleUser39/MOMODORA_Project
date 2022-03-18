@@ -11,6 +11,7 @@ enum class PLAYER_STATE
 	ATTACK1,
 	ATTACK2,
 	ATTACK3,
+	JUMP,
 	DEAD,
 	END
 };
@@ -39,13 +40,8 @@ private:
 	const float m_fDelaytime = 0.5f; //딜레이 
 	const float m_fCombotime = 1.f; //콤보 시간 - 이안에 눌러야 연결
 
-	float m_velocity;	//캐릭터 속도
-	float m_Maxvelocity; //캐릭터 최고 속도
-	float m_fFriction;	//멈출 속도
-	float m_jumpforce;	//캐릭터 점프력
-	float m_gravity;	//중력
+	
 	float m_HP;			//캐릭터의 체력
-
 	float m_fDelay = 0; //공격 딜레이
 	int	  m_iCombo = 0;
 	
@@ -71,6 +67,7 @@ public:
 
 	float GetDirect();
 
+	void Jump();
 	void CreateArrow();		//화살 충돌체 만듦
 	
 	virtual void OnCollision(CCollider* pOther);		//충돌중 일때

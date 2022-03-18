@@ -3,6 +3,7 @@
 class CCollider;
 class CAnimator;
 class CRigidBody;
+class CGravity;
 
 class CGameObject
 {
@@ -17,6 +18,7 @@ private:
 	CCollider* m_pCollider;
 	CAnimator* m_pAnimator;
 	CRigidBody* m_pRigidBody; //힘과 토크를 받아옴
+	CGravity* m_pGravity;  // 중력 개체 포인터 멤버
 
 	bool m_bAlive;
 	void SetDead();
@@ -54,5 +56,7 @@ public:
 
 	CRigidBody* GetRigidBody();	//강체 컴포넌트 가져오기
 	void CreateRigidBody();		//강체 컴포넌트 생성
+
+	void CreateGravity();  // 중력 개체 생성 함수
 };
 

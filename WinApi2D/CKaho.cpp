@@ -7,9 +7,9 @@
 #include "CArrow.h"
 #include "CHitBox.h"
 #include "CScene.h"
+#include "CGravity.h"
 
-#define GRAVITY 130
-#define JUMPFORCE 100
+
 
 CKaho::CKaho() : m_eCurState(PLAYER_STATE::IDLE)
 				, m_ePreState(PLAYER_STATE::WALK)
@@ -18,17 +18,10 @@ CKaho::CKaho() : m_eCurState(PLAYER_STATE::IDLE)
 {
 	m_idle = true;		//가만히 있는상태
 	m_bAttacking = false;	//공격 상태
-	
 	m_dead = false;		//죽은 상태
 	m_onfloor = true;	//바닥에 있는 상태
 	m_HP = 100;			//캐릭터 체력
-	
-	m_velocity = 0.f;		//처음 속도
-	m_Maxvelocity = 150.f;	//최고속도
-	m_fFriction = 50;		//멈출속도
-	m_gravity = GRAVITY;
-	m_jumpforce = JUMPFORCE;
-	
+
 	//img 1= 기본, 2 = 걷기, 3 = 점프, 4 = 공격, 5 = 공격2,6 = 공격3, 7 = 활쏘기(지상), 8 = 구르기 9 = 활쏘기(앉아), 10 = 앉기, 11 = 브레이크
     
 	m_pImg = CResourceManager::getInst()->LoadD2DImage(L"KahoImage", L"texture\\sKahoidle_Full.png");
@@ -46,6 +39,8 @@ CKaho::CKaho() : m_eCurState(PLAYER_STATE::IDLE)
 	
 	//강체 만들기
 	CreateRigidBody();
+	//중력 생성
+	CreateGravity();
 
 	//변수 이름 바꾸기
 	m_pImg2 = CResourceManager::getInst()->LoadD2DImage(L"KahoWalk", L"texture\\sKahoWalk_Full.png");
@@ -220,7 +215,7 @@ void CKaho::update_state() //현재 상태에 관한거
 void CKaho::update_move() //행동에 관한거
 {
 	CRigidBody* pRigid = GetRigidBody();
-
+	fPoint pos = GetPos();
 	if (Key(VK_LEFT) && !m_bAttacking)
 	{
 		pRigid->AddForce(fPoint(-200.f, 0.f));
@@ -240,41 +235,52 @@ void CKaho::update_move() //행동에 관한거
 		pRigid->AddVelocity(fPoint(200.f, 0.f));
 	}
 
-	
+	if (Key(VK_DOWN) && !m_bAttacking)
+	{
+		pRigid->AddForce(fPoint(0.f, 200.f));
+	}
+	if (KeyDown(VK_DOWN) && !m_bAttacking)
+	{
+		pRigid->AddVelocity(fPoint(0.f, 200.f));
+	}
 
-	//if (KeyDown('S'))
-	//{
-	//	m_gravity = GRAVITY;
-	//	m_jumpforce = JUMPFORCE;
-	//	m_Fjump = true;
-	//	m_onfloor = false;
-	//	GetAnimator()->Play(L"KahoJump");
-	//}
-	////점프 상태(공중에 있는 상태)
-	//if (true == m_Fjump && false == m_onfloor)
-	//{
-	//	m_gravity = GRAVITY;
-	//	m_jumpforce -= m_gravity * fDT;
-	//	pos.y -= m_jumpforce * fDT;
-
-	//	if (m_jumpforce <= 0.f) //점프력이 0이되면(최고점에 올라가면)
-	//	{
-	//		pos.y += m_gravity * fDT;	//중력으로 떨어짐
-	//	}
-	//}
-
-	//if (KeyDown('D'))
-	//{
-	//	//todo 활공격 - 여기에 create 미사일 넣기 충전 공격넣기
-	//	CreateArrow();
-	//	GetAnimator()->Play(L"KahoBow");
-	//}
-
+	if (KeyDown('S'))
+	{
+		GetRigidBody()->SetVelocity(fVec2(GetRigidBody()->GetVelocity().x, -300.f));
+	}
 	//if (Key('F'))
 	//{
 	//	//todo 구르기 구현
 	//}
+	
 
+}
+
+void CKaho::Jump()
+{
+//	fPoint pos = GetPos();
+//	m_eCurState = PLAYER_STATE::JUMP;
+//	if (KeyDown('S'))
+//	{
+//		m_gravity = GRAVITY;
+//		m_jumpforce = JUMPFORCE;
+//
+//		m_onfloor = false;
+//		GetAnimator()->Play(L"KahoJump");
+//	}
+//	//점프 상태(공중에 있는 상태)
+//	if (false == m_onfloor)
+//	{
+//		m_gravity = GRAVITY;
+//		m_jumpforce -= m_gravity * fDT;
+//		pos.y -= m_jumpforce * fDT;
+//
+//		if (m_jumpforce <= 0.f) //점프력이 0이되면(최고점에 올라가면)
+//		{
+//			pos.y += m_gravity * fDT;	//중력으로 떨어짐
+//		}
+//	}
+//	SetPos(pos);
 }
 
 void CKaho::update_animation()	//애니메이션에 관한거 - 상태에 따른 애니메이션 출력
