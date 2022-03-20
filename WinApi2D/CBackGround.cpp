@@ -36,7 +36,7 @@ void CBackGround::render()
     fPoint pos = GetPos();
     fPoint scale = GetScale();
     fPoint renderPos = CCameraManager::getInst()->GetRenderPos(pos);
-    renderPos = pos + (renderPos - pos) / 5;   
+    
 
     CRenderManager::getInst()->RenderImage(
         m_pImg,

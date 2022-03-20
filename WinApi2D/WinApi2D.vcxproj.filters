@@ -73,6 +73,12 @@
     <Filter Include="Engine\Component\CGravity">
       <UniqueIdentifier>{505b061b-fe1e-48bf-893b-3db9c4242fd7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Object\Character\Monster">
+      <UniqueIdentifier>{4d2c97c5-48d8-420d-9342-ec2c98372dd5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\Character\Monster\AI">
+      <UniqueIdentifier>{8a2521d6-f251-42cf-9e49-f18e0d798e80}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -162,12 +168,6 @@
     <ClInclude Include="CMissile.h">
       <Filter>Object\Character</Filter>
     </ClInclude>
-    <ClInclude Include="CMonster.h">
-      <Filter>Object\Character</Filter>
-    </ClInclude>
-    <ClInclude Include="CPlayer.h">
-      <Filter>Object\Character</Filter>
-    </ClInclude>
     <ClInclude Include="CUIManager.h">
       <Filter>Engine\Manager</Filter>
     </ClInclude>
@@ -215,6 +215,36 @@
     </ClInclude>
     <ClInclude Include="CGravity.h">
       <Filter>Engine\Component\CGravity</Filter>
+    </ClInclude>
+    <ClInclude Include="CMonster.h">
+      <Filter>Object\Character\Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="CScene_Boss.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="CTitleAni.h">
+      <Filter>Object\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="AI.h">
+      <Filter>Object\Character\Monster\AI</Filter>
+    </ClInclude>
+    <ClInclude Include="CIdleState.h">
+      <Filter>Object\Character\Monster\AI</Filter>
+    </ClInclude>
+    <ClInclude Include="CState.h">
+      <Filter>Object\Character\Monster\AI</Filter>
+    </ClInclude>
+    <ClInclude Include="CTraceState.h">
+      <Filter>Object\Character\Monster\AI</Filter>
+    </ClInclude>
+    <ClInclude Include="CAttState.h">
+      <Filter>Object\Character\Monster\AI</Filter>
+    </ClInclude>
+    <ClInclude Include="CScene_Select.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="CSelectButton.h">
+      <Filter>Object\UI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -287,12 +317,6 @@
     <ClCompile Include="CMissile.cpp">
       <Filter>Object\Character</Filter>
     </ClCompile>
-    <ClCompile Include="CMonster.cpp">
-      <Filter>Object\Character</Filter>
-    </ClCompile>
-    <ClCompile Include="CPlayer.cpp">
-      <Filter>Object\Character</Filter>
-    </ClCompile>
     <ClCompile Include="CUIManager.cpp">
       <Filter>Engine\Manager</Filter>
     </ClCompile>
@@ -340,6 +364,36 @@
     </ClCompile>
     <ClCompile Include="CGravity.cpp">
       <Filter>Engine\Component\CGravity</Filter>
+    </ClCompile>
+    <ClCompile Include="CMonster.cpp">
+      <Filter>Object\Character\Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="CScene_Boss.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="CTitleAni.cpp">
+      <Filter>Object\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="AI.cpp">
+      <Filter>Object\Character\Monster\AI</Filter>
+    </ClCompile>
+    <ClCompile Include="CIdleState.cpp">
+      <Filter>Object\Character\Monster\AI</Filter>
+    </ClCompile>
+    <ClCompile Include="CState.cpp">
+      <Filter>Object\Character\Monster\AI</Filter>
+    </ClCompile>
+    <ClCompile Include="CTraceState.cpp">
+      <Filter>Object\Character\Monster\AI</Filter>
+    </ClCompile>
+    <ClCompile Include="CAttState.cpp">
+      <Filter>Object\Character\Monster\AI</Filter>
+    </ClCompile>
+    <ClCompile Include="CScene_Select.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="CSelectButton.cpp">
+      <Filter>Object\UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

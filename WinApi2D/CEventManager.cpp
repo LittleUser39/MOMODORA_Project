@@ -2,6 +2,7 @@
 #include "CEventManager.h"
 #include "CGameObject.h"
 #include "CScene.h"
+#include "AI.h"
 
 CEventManager::CEventManager()
 {
@@ -26,7 +27,7 @@ void CEventManager::Execute(const tEvent& event)
 
 		CSceneManager::getInst()->GetCurScene()->AddObject(pObj, group);
 	}
-		break;
+	break;
 	case TYPE_EVENT::DELETE_OBJECT:
 	{
 		// lParam : Object 주소
@@ -38,7 +39,7 @@ void CEventManager::Execute(const tEvent& event)
 		pObj->SetDead();
 		m_vecDead.push_back(pObj);
 	}
-		break;
+	break;
 	case TYPE_EVENT::CHANGE_SCENE:
 	{
 		// lParam : scene 그룹
@@ -47,7 +48,16 @@ void CEventManager::Execute(const tEvent& event)
 		CUIManager::getInst()->SetFocusedUI(nullptr);
 		CSceneManager::getInst()->ChangeScene(scene);
 	}
-		break;
+	break;
+	case TYPE_EVENT::CHANGE_AI_STATE:
+	{
+		// lParam : AI
+		// wParam : next state
+		AI* pAI = (AI*)event.lParam;
+		MON_STATE nextState = (MON_STATE)event.wParam;
+		pAI->ChangeState(nextState);
+	}
+	break;
 	}
 }
 
@@ -99,4 +109,14 @@ void CEventManager::EventChangeScene(GROUP_SCENE scene)
 	event.lParam = (DWORD_PTR)scene;
 
 	AddEvent(event);
+}
+
+void CEventManager::EventChangeAIState(AI* ai, MON_STATE state)
+{
+	tEvent event = {};
+	event.eEven = TYPE_EVENT::CHANGE_AI_STATE;
+	event.lParam = (DWORD_PTR)ai;
+	event.wParam = (DWORD_PTR)state;
+
+	CEventManager::getInst()->AddEvent(event);
 }

@@ -15,7 +15,7 @@ CHitBox::CHitBox()
 	SetName(L"HitBox_Player");
 
 	CreateCollider();
-	GetCollider()->SetScale(fPoint(30.f, 50.f));
+	GetCollider()->SetScale(fPoint(60.f, 50.f));
 }
 
 CHitBox::~CHitBox()
@@ -25,7 +25,7 @@ CHitBox::~CHitBox()
 
 void CHitBox::update()
 {
-
+	
 }
 
 void CHitBox::render()
@@ -88,6 +88,6 @@ void CHitBox::OnCollisionEnter(CCollider* pOther)
 	CGameObject* pOtherObj = pOther->GetObj();
 	if (pOtherObj->GetName() == L"Monster")
 	{
-		DeleteObj(this);
+
 	}
 }

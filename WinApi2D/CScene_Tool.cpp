@@ -37,6 +37,11 @@ void CScene_Tool::update()
 		ChangeScn(GROUP_SCENE::START);
 	}
 
+	if (KeyDown(VK_SPACE))
+	{
+		ChangeScn(GROUP_SCENE::SELECT);
+	}
+
 	if (Key('A'))
 	{
 		CCameraManager::getInst()->Scroll(fVec2(-1, 0), m_velocity);
@@ -531,6 +536,12 @@ INT_PTR CALLBACK TileWinProc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lPar
 
 			pToolScene->DeleteGroup(GROUP_GAMEOBJ::TILE);
 			pToolScene->CreateTile(x, y);
+		}
+		break;
+		if (LOWORD(wParam) == IDCANCEL)
+		{
+			EndDialog(hDlg, LOWORD(wParam));
+			return (INT_PTR)TRUE;
 		}
 		break;
 	}

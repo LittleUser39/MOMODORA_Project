@@ -42,6 +42,7 @@ enum class GROUP_GAMEOBJ
 	BACKGROUND,
 	MAP,
 	TILE,
+	GROUND,
 	MONSTER,
 	MISSILE_MONSTER,
 	MISSILE_PLAYER,
@@ -55,6 +56,7 @@ enum class GROUP_SCENE
 {
 	TOOL,
 	TITLE,
+	SELECT,
 	START,
 	STAGE_01,
 	STAGE_02,
@@ -72,6 +74,18 @@ enum class GROUP_TILE
 	SIZE,
 };
 
+enum class MON_STATE
+{
+	IDLE,
+	PATROL,
+	TRACE,
+	ATT,
+	RUN,
+	DEAD,
+
+	SIZE,
+};
+
 //========================================
 //## 이벤트 타입					##
 //========================================
@@ -81,6 +95,7 @@ enum class TYPE_EVENT
 	CREATE_OBJECT,
 	DELETE_OBJECT,
 	CHANGE_SCENE,
+	CHANGE_AI_STATE,
 
 	SIZE,
 };
@@ -121,6 +136,7 @@ enum class TYPE_EVENT
 #define CreateObj(pObj, group)	CEventManager::getInst()->EventCreateObject(pObj, group)
 #define DeleteObj(pObj)			CEventManager::getInst()->EventDeleteObject(pObj)
 #define ChangeScn(scene)		CEventManager::getInst()->EventChangeScene(scene)
+#define ChangeAIState(ai, state)	CEventManager::getInst()->EventChangeAIState(ai, state)
 
 //========================================
 //## 전역변수(인스턴스, 윈도우 핸들)	##

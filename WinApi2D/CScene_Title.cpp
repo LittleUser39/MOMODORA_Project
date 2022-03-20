@@ -5,11 +5,15 @@
 #include "CAnimator.h"
 #include "CAnimation.h"
 #include "CImageObject.h"
+#include "CTitleAni.h"
 
 void CScene_Title::update()
 {
-	if(Key(VK_SPACE))
+	CScene::update();
+	if(KeyDown(VK_SPACE))
 		ChangeScn(GROUP_SCENE::START);
+	if (KeyDown(VK_TAB))
+		ChangeScn(GROUP_SCENE::SELECT);
 }
 
 void CScene_Title::Enter()
@@ -36,6 +40,10 @@ void CScene_Title::Enter()
 	
 	//todo 타이틀 애니 구현해야함
 	//생각 네모 박스 객체 하나 만들어서 위치 구현후 거기다가 애니메이션 덮어씀
+
+	CTitleAni* titleAni = new CTitleAni;
+	AddObject(titleAni, GROUP_GAMEOBJ::BACKGROUND);
+	
 }
 
 

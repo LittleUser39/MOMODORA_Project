@@ -28,6 +28,7 @@ void CRigidBody::finalupdate()
 
 
 	}
+
 	m_vAccel += m_vAccelA;
 
 	m_vVelocity += m_vAccel * fDT;
@@ -68,20 +69,6 @@ void CRigidBody::finalupdate()
 	m_vAccelA = fPoint(0.f, 0.f);
 }
 
-void CRigidBody::AddForce(fPoint _vForce)
-{
-	m_vForce += _vForce;
-}
-
-void CRigidBody::SetMass(float _fMass)
-{
-	 m_fMass = _fMass; 
-}
-
-float CRigidBody::GetMass()
-{
-	return m_fMass;
-}
 
 void CRigidBody::Move()
 {
@@ -100,19 +87,4 @@ void CRigidBody::Move()
 
 		m_pOwner->SetPos(vPos);
 	}
-}
-
-void CRigidBody::SetVelocity(fPoint _vVelocity)
-{
-	m_vVelocity = _vVelocity;
-}
-
-void CRigidBody::AddVelocity(fPoint _vVelocity)
-{
-	m_vVelocity += _vVelocity;
-}
-
-float CRigidBody::GetSpeed()
-{
-	return (float)m_vVelocity.Length();
 }

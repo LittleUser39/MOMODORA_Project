@@ -15,7 +15,15 @@ CGravity::~CGravity()
 
 void CGravity::finalupdate()
 {
-	m_pOwner->GetRigidBody()->SetAccelAlpha(fPoint(0.f, 800.f));
+	//todo 이거 아닌거 같은데 일단 만들었음 확인해봐야함
+	if (!m_pOwner->GetGround())
+	{
+		m_pOwner->GetRigidBody()->SetAccelAlpha(fPoint(0.f, 800.f));
+	}
+else
+	{
+		m_pOwner->GetRigidBody()->SetAccelAlpha(fPoint(0.f, 0.f));
+	}
 }
 
 void CGravity::SetGround(bool _b)
@@ -27,3 +35,5 @@ void CGravity::SetGround(bool _b)
 		m_pOwner->GetRigidBody()->SetVelocity(fPoint(vV.x, 0.f));
 	}
 }
+
+

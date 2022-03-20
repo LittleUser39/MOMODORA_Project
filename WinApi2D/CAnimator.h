@@ -16,6 +16,7 @@ private:
 public:
 	CAnimator();
 	~CAnimator();
+	CAnimator(const CAnimator& pOther);
 
 	CGameObject* GetObj();
 

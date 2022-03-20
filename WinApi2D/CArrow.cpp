@@ -12,7 +12,7 @@ CArrow::CArrow()
 {
 	SetScale(fPoint(20.f, 20.f));
 	m_fvDir = fVec2(0, 0);
-	SetName(L"Missile_Player");
+	SetName(L"Missile_Player1");
 
 	CreateCollider();
 	GetCollider()->SetScale(fPoint(15.f, 15.f));

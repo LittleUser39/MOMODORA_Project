@@ -13,6 +13,7 @@ CTile::CTile()
 	m_iY = 0;
 	m_group = GROUP_TILE::NONE;
 	SetScale(fPoint(SIZE_TILE, SIZE_TILE));
+	SetName(L"tile");
 }
 
 CTile::~CTile()
@@ -134,7 +135,7 @@ void CTile::Load(FILE* pFile)
 void CTile::OnCollision(CCollider* _pOther)
 {
 	CGameObject* pOtherObj = _pOther->GetObj();
-	if (pOtherObj->GetName() == L"Kaho")
+	if (pOtherObj->GetName() == L"Kaho"|| pOtherObj->GetName() == L"Monster")
 	{
 		pOtherObj->GetGravity()->SetGround(true);
 
@@ -157,7 +158,7 @@ void CTile::OnCollision(CCollider* _pOther)
 void CTile::OnCollisionEnter(CCollider* _pOther)
 {
 	CGameObject* pOtherObj = _pOther->GetObj();
-	if (pOtherObj->GetName() == L"Kaho")
+	if (pOtherObj->GetName() == L"Kaho" || pOtherObj->GetName() == L"Monster")
 	{
 		pOtherObj->GetGravity()->SetGround(true);
 
@@ -180,7 +181,7 @@ void CTile::OnCollisionEnter(CCollider* _pOther)
 void CTile::OnCollisionExit(CCollider* _pOther)
 {
 	CGameObject* pOtherObj = _pOther->GetObj();
-	if (pOtherObj->GetName() == L"Kaho")
+	if (pOtherObj->GetName() == L"Kaho" || pOtherObj->GetName() == L"Monster")
 	{
 		pOtherObj->GetGravity()->SetGround(false);
 	}

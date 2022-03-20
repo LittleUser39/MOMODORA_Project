@@ -20,18 +20,17 @@ public:
 	~CRigidBody();
 
 	void finalupdate();
-	
-	void AddForce(fPoint _vForce);		//힘을 준다
-	void SetMass(float _fMass);			//질량
-	float GetMass();					//질량을 가져옴
-	float GetSpeed();					//속도 가져오기
-	fPoint GetVelocity() { return m_vVelocity; }
-
-	void SetVelocity(fPoint _vVelocity);	//속도 설정
-	void AddVelocity(fPoint _vVelocity);	//가속도 주기
-	void SetMaxVelocity(fPoint _v) { m_vMaxVelocity = _v; } //최고 속력 설정
-	
 	void Move();						//움직이는 함수
 	
-	void SetAccelAlpha(fPoint _v) { m_vAccelA = _v; }
+	fPoint GetVelocity()			{ return m_vVelocity; }
+	void SetVelocity(fPoint _v)		{ m_vVelocity = _v; }
+	void AddVelocity(fPoint _v)		{ m_vVelocity += _v; }
+	void SetMaxVelocity(fPoint _v)	{ m_vMaxVelocity = _v; }
+	void SetAccelAlpha(fPoint _v)	{ m_vAccelA = _v; }
+	
+	void AddForce(fPoint _vF)	{ m_vForce += _vF; }
+	void SetMass(float _fMass)	{ m_fMass = _fMass; }
+	float GetMass()				{ return m_fMass; }
+	float GetSpeed()			{ return m_vVelocity.Length(); }
+	
 };

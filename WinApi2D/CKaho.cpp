@@ -9,7 +9,7 @@
 #include "CScene.h"
 #include "CGravity.h"
 
-
+CKaho* CKaho::instance = nullptr;
 
 CKaho::CKaho() : m_eCurState(PLAYER_STATE::IDLE)
 				, m_ePreState(PLAYER_STATE::WALK)
@@ -21,7 +21,9 @@ CKaho::CKaho() : m_eCurState(PLAYER_STATE::IDLE)
 	m_dead = false;		//죽은 상태
 	m_onfloor = true;	//바닥에 있는 상태
 	m_HP = 100;			//캐릭터 체력
-
+	m_bJump = false;
+	
+	
 	//img 1= 기본, 2 = 걷기, 3 = 점프, 4 = 공격, 5 = 공격2,6 = 공격3, 7 = 활쏘기(지상), 8 = 구르기 9 = 활쏘기(앉아), 10 = 앉기, 11 = 브레이크
     
 	m_pImg = CResourceManager::getInst()->LoadD2DImage(L"KahoImage", L"texture\\sKahoidle_Full.png");
@@ -37,10 +39,6 @@ CKaho::CKaho() : m_eCurState(PLAYER_STATE::IDLE)
     GetCollider()->SetScale(fPoint(40.f, 55.f));
     GetCollider()->SetOffsetPos(fPoint(0.f, 13.f));
 	
-	//강체 만들기
-	CreateRigidBody();
-	//중력 생성
-	/*CreateGravity();*/
 
 	//변수 이름 바꾸기
 	m_pImg2 = CResourceManager::getInst()->LoadD2DImage(L"KahoWalk", L"texture\\sKahoWalk_Full.png");
@@ -79,14 +77,20 @@ CKaho::CKaho() : m_eCurState(PLAYER_STATE::IDLE)
 	GetAnimator()->CreateAnimation(L"KahoCrouchBow", m_pImg9, fPoint(0.f, 0.f), fPoint(48.f, 48.f), fPoint(48.f, 0.f), 0.2f, 5, false);
 	GetAnimator()->CreateAnimation(L"KahoCrouch", m_pImg10, fPoint(0.f, 0.f), fPoint(48.f, 48.f), fPoint(48.f, 0.f), 0.2f, 3, false);
 
-	GetAnimator()->CreateAnimation(L"KahoBrake", m_pImg11, fPoint(0.f, 0.f), fPoint(48.f, 48.f), fPoint(48.f, 0.f), 0.2f, 6, false);
+	GetAnimator()->CreateAnimation(L"KahoBrakeR", m_pImg11, fPoint(0.f, 0.f), fPoint(48.f, 48.f), fPoint(48.f, 0.f), 0.2f, 6, false);
+	GetAnimator()->CreateAnimation(L"KahoBrakeL", m_pImg11, fPoint(0.f, 0.f), fPoint(48.f, 48.f), fPoint(48.f, 0.f), 0.2f, 6, false, true);
+
 
 	
-	
+	//강체 만들기
+	CreateRigidBody();
+	//중력 생성
+	CreateGravity();
 }
 
 CKaho::~CKaho()
 {
+	instance = nullptr;
 }
 
 CKaho* CKaho::Clone()
@@ -96,8 +100,8 @@ CKaho* CKaho::Clone()
 
 void CKaho::update() //플레이어 업데이트
 {
-	update_state();
 	update_move();
+	update_state();
 	update_animation();
 
 	
@@ -135,36 +139,52 @@ void CKaho::update_state() //현재 상태에 관한거
 	//속도가 없을때 대기상태로 만들어야함 그래서 속도를 가져옴
 	if (0.f == GetRigidBody()->GetSpeed())
 	{
-		//내가 설정한 딜레이 보다 내가 아무것도 안한상태가 더 크면 (나의 딜레이가 더 크면 대기상태)
-		if (m_fDelaytime + 0.2f <= m_fDelay)
+		if (m_fDelaytime + 0.05f <= m_fDelay && m_bAttacking)
+			//내가 설정한 딜레이 보다 내가 아무것도 안한상태가 더 크면 (나의 딜레이가 더 크면 대기상태)
 		{
 			m_bAttacking = false;
 			m_eCurState = PLAYER_STATE::IDLE;
 		}
+		
 	}
 
 	if (KeyDown(VK_LEFT)&& !m_bAttacking )
 	{
 		m_iCurDir = -1;
-		m_eCurState = PLAYER_STATE::WALK;
+		if (PLAYER_STATE::JUMP != m_eCurState)
+			m_eCurState = PLAYER_STATE::WALK;
 	}
 
 	if (KeyDown(VK_RIGHT) && !m_bAttacking )
 	{
 		m_iCurDir = 1;
-		m_eCurState = PLAYER_STATE::WALK;
+		if (PLAYER_STATE::JUMP != m_eCurState)
+			m_eCurState = PLAYER_STATE::WALK;
 	}
+
 	if (KeyUp(VK_RIGHT))
 	{
 		m_eCurState = PLAYER_STATE::BRAKE;
-		GetAnimator()->FindAnimation(L"KahoBrake")->SetFrame(0);
+		GetAnimator()->FindAnimation(L"KahoBrakeR")->SetFrame(0);
 	}
-	if (KeyDown('S'))
+
+	if (KeyUp(VK_LEFT))
+	{
+		m_eCurState = PLAYER_STATE::BRAKE;
+		GetAnimator()->FindAnimation(L"KahoBrakeL")->SetFrame(0);
+	}
+
+	if (m_eCurState == PLAYER_STATE::BRAKE && 0.f == GetRigidBody()->GetSpeed())
+	{
+		m_eCurState = PLAYER_STATE::IDLE;
+	}
+
+	if (KeyDown('S')&& !m_bJump)
 	{
 		m_eCurState = PLAYER_STATE::JUMP;
-		if (GetRigidBody())
+		if (GetRigidBody()&&!m_bJump)
 		{
-			GetRigidBody()->SetVelocity(fPoint(GetRigidBody()->GetVelocity().x, -300.f));
+			m_bJump = true;
 		}
 	}
 	
@@ -215,6 +235,7 @@ void CKaho::update_state() //현재 상태에 관한거
 	if (KeyDown('D'))
 	{
 		//todo 활공격 - 행동 넣어야함
+		CreateArrow();
 		GetAnimator()->FindAnimation(L"KahoBow")->SetFrame(0);
 	}
 
@@ -224,35 +245,47 @@ void CKaho::update_move() //행동에 관한거
 {
 	CRigidBody* pRigid = GetRigidBody();
 	fPoint pos = GetPos();
+	// 여기가 힘을 주는거고
+
 	if (Key(VK_LEFT) && !m_bAttacking)
 	{
-		pRigid->AddForce(fPoint(-200.f, 0.f));
+		pRigid->AddForce(fPoint(-300.f, 0.f));
 	}
-
-	if (KeyDown(VK_LEFT) && !m_bAttacking)
-	{
-		pRigid->AddVelocity(fPoint(-100.f, 0.f));
-	}
-
 	if (Key(VK_RIGHT) && !m_bAttacking)
 	{
-		pRigid->AddForce(fPoint(200.f, 0.f));
+		pRigid->AddForce(fPoint(300.f, 0.f));
 	}
-	if (KeyDown(VK_RIGHT) && !m_bAttacking)
+	//거기에 속도를 줌
+	if (KeyDown(VK_LEFT))
 	{
-		pRigid->AddVelocity(fPoint(100.f, 0.f));
+		pRigid->SetVelocity(fPoint(-100.f, pRigid->GetVelocity().y));
 	}
-
+	if (KeyDown(VK_RIGHT))
+	{
+		pRigid->SetVelocity(fPoint(100.f, pRigid->GetVelocity().y));
+	}
+	// todo 앉기 키로 바꿔야함
 	if (Key(VK_DOWN) && !m_bAttacking)
 	{
-		pRigid->AddForce(fPoint(0.f, 200.f));
+			
 	}
 	if (KeyDown(VK_DOWN) && !m_bAttacking)
 	{
-		pRigid->AddVelocity(fPoint(0.f, 200.f));
+		
 	}
-
-	if (KeyDown('S'))
+	if (KeyDown('A'))
+	{
+		if (m_iCurDir == 1)
+		{
+			pRigid->SetVelocity(fPoint(30.f, pRigid->GetVelocity().y));
+		}
+		else if (m_iCurDir == -1)
+		{
+			pRigid->SetVelocity(fPoint(-30.f, pRigid->GetVelocity().y));
+		}
+	}
+	//점프
+	if (KeyDown('S') && !m_bJump)
 	{
 		GetRigidBody()->SetVelocity(fVec2(GetRigidBody()->GetVelocity().x, -300.f));
 	}
@@ -261,34 +294,8 @@ void CKaho::update_move() //행동에 관한거
 	//	//todo 구르기 구현
 	//}
 	
+	
 
-}
-
-void CKaho::Jump()
-{
-//	fPoint pos = GetPos();
-//	m_eCurState = PLAYER_STATE::JUMP;
-//	if (KeyDown('S'))
-//	{
-//		m_gravity = GRAVITY;
-//		m_jumpforce = JUMPFORCE;
-//
-//		m_onfloor = false;
-//		GetAnimator()->Play(L"KahoJump");
-//	}
-//	//점프 상태(공중에 있는 상태)
-//	if (false == m_onfloor)
-//	{
-//		m_gravity = GRAVITY;
-//		m_jumpforce -= m_gravity * fDT;
-//		pos.y -= m_jumpforce * fDT;
-//
-//		if (m_jumpforce <= 0.f) //점프력이 0이되면(최고점에 올라가면)
-//		{
-//			pos.y += m_gravity * fDT;	//중력으로 떨어짐
-//		}
-//	}
-//	SetPos(pos);
 }
 
 void CKaho::update_animation()	//애니메이션에 관한거 - 상태에 따른 애니메이션 출력
@@ -302,13 +309,13 @@ void CKaho::update_animation()	//애니메이션에 관한거 - 상태에 따른 애니메이션 출
 	{
 	case PLAYER_STATE::IDLE:
 	{	if (-1 == m_iCurDir && m_onfloor)
-	{
-		GetAnimator()->Play(L"KahoidleL");
-	}
+		{
+			GetAnimator()->Play(L"KahoidleL");
+		}
 		else if (1 == m_iCurDir && m_onfloor)
-	{
-		GetAnimator()->Play(L"KahoidleR");
-	}
+		{
+			GetAnimator()->Play(L"KahoidleR");
+		}
 	}
 	break;
 
@@ -337,6 +344,7 @@ void CKaho::update_animation()	//애니메이션에 관한거 - 상태에 따른 애니메이션 출
 		}
 	}
 	break;
+
 	case PLAYER_STATE::ATTACK2:
 	{
 		if (-1 == m_iCurDir && m_onfloor)
@@ -349,6 +357,7 @@ void CKaho::update_animation()	//애니메이션에 관한거 - 상태에 따른 애니메이션 출
 		}
 	}
 	break;
+
 	case PLAYER_STATE::ATTACK3:
 	{
 		if (-1 == m_iCurDir && m_onfloor)
@@ -361,16 +370,30 @@ void CKaho::update_animation()	//애니메이션에 관한거 - 상태에 따른 애니메이션 출
 		}
 	}
 	break;
+
 	case PLAYER_STATE::BRAKE:
 	{
-		GetAnimator()->Play(L"KahoBrake");
+		if (-1 == m_iCurDir && m_onfloor) 
+		{
+			GetAnimator()->Play(L"KahoBrakeL");
+		}
+		else if (1 == m_iCurDir && m_onfloor)
+		{
+			GetAnimator()->Play(L"KahoBrakeR");
+		}
 	}
 	break;
+
 	case PLAYER_STATE::DEAD:
 	{}
 	break;
 
 	}
+}
+
+void CKaho::update_gravity()
+{
+	GetRigidBody()->AddForce(fPoint(0.f, 500.f));
 }
 
 void CKaho::render()
@@ -398,11 +421,11 @@ void CKaho::CreateArrow()
 
 void CKaho::OnCollision(CCollider* pOther)
 {
-	/*CGameObject* pOtherObj = pOther->GetObj();
-	if (pOtherObj->GetName() == L"Monster")
+	CGameObject* pOtherObj = pOther->GetObj();
+	if (L"tile" == pOtherObj->GetName())
 	{
-		m_onfloor = true;
-	}*/
+		 m_bJump = false;
+	}
 }
 
 void CKaho::OnCollisionEnter(CCollider* pOther)
@@ -410,21 +433,26 @@ void CKaho::OnCollisionEnter(CCollider* pOther)
 	CGameObject* pOtherObj = pOther->GetObj();
 	if (L"tile" == pOtherObj->GetName())
 	{
-		fPoint vPos = GetPos();
+		/*fPoint vPos = GetPos();
 		if (vPos.y < pOtherObj->GetPos().y)
 		{
 			m_eCurState = PLAYER_STATE::IDLE;
-		}
+		}*/
 	}
 }
 
 void CKaho::OnCollisionExit(CCollider* pOther)
 {
-	//일단 몬스터로 타일을 구현해서 점프를 구현함
-	CGameObject* pOtherObj = pOther->GetObj();
-	if (pOtherObj->GetName() == L"Monster")
-	{
-		m_onfloor = false;
-	}
+	
+}
+
+void CKaho::RegisterPlayer()
+{
+	instance = this;
+}
+
+CKaho* CKaho::GetPlayer()
+{
+	return instance;
 }
 

@@ -19,6 +19,8 @@ enum class PLAYER_STATE
 class CKaho : public CGameObject
 {
 private:
+	static CKaho* instance; //하나만 있는 플레이어
+
 	CD2DImage* m_pImg;	//캐릭터 이미지
 	CD2DImage* m_pImg2;
 	CD2DImage* m_pImg3;
@@ -48,7 +50,7 @@ private:
 	bool m_onfloor;			//캐릭터가 바닥에 있는가
 	bool m_idle;			//캐릭터가 가만히 있는가
 	bool m_bAttacking;		//캐릭터가 공격중 인가
-	
+	bool m_bJump;			//점프상태
 	bool m_dead;			//캐릭터가 죽어있는가
 
 	CHitBox* m_cPHitbox;	//히트박스
@@ -61,17 +63,20 @@ public:
 	void update_move();
 	void update_state();
 	void update_animation();
+	void update_gravity();
 
 	virtual void update();
 	virtual void render();
 
 	float GetDirect();
 
-	void Jump();
 	void CreateArrow();		//화살 충돌체 만듦
 	
 	virtual void OnCollision(CCollider* pOther);		//충돌중 일때
 	virtual void OnCollisionEnter(CCollider* pOther);	//층돌에 들어갈때
 	virtual void OnCollisionExit(CCollider* pOther);	//충돌에서 나갈때 
+
+	virtual void RegisterPlayer();
+	static CKaho* GetPlayer();	// 게임 내에 하나만 있는 플레이어 객체 확인(임의로 싱글톤 선언)
 };
 
