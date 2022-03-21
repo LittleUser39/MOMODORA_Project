@@ -15,6 +15,7 @@ CHitBox::CHitBox()
 
 	CreateCollider();
 	GetCollider()->SetScale(fPoint(60.f, 50.f));
+	
 }
 
 CHitBox::~CHitBox()
@@ -87,6 +88,6 @@ void CHitBox::OnCollisionEnter(CCollider* pOther)
 	CGameObject* pOtherObj = pOther->GetObj();
 	if (pOtherObj->GetName() == L"Monster")
 	{
-
+		
 	}
 }

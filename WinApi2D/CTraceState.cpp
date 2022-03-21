@@ -29,7 +29,9 @@ void CTraceState::update()
 	{
 		ChangeAIState(GetOwnerAI(), MON_STATE::IDLE);
 	}
-
+	if (fLen < pMonster->GetMonInfo().fAttRange)
+		ChangeAIState(GetOwnerAI(), MON_STATE::ATT);
+	
 	fPoint pos = pMonster->GetPos();
 	pos += fvDiff.normalize() * 100 * fDT;
 	pMonster->SetPos(pos);

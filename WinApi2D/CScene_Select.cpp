@@ -23,7 +23,7 @@ void CScene_Select::update()
 
 void CScene_Select::Enter()
 {
-	CD2DImage* pImg1 = CResourceManager::getInst()->LoadD2DImage(L"Tile", L"texture\\menu.png");
+	CD2DImage* pImg1 = CResourceManager::getInst()->LoadD2DImage(L"selectmenu", L"texture\\menu.png");
 	CSelectButton* button = new CSelectButton;
 	button->SetScale(fPoint(200,100));
 	button->SetPos(fPoint(100,200));
@@ -41,5 +41,5 @@ void CScene_Select::Enter()
 
 void CScene_Select::Exit()
 {
-
+	DeleteAll();
 }

@@ -16,15 +16,13 @@ CKaho::CKaho() : m_eCurState(PLAYER_STATE::IDLE)
 				, m_iCurDir(1)
 				, m_iPreDir(1)
 {
-	m_idle = true;		//가만히 있는상태
+	
 	m_bAttacking = false;	//공격 상태
-	m_dead = false;		//죽은 상태
+	m_bDead = false;		//죽은 상태
 	m_onfloor = true;	//바닥에 있는 상태
-	m_HP = 100;			//캐릭터 체력
 	m_bJump = false;
 	
 	
-	//img 1= 기본, 2 = 걷기, 3 = 점프, 4 = 공격, 5 = 공격2,6 = 공격3, 7 = 활쏘기(지상), 8 = 구르기 9 = 활쏘기(앉아), 10 = 앉기, 11 = 브레이크
 	
 	m_pImg = CResourceManager::getInst()->LoadD2DImage(L"KahoImage", L"texture\\sKahoidle_Full.png");
     SetName(L"Kaho");
@@ -40,6 +38,7 @@ CKaho::CKaho() : m_eCurState(PLAYER_STATE::IDLE)
     GetCollider()->SetScale(fPoint(40.f, 55.f));
     GetCollider()->SetOffsetPos(fPoint(0.f, 13.f));
 	
+	//img 1= 기본, 2 = 걷기, 3 = 점프, 4 = 공격, 5 = 공격2,6 = 공격3, 7 = 활쏘기(지상), 8 = 구르기 9 = 활쏘기(앉아), 10 = 앉기, 11 = 브레이크
 
 	//변수 이름 바꾸기
 	m_pImg2 = CResourceManager::getInst()->LoadD2DImage(L"KahoWalk", L"texture\\sKahoWalk_Full.png");
@@ -74,7 +73,10 @@ CKaho::CKaho() : m_eCurState(PLAYER_STATE::IDLE)
 	GetAnimator()->CreateAnimation(L"KahoAttack3L", m_pImg6, fPoint(0.f, 0.f), fPoint(48.f, 48.f), fPoint(48.f, 0.f), 0.1f, 6, false, true);
 
 	GetAnimator()->CreateAnimation(L"KahoBow", m_pImg7, fPoint(0.f, 0.f), fPoint(48.f, 48.f), fPoint(48.f, 0.f), 0.2f, 5, false);
-	GetAnimator()->CreateAnimation(L"KahoRoll",m_pImg8,fPoint(0.f,0.f), fPoint(48.f, 48.f), fPoint(48.f, 0.f), 0.2f, 7, false);
+
+	GetAnimator()->CreateAnimation(L"KahoRollR",m_pImg8,fPoint(0.f,0.f), fPoint(48.f, 48.f), fPoint(48.f, 0.f), 0.2f, 7, false);
+	GetAnimator()->CreateAnimation(L"KahoRollL", m_pImg8, fPoint(0.f, 0.f), fPoint(48.f, 48.f), fPoint(48.f, 0.f), 0.2f, 7, false, true);
+
 	GetAnimator()->CreateAnimation(L"KahoCrouchBow", m_pImg9, fPoint(0.f, 0.f), fPoint(48.f, 48.f), fPoint(48.f, 0.f), 0.2f, 5, false);
 	GetAnimator()->CreateAnimation(L"KahoCrouch", m_pImg10, fPoint(0.f, 0.f), fPoint(48.f, 48.f), fPoint(48.f, 0.f), 0.2f, 3, false);
 
@@ -104,7 +106,6 @@ void CKaho::update() //플레이어 업데이트
 	update_move();
 	update_state();
 	update_animation();
-
 	
 	//if (Key(VK_DOWN))
 	//{
@@ -163,13 +164,13 @@ void CKaho::update_state() //현재 상태에 관한거
 			m_eCurState = PLAYER_STATE::WALK;
 	}
 
-	if (KeyUp(VK_RIGHT))
+	if (KeyUp(VK_RIGHT)&&m_iCurDir==1)
 	{
 		m_eCurState = PLAYER_STATE::BRAKE;
 		GetAnimator()->FindAnimation(L"KahoBrakeR")->SetFrame(0);
 	}
 
-	if (KeyUp(VK_LEFT))
+	if (KeyUp(VK_LEFT) && m_iCurDir == -1)
 	{
 		m_eCurState = PLAYER_STATE::BRAKE;
 		GetAnimator()->FindAnimation(L"KahoBrakeL")->SetFrame(0);
@@ -237,9 +238,17 @@ void CKaho::update_state() //현재 상태에 관한거
 	{
 		//todo 활공격 - 행동 넣어야함
 		CreateArrow();
+		m_eCurState = PLAYER_STATE::BOW;
 		GetAnimator()->FindAnimation(L"KahoBow")->SetFrame(0);
 	}
-
+	if (KeyDown('F'))
+	{
+		m_eCurState = PLAYER_STATE::ROLL;
+		if (m_iCurDir == 1)
+			GetAnimator()->FindAnimation(L"KahoRollR")->SetFrame(0);
+		else if(m_iCurDir == -1)
+			GetAnimator()->FindAnimation(L"KahoRollL")->SetFrame(0);
+	}
 }
 
 void CKaho::update_move() //행동에 관한거
@@ -290,10 +299,18 @@ void CKaho::update_move() //행동에 관한거
 	{
 		GetRigidBody()->SetVelocity(fVec2(GetRigidBody()->GetVelocity().x, -300.f));
 	}
-	//if (Key('F'))
-	//{
-	//	//todo 구르기 구현
-	//}
+
+	if (KeyDown('F'))
+	{
+		if (m_iCurDir == 1)
+		{
+			GetRigidBody()->SetVelocity(fVec2(300.f, GetRigidBody()->GetVelocity().y));
+		}
+		else if (m_iCurDir == -1)
+		{
+			GetRigidBody()->SetVelocity(fVec2(-300.f, GetRigidBody()->GetVelocity().y));
+		}
+	}
 	
 	
 
@@ -371,7 +388,11 @@ void CKaho::update_animation()	//애니메이션에 관한거 - 상태에 따른 애니메이션 출
 		}
 	}
 	break;
-
+	case PLAYER_STATE::BOW:
+	{
+		GetAnimator()->Play(L"KahoBow");
+	}
+	break;
 	case PLAYER_STATE::BRAKE:
 	{
 		if (-1 == m_iCurDir && m_onfloor) 
@@ -384,7 +405,17 @@ void CKaho::update_animation()	//애니메이션에 관한거 - 상태에 따른 애니메이션 출
 		}
 	}
 	break;
+	
+	case PLAYER_STATE::ROLL:
+	{
+		if (1 == m_iCurDir)
+			GetAnimator()->Play(L"KahoRollR");
+		else if (-1 == m_iCurDir)
+			GetAnimator()->Play(L"KahoRollL");
 
+	}
+	break;
+	
 	case PLAYER_STATE::DEAD:
 	{}
 	break;
@@ -392,9 +423,14 @@ void CKaho::update_animation()	//애니메이션에 관한거 - 상태에 따른 애니메이션 출
 	}
 }
 
-void CKaho::update_gravity()
+void CKaho::update_CollTime()
 {
-	GetRigidBody()->AddForce(fPoint(0.f, 500.f));
+	if (!m_bCanRoll)
+	{
+		m_fRollTime = DT;
+		if (m_fRollTime >= m_fRollCoolTime)
+			m_bCanRoll = true;
+	}
 }
 
 void CKaho::render()

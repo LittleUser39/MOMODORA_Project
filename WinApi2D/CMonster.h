@@ -3,6 +3,7 @@
 
 class CD2DImage;
 class AI;
+class CState;
 
 struct tMonInfo
 {
@@ -26,6 +27,7 @@ class CMonster : public CGameObject
 private:
 	tMonInfo m_tInfo;
 	AI* m_pAI;
+	CState* m_mState;
 
 public:
 	CMonster();
