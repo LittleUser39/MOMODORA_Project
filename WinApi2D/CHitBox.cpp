@@ -12,7 +12,6 @@ CHitBox::CHitBox()
 {
 	m_fvDir = fVec2(0, 0);
 	m_pOwner = nullptr;
-	SetName(L"HitBox_Player");
 
 	CreateCollider();
 	GetCollider()->SetScale(fPoint(60.f, 50.f));

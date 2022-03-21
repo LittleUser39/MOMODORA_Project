@@ -11,9 +11,8 @@ void CScene_Title::update()
 {
 	CScene::update();
 	if(KeyDown(VK_SPACE))
-		ChangeScn(GROUP_SCENE::START);
-	if (KeyDown(VK_TAB))
 		ChangeScn(GROUP_SCENE::SELECT);
+	
 }
 
 void CScene_Title::Enter()

@@ -16,6 +16,9 @@ CScene_Select::~CScene_Select()
 void CScene_Select::update()
 {
 	CScene::update();
+
+	if (KeyDown(VK_SPACE))
+		ChangeScn(GROUP_SCENE::START);
 }
 
 void CScene_Select::Enter()
@@ -32,7 +35,7 @@ void CScene_Select::Enter()
 	AddObject(buttonA, GROUP_GAMEOBJ::UI);
 	
 	CSelectButton* buttonB = button->Clone();
-	buttonB->SetPos(fPoint(100, 300));
+	buttonB->SetPos(fPoint(100, 400));
 	AddObject(buttonB, GROUP_GAMEOBJ::UI);
 }
 

@@ -4,7 +4,7 @@
 #include "CMonster.h"
 #include "CD2DImage.h"
 #include "CAnimator.h"
-
+#include "CHitBox.h"
 CAttState::CAttState(MON_STATE state):CState(state)
 {
 
@@ -34,12 +34,7 @@ void CAttState::update()
 	{
 		ChangeAIState(GetOwnerAI(), MON_STATE::IDLE);
 	}
-
 	
-
-	fPoint pos = pMonster->GetPos();
-	pos += fvDiff.normalize() * 100 * fDT;
-	pMonster->SetPos(pos);
 }
 
 void CAttState::Enter()

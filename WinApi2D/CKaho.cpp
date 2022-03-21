@@ -25,12 +25,13 @@ CKaho::CKaho() : m_eCurState(PLAYER_STATE::IDLE)
 	
 	
 	//img 1= 기본, 2 = 걷기, 3 = 점프, 4 = 공격, 5 = 공격2,6 = 공격3, 7 = 활쏘기(지상), 8 = 구르기 9 = 활쏘기(앉아), 10 = 앉기, 11 = 브레이크
-    
+	
 	m_pImg = CResourceManager::getInst()->LoadD2DImage(L"KahoImage", L"texture\\sKahoidle_Full.png");
     SetName(L"Kaho");
     SetScale(fPoint(70.f, 70.f));
 	m_cPHitbox = new CHitBox;
 	m_cPHitbox->SetOwnerObj(this);
+	m_cPHitbox->SetName(L"Player_hitbox");
 	CScene* pCurScene = CSceneManager::getInst()->GetCurScene();
 	pCurScene->AddObject(m_cPHitbox, GROUP_GAMEOBJ::HITBOX_PLAYER);
 

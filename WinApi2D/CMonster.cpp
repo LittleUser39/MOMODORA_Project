@@ -131,7 +131,7 @@ void CMonster::OnCollisionEnter(CCollider* pOther)
 {
 	CGameObject* pOtherObj = pOther->GetObj();
 
-	if (pOtherObj->GetName() == L"Missile_Player1"||pOtherObj->GetName()==L"HitBox_Player")
+	if (pOtherObj->GetName() == L"Missile_Player1"||pOtherObj->GetName()==L"Player_hitbox")
 	{
 		m_tInfo.fHP -= 1;
 		if (m_tInfo.fHP <= 0)
