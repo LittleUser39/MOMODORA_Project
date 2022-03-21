@@ -105,13 +105,11 @@ void CMonster::update()
 		GetAnimator()->update();
 	if (nullptr != m_pAI)
 		m_pAI->update();
-	if (nullptr != m_pAI)
-	{
+	if(nullptr!=m_mState)
 		if (m_mState->GetType() == MON_STATE::ATT)
 		{
 			GetAnimator()->Play(L"MonkeyAtt_full");
 		}
-	}
 }
 
 
