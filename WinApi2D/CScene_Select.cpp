@@ -23,23 +23,27 @@ void CScene_Select::update()
 
 void CScene_Select::Enter()
 {
-	CD2DImage* pImg1 = CResourceManager::getInst()->LoadD2DImage(L"selectmenu", L"texture\\menu.png");
-	CSelectButton* button = new CSelectButton;
-	button->SetScale(fPoint(200,100));
-	button->SetPos(fPoint(100,200));
-	button->SetImage(pImg1);	
-	AddObject(button, GROUP_GAMEOBJ::UI);
-	
-	CSelectButton* buttonA = button->Clone();
-	buttonA->SetPos(fPoint(100, 300));
-	AddObject(buttonA, GROUP_GAMEOBJ::UI);
-	
-	CSelectButton* buttonB = button->Clone();
-	buttonB->SetPos(fPoint(100, 400));
-	AddObject(buttonB, GROUP_GAMEOBJ::UI);
+	CreateSelectButton();
 }
 
 void CScene_Select::Exit()
 {
 	DeleteAll();
+}
+
+void CScene_Select::CreateSelectButton()
+{
+	CButtonUI* StartButton = new CButtonUI;
+	StartButton->SetName(L"start");
+	StartButton->SetScale(fPoint(300.f, 100.f));
+	StartButton->SetPos(fPoint(200.f, 400.f));
+	CButtonUI* TextUI = new CButtonUI;
+	TextUI->SetScale(fPoint(50.f, 50.f));
+	TextUI->SetPos(fPoint(50.f, 50.f));
+	TextUI->SetText(L"Start");
+	StartButton->AddChild(TextUI);
+
+
+
+	AddObject(StartButton, GROUP_GAMEOBJ::UI);
 }

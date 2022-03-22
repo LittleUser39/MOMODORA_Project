@@ -338,6 +338,7 @@ void ClickTileGroupButton(DWORD_PTR param1, DWORD_PTR param2)
 	CButtonUI* button = (CButtonUI*)param2;
 	scene_tool->ClickTileGroup(button);
 }
+
 void CScene_Tool::ClickTileGroup(CButtonUI* button)
 {
 	if (m_gTile == GROUP_TILE::NONE)
