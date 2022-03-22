@@ -273,7 +273,7 @@ void CKaho::update_move() //행동에 관한거
 	{
 		
 	}
-	if (KeyDown('A'))
+	if (KeyDown('A')) //
 	{
 		if (m_iCurDir == 1)
 		{
