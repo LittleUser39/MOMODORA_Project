@@ -19,7 +19,7 @@ public:
 	CMonster* GetOwnerAI();
 	CState* GetState(MON_STATE state);
 	void SetCurState(MON_STATE state);
-
+	
 	void update();
 
 	void AddState(CState* state);

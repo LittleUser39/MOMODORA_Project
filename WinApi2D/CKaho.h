@@ -8,12 +8,21 @@ enum class PLAYER_STATE
 	IDLE,
 	WALK,
 	BRAKE,
+	ROLL,
 	ATTACK1,
 	ATTACK2,
 	ATTACK3,
+	BOW,
 	JUMP,
 	DEAD,
 	END
+};
+struct Player_Info //플레이어 정보 설정
+{
+	float m_fPMAXHP;
+	float m_fPHP;
+	float m_fPAtt;
+	float m_fPArrowDamge;
 };
 
 class CKaho : public CGameObject
@@ -42,16 +51,17 @@ private:
 	const float m_fDelaytime = 0.5f; //딜레이 
 	const float m_fCombotime = 1.f; //콤보 시간 - 이안에 눌러야 연결
 
-	
-	float m_HP;			//캐릭터의 체력
+	float m_fRollCoolTime = 1.f;
+	float m_fRollTime = 0;
+
 	float m_fDelay = 0; //공격 딜레이
 	int	  m_iCombo = 0;
 	
 	bool m_onfloor;			//캐릭터가 바닥에 있는가
-	bool m_idle;			//캐릭터가 가만히 있는가
 	bool m_bAttacking;		//캐릭터가 공격중 인가
 	bool m_bJump;			//점프상태
-	bool m_dead;			//캐릭터가 죽어있는가
+	bool m_bDead;			//캐릭터가 죽어있는가
+	bool m_bCanRoll;		//캐릭터가 구를수있는상태
 
 	CHitBox* m_cPHitbox;	//히트박스
 
@@ -63,7 +73,7 @@ public:
 	void update_move();
 	void update_state();
 	void update_animation();
-	void update_gravity();
+	void update_CollTime();
 
 	virtual void update();
 	virtual void render();

@@ -47,6 +47,7 @@ enum class GROUP_GAMEOBJ
 	MISSILE_MONSTER,
 	MISSILE_PLAYER,
 	PLAYER,
+	HITBOX_MONSTER,
 	HITBOX_PLAYER,
 	UI,		// UI는 모든 게임오브젝트 중 최상단 Layer에 위치
 	SIZE,

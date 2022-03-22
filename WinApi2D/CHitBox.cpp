@@ -12,10 +12,10 @@ CHitBox::CHitBox()
 {
 	m_fvDir = fVec2(0, 0);
 	m_pOwner = nullptr;
-	SetName(L"HitBox_Player");
 
 	CreateCollider();
 	GetCollider()->SetScale(fPoint(60.f, 50.f));
+	
 }
 
 CHitBox::~CHitBox()
@@ -88,6 +88,6 @@ void CHitBox::OnCollisionEnter(CCollider* pOther)
 	CGameObject* pOtherObj = pOther->GetObj();
 	if (pOtherObj->GetName() == L"Monster")
 	{
-
+		
 	}
 }
