@@ -1,9 +1,12 @@
 #pragma once
 #include "CGameObject.h"
+
 class CHitBox : public CGameObject
 {
-	fVec2 m_fvDir;
-	CGameObject* m_pOwner;
+	CD2DImage* m_pImg;
+
+	const float m_fDelaytime = 0.5f; //µÙ∑π¿Ã 
+	float m_fDelay;
 
 public:
 	CHitBox();
@@ -16,6 +19,7 @@ public:
 	CGameObject* GetOwnerObj();
 	void SetOwnerObj(CGameObject* pOwner);
 
+	
 	void create();
 	void OnCollisionEnter(CCollider* pOther);
 };

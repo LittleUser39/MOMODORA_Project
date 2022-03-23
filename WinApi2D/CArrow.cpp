@@ -2,6 +2,9 @@
 #include "CMissile.h"
 #include "CArrow.h"
 #include "CCollider.h"
+#include "CAnimator.h"
+#include "CAnimation.h"
+#include "CD2DImage.h"
 
 CArrow* CArrow::Clone()
 {
@@ -16,6 +19,11 @@ CArrow::CArrow()
 
 	CreateCollider();
 	GetCollider()->SetScale(fPoint(15.f, 15.f));
+
+	m_pImg = CResourceManager::getInst()->LoadD2DImage(L"Arrow", L"texture\\sSealProjectile_0.png");
+	CreateAnimator();
+	GetAnimator()->CreateAnimation(L"Arrow",m_pImg,fPoint(0,0),fPoint(24.f,8.f),fPoint(0,0),1.f,1,true);
+	GetAnimator()->Play(L"Arrow");
 }
 
 CArrow::~CArrow()

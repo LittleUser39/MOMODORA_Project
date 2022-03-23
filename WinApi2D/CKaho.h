@@ -86,6 +86,8 @@ public:
 	virtual void OnCollisionEnter(CCollider* pOther);	//층돌에 들어갈때
 	virtual void OnCollisionExit(CCollider* pOther);	//충돌에서 나갈때 
 
+	const int GetAttCount();
+
 	virtual void RegisterPlayer();
 	static CKaho* GetPlayer();	// 게임 내에 하나만 있는 플레이어 객체 확인(임의로 싱글톤 선언)
 };

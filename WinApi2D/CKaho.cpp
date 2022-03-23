@@ -82,8 +82,6 @@ CKaho::CKaho() : m_eCurState(PLAYER_STATE::IDLE)
 
 	GetAnimator()->CreateAnimation(L"KahoBrakeR", m_pImg11, fPoint(0.f, 0.f), fPoint(48.f, 48.f), fPoint(48.f, 0.f), 0.2f, 6, false);
 	GetAnimator()->CreateAnimation(L"KahoBrakeL", m_pImg11, fPoint(0.f, 0.f), fPoint(48.f, 48.f), fPoint(48.f, 0.f), 0.2f, 6, false, true);
-
-
 	
 	//강체 만들기
 	CreateRigidBody();
@@ -208,6 +206,7 @@ void CKaho::update_state() //현재 상태에 관한거
 			m_eCurState = PLAYER_STATE::ATTACK1;
 			GetAnimator()->FindAnimation(L"KahoAttack1R")->SetFrame(0);
 			GetAnimator()->FindAnimation(L"KahoAttack1L")->SetFrame(0);
+			
 
 			m_cPHitbox->create();
 		}
@@ -481,6 +480,11 @@ void CKaho::OnCollisionEnter(CCollider* pOther)
 void CKaho::OnCollisionExit(CCollider* pOther)
 {
 	
+}
+
+const int CKaho::GetAttCount()
+{
+	return m_iCombo;
 }
 
 void CKaho::RegisterPlayer()

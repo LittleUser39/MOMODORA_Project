@@ -6,6 +6,7 @@ class CArrow : public CGameObject
 private:
 	fVec2 m_fvDir;
 	float m_fVelocity = 400.f;
+	CD2DImage* m_pImg;
 
 public:
 	CArrow();

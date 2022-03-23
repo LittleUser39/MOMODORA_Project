@@ -167,6 +167,7 @@
     <ClInclude Include="CHitBox.h" />
     <ClInclude Include="CIdleState.h" />
     <ClInclude Include="CImageObject.h" />
+    <ClInclude Include="CImp.h" />
     <ClInclude Include="CKaho.h" />
     <ClInclude Include="CKeyManager.h" />
     <ClInclude Include="CMap.h" />
@@ -225,6 +226,7 @@
     <ClCompile Include="CHitBox.cpp" />
     <ClCompile Include="CIdleState.cpp" />
     <ClCompile Include="CImageObject.cpp" />
+    <ClCompile Include="CImp.cpp" />
     <ClCompile Include="CKaho.cpp" />
     <ClCompile Include="CKeyManager.cpp" />
     <ClCompile Include="CMap.cpp" />

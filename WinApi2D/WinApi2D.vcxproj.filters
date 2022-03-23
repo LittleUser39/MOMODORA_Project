@@ -79,6 +79,9 @@
     <Filter Include="Object\Character\Monster\AI">
       <UniqueIdentifier>{8a2521d6-f251-42cf-9e49-f18e0d798e80}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Object\Character\Player">
+      <UniqueIdentifier>{8ebcbc8d-bb7e-4123-b0f3-fe80f9235baa}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -186,9 +189,6 @@
     <ClInclude Include="CRenderManager.h">
       <Filter>Engine\Manager</Filter>
     </ClInclude>
-    <ClInclude Include="CKaho.h">
-      <Filter>Object\Character</Filter>
-    </ClInclude>
     <ClInclude Include="CBackGround.h">
       <Filter>Object\Map</Filter>
     </ClInclude>
@@ -197,9 +197,6 @@
     </ClInclude>
     <ClInclude Include="CScene_Title.h">
       <Filter>Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="CArrow.h">
-      <Filter>Object\Character</Filter>
     </ClInclude>
     <ClInclude Include="CHitBox.h">
       <Filter>Object\Character</Filter>
@@ -248,6 +245,15 @@
     </ClInclude>
     <ClInclude Include="CScene_Death.h">
       <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="CImp.h">
+      <Filter>Object\Character\Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="CArrow.h">
+      <Filter>Object\Character\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="CKaho.h">
+      <Filter>Object\Character\Player</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -338,9 +344,6 @@
     <ClCompile Include="CRenderManager.cpp">
       <Filter>Engine\Manager</Filter>
     </ClCompile>
-    <ClCompile Include="CKaho.cpp">
-      <Filter>Object\Character</Filter>
-    </ClCompile>
     <ClCompile Include="CBackGround.cpp">
       <Filter>Object\Map</Filter>
     </ClCompile>
@@ -349,9 +352,6 @@
     </ClCompile>
     <ClCompile Include="CScene_Title.cpp">
       <Filter>Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="CArrow.cpp">
-      <Filter>Object\Character</Filter>
     </ClCompile>
     <ClCompile Include="CHitBox.cpp">
       <Filter>Object\Character</Filter>
@@ -400,6 +400,15 @@
     </ClCompile>
     <ClCompile Include="CScene_Death.cpp">
       <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="CImp.cpp">
+      <Filter>Object\Character\Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="CArrow.cpp">
+      <Filter>Object\Character\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="CKaho.cpp">
+      <Filter>Object\Character\Player</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
