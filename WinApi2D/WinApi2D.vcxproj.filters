@@ -255,6 +255,12 @@
     <ClInclude Include="CKaho.h">
       <Filter>Object\Character\Player</Filter>
     </ClInclude>
+    <ClInclude Include="CDagger.h">
+      <Filter>Object\Character\Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="CMHitBox.h">
+      <Filter>Object\Character\Monster</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WinApi2D.cpp">
@@ -409,6 +415,12 @@
     </ClCompile>
     <ClCompile Include="CKaho.cpp">
       <Filter>Object\Character\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="CDagger.cpp">
+      <Filter>Object\Character\Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="CMHitBox.cpp">
+      <Filter>Object\Character\Monster</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

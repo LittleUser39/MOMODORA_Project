@@ -23,11 +23,11 @@ CKaho::CKaho() : m_eCurState(PLAYER_STATE::IDLE)
 {
 	
 	m_bAttacking = false;	//공격 상태
+	m_bBow = false;
 	m_bDead = false;		//죽은 상태
-	m_onfloor = true;	//바닥에 있는 상태
-	m_bJump = false;
-	
-	
+	m_onfloor = true;		//바닥에 있는 상태
+	m_bJump = false;		//점프 상태
+	m_bCrouch = false;
 	
 	m_pImg = CResourceManager::getInst()->LoadD2DImage(L"KahoImage", L"texture\\sKahoidle_Full.png");
     SetName(L"Kaho");
@@ -72,13 +72,17 @@ CKaho::CKaho() : m_eCurState(PLAYER_STATE::IDLE)
 	GetAnimator()->CreateAnimation(L"KahoAttack3R", m_pImg6, fPoint(0.f, 0.f), fPoint(48.f, 48.f), fPoint(48.f, 0.f), 0.1f, 6, false);
 	GetAnimator()->CreateAnimation(L"KahoAttack3L", m_pImg6, fPoint(0.f, 0.f), fPoint(48.f, 48.f), fPoint(48.f, 0.f), 0.1f, 6, false, true);
 
-	GetAnimator()->CreateAnimation(L"KahoBow", m_pImg7, fPoint(0.f, 0.f), fPoint(48.f, 48.f), fPoint(48.f, 0.f), 0.2f, 5, false);
+	GetAnimator()->CreateAnimation(L"KahoBowR", m_pImg7, fPoint(0.f, 0.f), fPoint(48.f, 48.f), fPoint(48.f, 0.f), 0.2f, 5, false);
+	GetAnimator()->CreateAnimation(L"KahoBowL", m_pImg7, fPoint(0.f, 0.f), fPoint(48.f, 48.f), fPoint(48.f, 0.f), 0.2f, 5, false,true);
+
+	GetAnimator()->CreateAnimation(L"KahoCrouchBowR", m_pImg9, fPoint(0.f, 0.f), fPoint(48.f, 48.f), fPoint(48.f, 0.f), 0.2f, 5, false);
+	GetAnimator()->CreateAnimation(L"KahoCrouchBowL", m_pImg9, fPoint(0.f, 0.f), fPoint(48.f, 48.f), fPoint(48.f, 0.f), 0.2f, 5, false,true);
+
+	GetAnimator()->CreateAnimation(L"KahoCrouchR", m_pImg10, fPoint(0.f, 0.f), fPoint(48.f, 48.f), fPoint(48.f, 0.f), 0.2f, 3, false);
+	GetAnimator()->CreateAnimation(L"KahoCrouchL", m_pImg10, fPoint(0.f, 0.f), fPoint(48.f, 48.f), fPoint(48.f, 0.f), 0.2f, 3, false,true);
 
 	GetAnimator()->CreateAnimation(L"KahoRollR",m_pImg8,fPoint(0.f,0.f), fPoint(48.f, 48.f), fPoint(48.f, 0.f), 0.2f, 7, false);
 	GetAnimator()->CreateAnimation(L"KahoRollL", m_pImg8, fPoint(0.f, 0.f), fPoint(48.f, 48.f), fPoint(48.f, 0.f), 0.2f, 7, false, true);
-
-	GetAnimator()->CreateAnimation(L"KahoCrouchBow", m_pImg9, fPoint(0.f, 0.f), fPoint(48.f, 48.f), fPoint(48.f, 0.f), 0.2f, 5, false);
-	GetAnimator()->CreateAnimation(L"KahoCrouch", m_pImg10, fPoint(0.f, 0.f), fPoint(48.f, 48.f), fPoint(48.f, 0.f), 0.2f, 3, false);
 
 	GetAnimator()->CreateAnimation(L"KahoBrakeR", m_pImg11, fPoint(0.f, 0.f), fPoint(48.f, 48.f), fPoint(48.f, 0.f), 0.2f, 6, false);
 	GetAnimator()->CreateAnimation(L"KahoBrakeL", m_pImg11, fPoint(0.f, 0.f), fPoint(48.f, 48.f), fPoint(48.f, 0.f), 0.2f, 6, false, true);
@@ -104,30 +108,8 @@ void CKaho::update() //플레이어 업데이트
 	update_move();
 	update_state();
 	update_animation();
-	
-	//if (Key(VK_DOWN))
-	//{
-	//	//todo 앉기랑 사다리 있으면 사다리 내려가기
-	//	//pos.y += m_velocity * fDT;
-	//	if (m_onfloor)
-	//	{
-	//		GetAnimator()->Play(L"KahoCrouch");
-	//	}
-	//}
-
-	//if (Key(VK_UP))
-	//{
-	//	//todo 사다리있으면 사다리 오르기
-	//}
-	
-
-	//if (Key(VK_DOWN) && Key('S'))
-	//	GetAnimator()->Play(L"KahoCrouchBow");
-	//
-	
-	//점프 하는 상태
-	
 	GetAnimator()->update();
+	
 	m_ePreState = m_eCurState;
 	m_iPreDir = m_iCurDir;
 }
@@ -139,7 +121,7 @@ void CKaho::update_state() //현재 상태에 관한거
 	//속도가 없을때 대기상태로 만들어야함 그래서 속도를 가져옴
 	if (0.f == GetRigidBody()->GetSpeed())
 	{
-		if (m_fDelaytime + 0.05f <= m_fDelay && m_bAttacking)
+		if (m_fDelaytime + 0.5f <= m_fDelay && m_bAttacking)
 			//내가 설정한 딜레이 보다 내가 아무것도 안한상태가 더 크면 (나의 딜레이가 더 크면 대기상태)
 		{
 			m_bAttacking = false;
@@ -147,15 +129,24 @@ void CKaho::update_state() //현재 상태에 관한거
 		}
 		
 	}
-
-	if (KeyDown(VK_LEFT)&& !m_bAttacking )
+	if (Key(VK_DOWN))
+	{
+		m_bCrouch = true;
+		m_eCurState = PLAYER_STATE::CROUCH;
+	}
+	if (KeyUp(VK_DOWN))
+	{
+		m_bCrouch = false;
+		m_eCurState = PLAYER_STATE::IDLE;
+	}
+	if (KeyDown(VK_LEFT)&& !m_bAttacking&&!m_bCrouch)
 	{
 		m_iCurDir = -1;
 		if (PLAYER_STATE::JUMP != m_eCurState)
 			m_eCurState = PLAYER_STATE::WALK;
 	}
 
-	if (KeyDown(VK_RIGHT) && !m_bAttacking )
+	if (KeyDown(VK_RIGHT) && !m_bAttacking && !m_bCrouch)
 	{
 		m_iCurDir = 1;
 		if (PLAYER_STATE::JUMP != m_eCurState)
@@ -232,12 +223,20 @@ void CKaho::update_state() //현재 상태에 관한거
 			CreateHitBox();
 		}
 	}
-	if (KeyDown('D'))
+	//발사 시간 일정하게 조정 
+	if (KeyDown('D')&& m_fDelaytime + 0.1f < m_fDelay)
 	{
+		m_fDelay = 0;
 		CreateArrow();
+		m_bAttacking = true;
+		m_bBow = true;
 		m_eCurState = PLAYER_STATE::BOW;
-		GetAnimator()->FindAnimation(L"KahoBow")->SetFrame(0);
+		GetAnimator()->FindAnimation(L"KahoBowR")->SetFrame(0);
+		GetAnimator()->FindAnimation(L"KahoBowL")->SetFrame(0);
+		GetAnimator()->FindAnimation(L"KahoCrouchBowR")->SetFrame(0);
+		GetAnimator()->FindAnimation(L"KahoCrouchBowL")->SetFrame(0);
 	}
+
 	if (KeyDown('F'))
 	{
 		m_eCurState = PLAYER_STATE::ROLL;
@@ -252,35 +251,26 @@ void CKaho::update_move() //행동에 관한거
 {
 	CRigidBody* pRigid = GetRigidBody();
 	fPoint pos = GetPos();
+	m_fDelay += fDT;
 	// 여기가 힘을 주는거고
-
-	if (Key(VK_LEFT) && !m_bAttacking)
+	if (Key(VK_LEFT) && !m_bAttacking && !m_bCrouch)
 	{
 		pRigid->AddForce(fPoint(-300.f, 0.f));
 	}
-	if (Key(VK_RIGHT) && !m_bAttacking)
+	if (Key(VK_RIGHT) && !m_bAttacking && !m_bCrouch)
 	{
 		pRigid->AddForce(fPoint(300.f, 0.f));
 	}
 	//거기에 속도를 줌
-	if (KeyDown(VK_LEFT))
+	if (KeyDown(VK_LEFT) && !m_bAttacking && !m_bCrouch)
 	{
 		pRigid->SetVelocity(fPoint(-100.f, pRigid->GetVelocity().y));
 	}
-	if (KeyDown(VK_RIGHT))
+	if (KeyDown(VK_RIGHT) && !m_bAttacking && !m_bCrouch)
 	{
 		pRigid->SetVelocity(fPoint(100.f, pRigid->GetVelocity().y));
 	}
-	// todo 앉기 키로 바꿔야함
-	if (Key(VK_DOWN) && !m_bAttacking)
-	{
-			
-	}
-	if (KeyDown(VK_DOWN) && !m_bAttacking)
-	{
-		
-	}
-	if (KeyDown('A')) //
+	if (KeyDown('A')) 
 	{
 		if (m_iCurDir == 1)
 		{
@@ -297,6 +287,7 @@ void CKaho::update_move() //행동에 관한거
 		GetRigidBody()->SetVelocity(fVec2(GetRigidBody()->GetVelocity().x, -300.f));
 	}
 
+	//todo 구르기 손봐야함 쿨타임
 	if (KeyDown('F'))
 	{
 		if (m_iCurDir == 1)
@@ -330,6 +321,26 @@ void CKaho::update_animation()	//애니메이션에 관한거 - 상태에 따른 애니메이션 출
 		else if (1 == m_iCurDir && m_onfloor)
 		{
 			GetAnimator()->Play(L"KahoidleR");
+		}
+	}
+	break;
+	case PLAYER_STATE::CROUCH:
+	{
+		if (-1 == m_iCurDir)
+		{
+			GetAnimator()->Play(L"KahoCrouchL");
+			if (m_bBow)
+			{
+				GetAnimator()->Play(L"KahoCrouchBowL");
+			}
+		}
+		else if (1 == m_iCurDir)
+		{
+			GetAnimator()->Play(L"KahoCrouchR");
+			if (m_bBow)
+			{
+				GetAnimator()->Play(L"KahoCrouchBowR");
+			}
 		}
 	}
 	break;
@@ -387,9 +398,17 @@ void CKaho::update_animation()	//애니메이션에 관한거 - 상태에 따른 애니메이션 출
 	break;
 	case PLAYER_STATE::BOW:
 	{
-		GetAnimator()->Play(L"KahoBow");
+		if (1 == m_iCurDir)
+		{
+			GetAnimator()->Play(L"KahoBowR");
+		}
+		else if (-1 == m_iCurDir)
+		{
+			GetAnimator()->Play(L"KahoBowL");
+		}	
 	}
 	break;
+	
 	case PLAYER_STATE::BRAKE:
 	{
 		if (-1 == m_iCurDir && m_onfloor) 
@@ -420,16 +439,6 @@ void CKaho::update_animation()	//애니메이션에 관한거 - 상태에 따른 애니메이션 출
 	}
 }
 
-void CKaho::update_CollTime()
-{
-	if (!m_bCanRoll)
-	{
-		m_fRollTime = DT;
-		if (m_fRollTime >= m_fRollCoolTime)
-			m_bCanRoll = true;
-	}
-}
-
 void CKaho::render()
 {
 	component_render();
@@ -443,12 +452,44 @@ float CKaho::GetDirect()
 void CKaho::CreateArrow()
 {
 	fPoint fpArrowpos = GetPos();
-	fpArrowpos.x += GetScale().x / 2.f;
-
-	//화살 오브젝트
 	CArrow* pArrow = new CArrow;
-	pArrow->SetPos(fpArrowpos);
-	pArrow->SetDir(fVec2(1, 0));
+		
+	fpArrowpos.x -= GetScale().x / 2.f;
+	if (m_bCrouch)
+	{
+		if (1 == m_iCurDir)
+		{
+			fpArrowpos.x += GetScale().x / 2.f;
+			fpArrowpos.y += GetScale().y / 4.f;
+			pArrow->SetPos(fpArrowpos);
+			pArrow->SetDir(fVec2(1, 0));
+		}
+		else if (-1 == m_iCurDir)
+		{
+			fpArrowpos.x -= GetScale().x / 2.f;
+			fpArrowpos.y += GetScale().y / 4.f;
+			pArrow->SetPos(fpArrowpos);
+			pArrow->SetDir(fVec2(-1, 0));
+		}
+	}
+	else if(!m_bCrouch)
+	{
+		if (1 == m_iCurDir)
+		{
+			fpArrowpos.x += GetScale().x / 2.f;
+			pArrow->SetPos(fpArrowpos);
+			pArrow->SetDir(fVec2(1, 0));
+		}
+		else if (-1 == m_iCurDir)
+		{
+			fpArrowpos.x -= GetScale().x / 2.f;
+			pArrow->SetPos(fpArrowpos);
+			pArrow->SetDir(fVec2(-1, 0));
+		}
+	}
+	
+	
+	
 
 	CreateObj(pArrow, GROUP_GAMEOBJ::MISSILE_PLAYER);
 }
@@ -459,7 +500,7 @@ void CKaho::CreateHitBox()
 	fPoint fpHitbox = GetPos();
 	if(m_iCurDir==1)
 		fpHitbox.x += GetScale().x / 2.f; //이것이 방향따라 그려주는것
-	if(m_iCurDir==-1)
+	else if(m_iCurDir==-1)
 		fpHitbox.x -= GetScale().x / 2.f; //이것이 방향따라 그려주는것
 
 	CHitBox* pHitbox = new CHitBox;

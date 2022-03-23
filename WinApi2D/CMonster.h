@@ -47,4 +47,6 @@ public:
 	void SetMonInfo(const tMonInfo& info);
 
 	void OnCollisionEnter(CCollider* pOther);
+
+	void CreateHitBox();	//히트 박스 충돌체 만듦
 };

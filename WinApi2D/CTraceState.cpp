@@ -2,6 +2,7 @@
 #include "CTraceState.h"
 #include "CKaho.h"
 #include "CMonster.h"
+#include "CAnimator.h"
 
 CTraceState::CTraceState(MON_STATE state) : CState(state)
 {
@@ -29,12 +30,19 @@ void CTraceState::update()
 	{
 		ChangeAIState(GetOwnerAI(), MON_STATE::IDLE);
 	}
-	if (fLen < pMonster->GetMonInfo().fAttRange)
+	else if (fLen < pMonster->GetMonInfo().fAttRange)
+	{
 		ChangeAIState(GetOwnerAI(), MON_STATE::ATT);
-	
+	}
 	fPoint pos = pMonster->GetPos();
 	pos += fvDiff.normalize() * 100 * fDT;
 	pMonster->SetPos(pos);
+	
+	if (0 < fvDiff.x)
+		pMonster->GetAnimator()->Play(L"sMonkey_FullR");
+	else if (0 > fvDiff.x)
+		pMonster->GetAnimator()->Play(L"sMonkey_FullL");
+
 }
 
 void CTraceState::Enter()

@@ -48,17 +48,6 @@ void CArrow::update()
 
 void CArrow::render()
 {
-	fPoint pos = GetPos();
-	fPoint scale = GetScale();
-
-	fPoint fptRenderPos = CCameraManager::getInst()->GetRenderPos(pos);
-
-	CRenderManager::getInst()->RenderEllipse(
-		fptRenderPos.x,
-		fptRenderPos.y,
-		scale.x / 2.f,
-		scale.y / 2.f);
-
 	component_render();
 }
 

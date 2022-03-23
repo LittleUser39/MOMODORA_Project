@@ -8,11 +8,13 @@ enum class PLAYER_STATE
 	IDLE,
 	WALK,
 	BRAKE,
+	CROUCH,
 	ROLL,
+	BOW,
+	CROUCHBOW,
 	ATTACK1,
 	ATTACK2,
 	ATTACK3,
-	BOW,
 	JUMP,
 	DEAD,
 	END
@@ -61,9 +63,8 @@ private:
 	bool m_bAttacking;		//캐릭터가 공격중 인가
 	bool m_bJump;			//점프상태
 	bool m_bDead;			//캐릭터가 죽어있는가
-	bool m_bCanRoll;		//캐릭터가 구를수있는상태
-
-	CHitBox* m_cPHitbox;	//히트박스
+	bool m_bCrouch;			//캐릭터가 웅크린 상태 인가
+	bool m_bBow;
 
 public:
 	CKaho();
@@ -73,7 +74,6 @@ public:
 	void update_move();
 	void update_state();
 	void update_animation();
-	void update_CollTime();
 
 	virtual void update();
 	virtual void render();

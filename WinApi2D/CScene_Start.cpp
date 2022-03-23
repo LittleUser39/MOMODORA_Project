@@ -27,16 +27,6 @@ void CScene_Start::update()
 		ChangeScn(GROUP_SCENE::TOOL);
 	}
 	
-	if (KeyDown('Z'))
-	{
-		CSoundManager::getInst()->AddSound(L"bgm", L"sound\\drumloop.wav", true);
-		CSoundManager::getInst()->Play(L"bgm");
-	}
-
-	if (KeyDown('X'))
-	{
-		CSoundManager::getInst()->Stop(L"bgm");
-	}
 }
 
 void CScene_Start::Enter()
@@ -53,13 +43,13 @@ void CScene_Start::Enter()
 	pPlayer->RegisterPlayer();
 
 	//몬스터 추가
-	CMonster* pMonster = new CMonster;
-	pMonster->SetPos(fPoint(1100, 350));
-	AddObject(pMonster, GROUP_GAMEOBJ::MONSTER);
+	//CMonster* pMonster = new CMonster;
+	//pMonster->SetPos(fPoint(1100, 350));
+	//AddObject(pMonster, GROUP_GAMEOBJ::MONSTER);
 
-	CMonster* pCloneMonster = pMonster->Clone();
-	pCloneMonster->SetPos(fPoint(500, 350));
-	AddObject(pCloneMonster, GROUP_GAMEOBJ::MONSTER);
+	//CMonster* pCloneMonster = pMonster->Clone();
+	//pCloneMonster->SetPos(fPoint(500, 350));
+	//AddObject(pCloneMonster, GROUP_GAMEOBJ::MONSTER);
 
 	//맵 생성
 	CMap* map = new CMap;
@@ -84,6 +74,8 @@ void CScene_Start::Enter()
 	// 몬스터 배치
 	CMonster* pMon = CMonster::Create(MON_TYPE::NORMAL, fPoint(300.f, 300.f));
 	AddObject(pMon, GROUP_GAMEOBJ::MONSTER);
+	CMonster* pMon2 = CMonster::Create(MON_TYPE::NORMAL, fPoint(500.f, 300.f));
+	AddObject(pMon2, GROUP_GAMEOBJ::MONSTER);
 }
 
 void CScene_Start::Exit()

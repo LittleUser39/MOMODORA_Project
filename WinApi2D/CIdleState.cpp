@@ -2,6 +2,7 @@
 #include "CIdleState.h"
 #include "CKaho.h"
 #include "CMonster.h"
+#include "CAnimator.h"
 
 CIdleState::CIdleState(MON_STATE state)
 	: CState(state)
@@ -25,11 +26,16 @@ void CIdleState::update()
 
 	fVec2 fvDiff = fptPlayerPos - fptMonsterPos;
 	float fLen = fvDiff.Length(); 
-	if (fLen < pMonster->GetMonInfo().fRecogRange)
+	
+	if (fLen <= pMonster->GetMonInfo().fRecogRange)
 	{
 		ChangeAIState(GetOwnerAI(), MON_STATE::TRACE);
 	}
-
+	
+	if (0 < fvDiff.x)
+		pMonster->GetAnimator()->Play(L"sMonkey_idleR");
+	else if (0 > fvDiff.x)
+		pMonster->GetAnimator()->Play(L"sMonkey_idleL");
 }
 
 void CIdleState::Enter()

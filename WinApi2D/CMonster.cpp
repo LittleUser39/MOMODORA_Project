@@ -1,9 +1,12 @@
 #include "framework.h"
 #include "CMonster.h"
+#include "CKaho.h"
+
 #include "CCollider.h"
 
 #include "CD2DImage.h"
 #include "CAnimator.h"
+#include "CMHitBox.h"
 
 #include "AI.h"
 #include "CIdleState.h"
@@ -20,18 +23,25 @@ CMonster::CMonster()
 	m_pAI = nullptr;
 
 	SetName(L"Monster");
-	SetScale(fPoint(40, 40));
+	SetScale(fPoint(50.f, 50.f));
 	
-	CD2DImage* m_pImg2 = CResourceManager::getInst()->LoadD2DImage(L"MonsterAtt", L"texture\\sMonkeyAttack_Full1.png");
+	CD2DImage* m_pImgAtt = CResourceManager::getInst()->LoadD2DImage(L"MonsterAtt", L"texture\\sMonkeyAttack_Full1.png");
 	CreateCollider();
-	GetCollider()->SetScale(fPoint(40.f, 40.f));
+	GetCollider()->SetScale(fPoint(50.f, 50.f));
 
 	CreateAnimator();
-	GetAnimator()->CreateAnimation(L"sMonkey_Full", m_pImg, fPoint(0, 0), fPoint(44.f, 32.f), fPoint(44.f, 0), 0.1f, 5, true);
-	GetAnimator()->Play(L"sMonkey_Full");
-	GetAnimator()->CreateAnimation(L"MonkeyAtt_full",m_pImg2, fPoint(0, 0), fPoint(90.f, 48.f), fPoint(90.f, 0), 0.3f, 8, true);
+	GetAnimator()->CreateAnimation(L"sMonkey_idleR", m_pImg, fPoint(0, 0), fPoint(44.f, 32.f), fPoint(44.f, 0), 0.1f, 1, true);
+	GetAnimator()->CreateAnimation(L"sMonkey_idleL", m_pImg, fPoint(0, 0), fPoint(44.f, 32.f), fPoint(44.f, 0), 0.1f, 1, true, true);
 
+	GetAnimator()->CreateAnimation(L"sMonkey_FullR", m_pImg, fPoint(0, 0), fPoint(44.f, 32.f), fPoint(44.f, 0), 0.1f, 5, true);
+	GetAnimator()->CreateAnimation(L"sMonkey_FullL", m_pImg, fPoint(0, 0), fPoint(44.f, 32.f), fPoint(44.f, 0), 0.1f, 5, true, true);
 
+	
+	GetAnimator()->CreateAnimation(L"MonkeyAtt_fullR", m_pImgAtt, fPoint(0, 0), fPoint(80.f, 48.f), fPoint(80.f, 0), 0.1f, 8, true);
+	GetAnimator()->CreateAnimation(L"MonkeyAtt_fullL", m_pImgAtt, fPoint(0, 0), fPoint(80.f, 48.f), fPoint(80.f, 0), 0.1f, 8, true, true);
+	
+	GetAnimator()->Play(L"sMonkey_idleL");
+	
 	CreateGravity();
 	CreateRigidBody();
 }
@@ -105,11 +115,6 @@ void CMonster::update()
 		GetAnimator()->update();
 	if (nullptr != m_pAI)
 		m_pAI->update();
-	if(nullptr!=m_mState)
-		if (m_mState->GetType() == MON_STATE::ATT)
-		{
-			GetAnimator()->Play(L"MonkeyAtt_full");
-		}
 }
 
 
@@ -146,8 +151,31 @@ void CMonster::OnCollisionEnter(CCollider* pOther)
 
 	if (pOtherObj->GetName() == L"Missile_Player1"||pOtherObj->GetName()==L"Player_hitbox")
 	{
+		
 		m_tInfo.fHP -= 1;
 		if (m_tInfo.fHP <= 0)
 			DeleteObj(this);
 	}
+}
+
+void CMonster::CreateHitBox()
+{
+	//이게 그릴것 위치 정하는거
+	fPoint fpHitbox = GetPos();
+	
+	CKaho* pPlayer = CKaho::GetPlayer();
+	fPoint fptPlayerPos = pPlayer->GetPos();
+
+
+	fVec2 fvDiff = fptPlayerPos - fpHitbox;
+	
+	if(0 > fvDiff.x)
+		fpHitbox.x -= GetScale().x / 2.f; 
+	else if (0 < fvDiff.x)
+		fpHitbox.x += GetScale().x / 2.f;
+	
+	CMHitBox* mHitbox = new CMHitBox;
+	mHitbox->SetPos(fpHitbox);
+	mHitbox->SetOwnerObj(this);
+	CreateObj(mHitbox, GROUP_GAMEOBJ::HITBOX_MONSTER);
 }
