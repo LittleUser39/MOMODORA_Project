@@ -81,7 +81,8 @@ public:
 	float GetDirect();
 
 	void CreateArrow();		//화살 충돌체 만듦
-	
+	void CreateHitBox();	//히트 박스 충돌체 만듦
+
 	virtual void OnCollision(CCollider* pOther);		//충돌중 일때
 	virtual void OnCollisionEnter(CCollider* pOther);	//층돌에 들어갈때
 	virtual void OnCollisionExit(CCollider* pOther);	//충돌에서 나갈때 

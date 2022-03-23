@@ -1,11 +1,16 @@
 #include "framework.h"
 #include "CKaho.h"
+
 #include "CCollider.h"
+
 #include "CAnimator.h"
 #include "CAnimation.h"
+
 #include "CRigidBody.h"
+
 #include "CArrow.h"
 #include "CHitBox.h"
+
 #include "CScene.h"
 #include "CGravity.h"
 
@@ -27,11 +32,6 @@ CKaho::CKaho() : m_eCurState(PLAYER_STATE::IDLE)
 	m_pImg = CResourceManager::getInst()->LoadD2DImage(L"KahoImage", L"texture\\sKahoidle_Full.png");
     SetName(L"Kaho");
     SetScale(fPoint(70.f, 70.f));
-	m_cPHitbox = new CHitBox;
-	m_cPHitbox->SetOwnerObj(this);
-	m_cPHitbox->SetName(L"Player_hitbox");
-	CScene* pCurScene = CSceneManager::getInst()->GetCurScene();
-	pCurScene->AddObject(m_cPHitbox, GROUP_GAMEOBJ::HITBOX_PLAYER);
 
 	//충돌체 생성 및 충돌체 크기,오프셋
     CreateCollider();
@@ -207,8 +207,7 @@ void CKaho::update_state() //현재 상태에 관한거
 			GetAnimator()->FindAnimation(L"KahoAttack1R")->SetFrame(0);
 			GetAnimator()->FindAnimation(L"KahoAttack1L")->SetFrame(0);
 			
-
-			m_cPHitbox->create();
+			CreateHitBox();
 		}
 		//콤보가 2일때 3번째 공격
 		if ( m_iCombo == 2)
@@ -218,7 +217,7 @@ void CKaho::update_state() //현재 상태에 관한거
 			GetAnimator()->FindAnimation(L"KahoAttack2R")->SetFrame(0);
 			GetAnimator()->FindAnimation(L"KahoAttack2L")->SetFrame(0);
 
-			m_cPHitbox->create();
+			CreateHitBox();
 		}
 
 		//콤보가 2일때 3번째 공격
@@ -230,12 +229,11 @@ void CKaho::update_state() //현재 상태에 관한거
 			GetAnimator()->FindAnimation(L"KahoAttack3R")->SetFrame(0);
 			GetAnimator()->FindAnimation(L"KahoAttack3L")->SetFrame(0);
 			
-			m_cPHitbox->create();
+			CreateHitBox();
 		}
 	}
 	if (KeyDown('D'))
 	{
-		//todo 활공격 - 행동 넣어야함
 		CreateArrow();
 		m_eCurState = PLAYER_STATE::BOW;
 		GetAnimator()->FindAnimation(L"KahoBow")->SetFrame(0);
@@ -453,6 +451,21 @@ void CKaho::CreateArrow()
 	pArrow->SetDir(fVec2(1, 0));
 
 	CreateObj(pArrow, GROUP_GAMEOBJ::MISSILE_PLAYER);
+}
+
+void CKaho::CreateHitBox()
+{
+	//이게 그릴것 위치 정하는거
+	fPoint fpHitbox = GetPos();
+	if(m_iCurDir==1)
+		fpHitbox.x += GetScale().x / 2.f; //이것이 방향따라 그려주는것
+	if(m_iCurDir==-1)
+		fpHitbox.x -= GetScale().x / 2.f; //이것이 방향따라 그려주는것
+
+	CHitBox* pHitbox = new CHitBox;
+	pHitbox->SetPos(fpHitbox);
+	pHitbox->SetOwnerObj(this);
+	CreateObj(pHitbox, GROUP_GAMEOBJ::HITBOX_PLAYER);
 }
 
 void CKaho::OnCollision(CCollider* pOther)

@@ -1,9 +1,14 @@
 #pragma once
 #include "CGameObject.h"
+class CKaho;
 
 class CHitBox : public CGameObject
 {
 	CD2DImage* m_pImg;
+	CD2DImage* m_pImg2;
+	CD2DImage* m_pImg3;
+
+	CKaho* m_pOwner;
 
 	const float m_fDelaytime = 0.5f; //µÙ∑π¿Ã 
 	float m_fDelay;
@@ -16,11 +21,11 @@ public:
 	virtual void update();
 	virtual void render();
 
-	CGameObject* GetOwnerObj();
-	void SetOwnerObj(CGameObject* pOwner);
+	void update_animation();
 
-	
-	void create();
 	void OnCollisionEnter(CCollider* pOther);
+
+	CKaho* GetOwnerObj();
+	void SetOwnerObj(CKaho* pOwner);
 };
 

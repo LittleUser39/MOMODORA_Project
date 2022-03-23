@@ -42,6 +42,8 @@ void CArrow::update()
 	if (pos.x < 0 || pos.x > WINSIZEX
 		|| pos.y < 0 || pos.y > WINSIZEY)
 		DeleteObj(this);
+
+	GetAnimator()->update();
 }
 
 void CArrow::render()
