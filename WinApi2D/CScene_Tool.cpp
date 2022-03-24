@@ -396,9 +396,11 @@ void CScene_Tool::CreateTilePanel()
 	}
 
 	CButtonUI* btnTileGroup = new CButtonUI;
+	CD2DImage* btnImg = CResourceManager::getInst()->LoadD2DImage(L"SelectBox", L"texture\\sFileSelectBg2_0.png");
 	btnTileGroup->SetScale(fPoint(100.f, 50.f));
 	btnTileGroup->SetPos(fPoint(50.f, 500.f));
 	btnTileGroup->SetText(L"NONE");
+	btnTileGroup->SetImage(btnImg);
 	btnTileGroup->SetClickedCallBack(ClickTileGroupButton, (DWORD_PTR)this, (DWORD_PTR)btnTileGroup);
 	panelTile->AddChild(btnTileGroup);
 
