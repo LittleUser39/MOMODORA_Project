@@ -125,6 +125,7 @@ void CKaho::update_state() //현재 상태에 관한거
 			//내가 설정한 딜레이 보다 내가 아무것도 안한상태가 더 크면 (나의 딜레이가 더 크면 대기상태)
 		{
 			m_bAttacking = false;
+			m_bBow = false;
 			m_eCurState = PLAYER_STATE::IDLE;
 		}
 		
@@ -168,6 +169,7 @@ void CKaho::update_state() //현재 상태에 관한거
 	if (m_eCurState == PLAYER_STATE::BRAKE && 0.f == GetRigidBody()->GetSpeed())
 	{
 		m_eCurState = PLAYER_STATE::IDLE;
+		m_bBow = false;
 	}
 
 	if (KeyDown('S')&& !m_bJump)
@@ -178,13 +180,13 @@ void CKaho::update_state() //현재 상태에 관한거
 			m_bJump = true;
 		}
 	}
-	
+	//todo 공격 딜레이 만들어야함
 	if (KeyDown('A'))
 	{
 		//공격상태
 		m_bAttacking = true;
 		//딜레이 타임보다 늦게 누르면 콤보  없애줌
-		if (m_fDelaytime + 0.1f <= m_fDelay)
+		if (m_fDelaytime + 0.5f <= m_fDelay)
 			m_iCombo = 0;
 		//콤보3이거나 같으면 다시 0으로 바꿔줌
 		if (m_iCombo >= 3)
@@ -463,6 +465,7 @@ void CKaho::CreateArrow()
 			fpArrowpos.y += GetScale().y / 4.f;
 			pArrow->SetPos(fpArrowpos);
 			pArrow->SetDir(fVec2(1, 0));
+			pArrow->GetAnimator()->Play(L"ArrowR");
 		}
 		else if (-1 == m_iCurDir)
 		{
@@ -470,6 +473,7 @@ void CKaho::CreateArrow()
 			fpArrowpos.y += GetScale().y / 4.f;
 			pArrow->SetPos(fpArrowpos);
 			pArrow->SetDir(fVec2(-1, 0));
+			pArrow->GetAnimator()->Play(L"ArrowL");
 		}
 	}
 	else if(!m_bCrouch)
@@ -479,12 +483,14 @@ void CKaho::CreateArrow()
 			fpArrowpos.x += GetScale().x / 2.f;
 			pArrow->SetPos(fpArrowpos);
 			pArrow->SetDir(fVec2(1, 0));
+			pArrow->GetAnimator()->Play(L"ArrowR");
 		}
 		else if (-1 == m_iCurDir)
 		{
 			fpArrowpos.x -= GetScale().x / 2.f;
 			pArrow->SetPos(fpArrowpos);
 			pArrow->SetDir(fVec2(-1, 0));
+			pArrow->GetAnimator()->Play(L"ArrowL");
 		}
 	}
 	

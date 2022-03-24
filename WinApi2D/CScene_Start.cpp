@@ -4,6 +4,8 @@
 #include "CGameObject.h"
 #include "CKaho.h"
 #include "CMonster.h"
+#include "CImp.h"
+
 #include "CMap.h"
 #include "CBackGround.h"
 
@@ -50,6 +52,10 @@ void CScene_Start::Enter()
 	//CMonster* pCloneMonster = pMonster->Clone();
 	//pCloneMonster->SetPos(fPoint(500, 350));
 	//AddObject(pCloneMonster, GROUP_GAMEOBJ::MONSTER);
+
+	CImp* pImp = new CImp;
+	pImp->SetPos(fPoint(700.f, 300.f));
+	AddObject(pImp, GROUP_GAMEOBJ::MONSTER);
 
 	//¸Ê »ý¼º
 	CMap* map = new CMap;

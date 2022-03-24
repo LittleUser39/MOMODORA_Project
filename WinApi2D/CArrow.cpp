@@ -22,8 +22,9 @@ CArrow::CArrow()
 
 	m_pImg = CResourceManager::getInst()->LoadD2DImage(L"Arrow", L"texture\\sSealProjectile_0.png");
 	CreateAnimator();
-	GetAnimator()->CreateAnimation(L"Arrow",m_pImg,fPoint(0,0),fPoint(24.f,8.f),fPoint(0,0),1.f,1,true);
-	GetAnimator()->Play(L"Arrow");
+	GetAnimator()->CreateAnimation(L"ArrowR",m_pImg,fPoint(0,0),fPoint(24.f,8.f),fPoint(0,0),1.f,1,true);
+	GetAnimator()->CreateAnimation(L"ArrowL", m_pImg, fPoint(0, 0), fPoint(24.f, 8.f), fPoint(0, 0), 1.f, 1, true, true);
+
 }
 
 CArrow::~CArrow()

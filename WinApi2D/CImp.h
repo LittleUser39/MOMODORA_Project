@@ -25,8 +25,9 @@ private:
 	MON_STATE m_eCurState;	//현재상태
 	MON_STATE m_ePerState;	//이전상태
 
-	int          m_iCurDir;	  //현재방향
-	int          m_iPreDir;	  //이전방향
+	bool		 bAttcking;	  //공격중
+	float m_fAttCoolTime = 1.f;	//공격 딜레이
+	float m_fAttTime = 0;		//딜레이
 
 public:
 	CImp();

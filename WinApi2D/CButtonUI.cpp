@@ -24,6 +24,17 @@ void CButtonUI::render()
 {
 	CUI::render();
 
+	if (nullptr != m_pImg)
+	{
+		CRenderManager::getInst()->RenderImage(
+			m_pImg,
+			GetFinalPos().x,
+			GetFinalPos().y,
+			GetFinalPos().x + GetScale().x,
+			GetFinalPos().y + GetScale().y
+		);
+	}
+
 	if (m_strText.size() > 0)
 	{
 		CRenderManager::getInst()->RenderText(
@@ -35,16 +46,6 @@ void CButtonUI::render()
 		);
 	}
 
-	if (nullptr != m_pImg)
-	{
-		CRenderManager::getInst()->RenderImage(
-			m_pImg,
-			GetFinalPos().x,
-			GetFinalPos().y,
-			GetFinalPos().x + GetScale().x,
-			GetFinalPos().y + GetScale().y
-		);
-	}
 }
 
 void CButtonUI::MouseOn()

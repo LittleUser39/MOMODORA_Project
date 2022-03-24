@@ -3,7 +3,7 @@
 #include "CAnimator.h"
 #include "CCollider.h"
 
-CDagger::~CDagger()
+CDagger::CDagger()
 {
 	SetScale(fPoint(16.f, 16.f));
 	m_fvDir = fVec2(0, 0);
@@ -16,6 +16,11 @@ CDagger::~CDagger()
 	CreateAnimator();
 	GetAnimator()->CreateAnimation(L"ImpDaggerL", m_pImg, fPoint(0,0), fPoint(16.f,16.f), fPoint(0,0), 0.1f, 1, true, false);
 	GetAnimator()->CreateAnimation(L"ImpDaggerR", m_pImg, fPoint(0,0), fPoint(16.f, 16.f), fPoint(0, 0), 0.1f, 1, true, true);
+	
+}
+
+CDagger::~CDagger()
+{
 
 }
 
