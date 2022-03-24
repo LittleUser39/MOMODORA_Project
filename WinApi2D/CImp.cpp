@@ -54,21 +54,24 @@ CImp* CImp::Clone()
 
 void CImp::render()
 {
+
 }
 
 void CImp::update()
 {
+
 }
 
 void CImp::OnCollisionEnter(CCollider* pOther)
 {
+
 }
 
 void CImp::CreateDagger()
 {
 	//이게 그릴것 위치 정하는거
 	fPoint fpImp = this->GetPos();
-	fPoint 
+
 	CDagger* mDagger = new CDagger;
 	
 	CKaho* pPlayer = CKaho::GetPlayer();
@@ -78,11 +81,16 @@ void CImp::CreateDagger()
 	fVec2 fvDiff = fptPlayerPos - fpImp;
 
 	if (0 > fvDiff.x)
-		fpHitbox.x -= GetScale().x / 2.f;
+	{
+		fpImp.x -= GetScale().x / 2.f;
+		mDagger->SetDir(fPoint(1.f, 0.f));
+	}
 	else if (0 < fvDiff.x)
-		fpHitbox.x += GetScale().x / 2.f;
+	{
+		fpImp.x += GetScale().x / 2.f;
+	}
 
-	CreateObj(mHitbox, GROUP_GAMEOBJ::MISSILE_MONSTER);
+	CreateObj(mDagger, GROUP_GAMEOBJ::MISSILE_MONSTER);
 }
 
 void CImp::update_move()

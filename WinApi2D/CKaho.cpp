@@ -454,7 +454,7 @@ void CKaho::CreateArrow()
 	fPoint fpArrowpos = GetPos();
 	CArrow* pArrow = new CArrow;
 		
-	fpArrowpos.x -= GetScale().x / 2.f;
+	
 	if (m_bCrouch)
 	{
 		if (1 == m_iCurDir)
