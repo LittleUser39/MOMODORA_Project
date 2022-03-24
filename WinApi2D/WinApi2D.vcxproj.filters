@@ -82,6 +82,12 @@
     <Filter Include="Object\Character\Player">
       <UniqueIdentifier>{8ebcbc8d-bb7e-4123-b0f3-fe80f9235baa}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Object\Character\Monster\Common">
+      <UniqueIdentifier>{f0fddcf0-e027-4a56-9014-b383f307bd7c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\Character\Monster\BOSS">
+      <UniqueIdentifier>{21cc186b-fa54-46e3-8f5b-f0114ead9806}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -168,9 +174,6 @@
     <ClInclude Include="CUI.h">
       <Filter>Object\UI</Filter>
     </ClInclude>
-    <ClInclude Include="CMissile.h">
-      <Filter>Object\Character</Filter>
-    </ClInclude>
     <ClInclude Include="CUIManager.h">
       <Filter>Engine\Manager</Filter>
     </ClInclude>
@@ -198,9 +201,6 @@
     <ClInclude Include="CScene_Title.h">
       <Filter>Scene</Filter>
     </ClInclude>
-    <ClInclude Include="CHitBox.h">
-      <Filter>Object\Character</Filter>
-    </ClInclude>
     <ClInclude Include="CImageObject.h">
       <Filter>Object\Map</Filter>
     </ClInclude>
@@ -212,9 +212,6 @@
     </ClInclude>
     <ClInclude Include="CGravity.h">
       <Filter>Engine\Component\CGravity</Filter>
-    </ClInclude>
-    <ClInclude Include="CMonster.h">
-      <Filter>Object\Character\Monster</Filter>
     </ClInclude>
     <ClInclude Include="CScene_Boss.h">
       <Filter>Scene</Filter>
@@ -246,9 +243,6 @@
     <ClInclude Include="CScene_Death.h">
       <Filter>Scene</Filter>
     </ClInclude>
-    <ClInclude Include="CImp.h">
-      <Filter>Object\Character\Monster</Filter>
-    </ClInclude>
     <ClInclude Include="CArrow.h">
       <Filter>Object\Character\Player</Filter>
     </ClInclude>
@@ -256,10 +250,25 @@
       <Filter>Object\Character\Player</Filter>
     </ClInclude>
     <ClInclude Include="CDagger.h">
-      <Filter>Object\Character\Monster</Filter>
+      <Filter>Object\Character\Monster\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="CImp.h">
+      <Filter>Object\Character\Monster\Common</Filter>
     </ClInclude>
     <ClInclude Include="CMHitBox.h">
-      <Filter>Object\Character\Monster</Filter>
+      <Filter>Object\Character\Monster\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="CMonster.h">
+      <Filter>Object\Character\Monster\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="CFennel.h">
+      <Filter>Object\Character\Monster\BOSS</Filter>
+    </ClInclude>
+    <ClInclude Include="CHitBox.h">
+      <Filter>Object\Character\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="CBHitBox.h">
+      <Filter>Object\Character\Monster\BOSS</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -329,9 +338,6 @@
     <ClCompile Include="CUI.cpp">
       <Filter>Object\UI</Filter>
     </ClCompile>
-    <ClCompile Include="CMissile.cpp">
-      <Filter>Object\Character</Filter>
-    </ClCompile>
     <ClCompile Include="CUIManager.cpp">
       <Filter>Engine\Manager</Filter>
     </ClCompile>
@@ -359,9 +365,6 @@
     <ClCompile Include="CScene_Title.cpp">
       <Filter>Scene</Filter>
     </ClCompile>
-    <ClCompile Include="CHitBox.cpp">
-      <Filter>Object\Character</Filter>
-    </ClCompile>
     <ClCompile Include="CImageObject.cpp">
       <Filter>Object\Map</Filter>
     </ClCompile>
@@ -373,9 +376,6 @@
     </ClCompile>
     <ClCompile Include="CGravity.cpp">
       <Filter>Engine\Component\CGravity</Filter>
-    </ClCompile>
-    <ClCompile Include="CMonster.cpp">
-      <Filter>Object\Character\Monster</Filter>
     </ClCompile>
     <ClCompile Include="CScene_Boss.cpp">
       <Filter>Scene</Filter>
@@ -407,9 +407,6 @@
     <ClCompile Include="CScene_Death.cpp">
       <Filter>Scene</Filter>
     </ClCompile>
-    <ClCompile Include="CImp.cpp">
-      <Filter>Object\Character\Monster</Filter>
-    </ClCompile>
     <ClCompile Include="CArrow.cpp">
       <Filter>Object\Character\Player</Filter>
     </ClCompile>
@@ -417,10 +414,25 @@
       <Filter>Object\Character\Player</Filter>
     </ClCompile>
     <ClCompile Include="CDagger.cpp">
-      <Filter>Object\Character\Monster</Filter>
+      <Filter>Object\Character\Monster\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="CImp.cpp">
+      <Filter>Object\Character\Monster\Common</Filter>
     </ClCompile>
     <ClCompile Include="CMHitBox.cpp">
-      <Filter>Object\Character\Monster</Filter>
+      <Filter>Object\Character\Monster\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="CMonster.cpp">
+      <Filter>Object\Character\Monster\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="CFennel.cpp">
+      <Filter>Object\Character\Monster\BOSS</Filter>
+    </ClCompile>
+    <ClCompile Include="CHitBox.cpp">
+      <Filter>Object\Character\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="CBHitBox.cpp">
+      <Filter>Object\Character\Monster\BOSS</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

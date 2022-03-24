@@ -2,6 +2,7 @@
 
 class CMonster;
 class CState;
+class CFennel;
 
 class AI
 {
@@ -17,6 +18,7 @@ public:
 	~AI();
 
 	CMonster* GetOwnerAI();
+	
 	CState* GetState(MON_STATE state);
 	void SetCurState(MON_STATE state);
 	

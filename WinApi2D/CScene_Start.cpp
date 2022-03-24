@@ -5,12 +5,14 @@
 #include "CKaho.h"
 #include "CMonster.h"
 #include "CImp.h"
+#include "CFennel.h"
 
 #include "CMap.h"
 #include "CBackGround.h"
 
 #include "CSound.h"
 #include "CD2DImage.h"
+
 
 CScene_Start::CScene_Start()
 {
@@ -63,12 +65,17 @@ void CScene_Start::Enter()
 	map->SetPos(fPoint(-200.f, -300.f));
 	AddObject(map, GROUP_GAMEOBJ::MAP);
 
+	CFennel* pFennel = new CFennel;
+	pFennel->SetPos(fPoint(800.f, 300.f));
+	AddObject(pFennel, GROUP_GAMEOBJ::BOSS);
+
+
 	CCollisionManager::getInst()->CheckGroup(GROUP_GAMEOBJ::PLAYER, GROUP_GAMEOBJ::MONSTER);
 	CCollisionManager::getInst()->CheckGroup(GROUP_GAMEOBJ::MISSILE_PLAYER, GROUP_GAMEOBJ::MONSTER);
 	CCollisionManager::getInst()->CheckGroup(GROUP_GAMEOBJ::PLAYER, GROUP_GAMEOBJ::TILE);
 	CCollisionManager::getInst()->CheckGroup(GROUP_GAMEOBJ::MONSTER, GROUP_GAMEOBJ::TILE);
 	CCollisionManager::getInst()->CheckGroup(GROUP_GAMEOBJ::HITBOX_PLAYER, GROUP_GAMEOBJ::MONSTER);
-
+	CCollisionManager::getInst()->CheckGroup(GROUP_GAMEOBJ::BOSS, GROUP_GAMEOBJ::TILE);
 
 	// Camera Look ÁöÁ¤
 	CCameraManager::getInst()->SetLookAt(fPoint(WINSIZEX / 2.f, WINSIZEY / 2.f));

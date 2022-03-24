@@ -135,7 +135,7 @@ void CTile::Load(FILE* pFile)
 void CTile::OnCollision(CCollider* _pOther)
 {
 	CGameObject* pOtherObj = _pOther->GetObj();
-	if (pOtherObj->GetName() == L"Kaho"|| pOtherObj->GetName() == L"Monster" || pOtherObj->GetName() == L"Imp")
+	if (pOtherObj->GetName() == L"Kaho"|| pOtherObj->GetName() == L"Monster" || pOtherObj->GetName() == L"Imp" || pOtherObj->GetName() == L"Fennel")
 	{
 		pOtherObj->GetGravity()->SetGround(true);
 
@@ -158,7 +158,7 @@ void CTile::OnCollision(CCollider* _pOther)
 void CTile::OnCollisionEnter(CCollider* _pOther)
 {
 	CGameObject* pOtherObj = _pOther->GetObj();
-	if (pOtherObj->GetName() == L"Kaho" || pOtherObj->GetName() == L"Monster" || pOtherObj->GetName() == L"Imp")
+	if (pOtherObj->GetName() == L"Kaho" || pOtherObj->GetName() == L"Monster" || pOtherObj->GetName() == L"Imp" || pOtherObj->GetName() == L"Fennel")
 	{
 		pOtherObj->GetGravity()->SetGround(true);
 
@@ -181,7 +181,7 @@ void CTile::OnCollisionEnter(CCollider* _pOther)
 void CTile::OnCollisionExit(CCollider* _pOther)
 {
 	CGameObject* pOtherObj = _pOther->GetObj();
-	if (pOtherObj->GetName() == L"Kaho" || pOtherObj->GetName() == L"Monster" || pOtherObj->GetName() == L"Imp")
+	if (pOtherObj->GetName() == L"Kaho" || pOtherObj->GetName() == L"Monster" || pOtherObj->GetName() == L"Imp" || pOtherObj->GetName() == L"Fennel")
 	{
 		pOtherObj->GetGravity()->SetGround(false);
 	}
