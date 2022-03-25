@@ -17,7 +17,7 @@ CFennel::CFennel()
 	
 	m_pImg = CResourceManager::getInst()->LoadD2DImage(L"FennelIdle",L"texture\\sFennelIdle_Full.png");
 	m_pImg2 = CResourceManager::getInst()->LoadD2DImage(L"FenneAtt", L"texture\\sFennelAtt_Full.png");
-	m_CurState = Boss_PHASE::PHASE_1;
+	m_CurState = Boss_Pattern::IDEL;
 	
 	CreateCollider();
 	GetCollider()->SetScale(fPoint(60.f, 75.f));
@@ -26,7 +26,7 @@ CFennel::CFennel()
 	//공격 자른크기 100,55,60,105
 	CreateAnimator();
 	GetAnimator()->CreateAnimation(L"FennelIdle", m_pImg, fPoint(0,0), fPoint(55.f,55.f), fPoint(55.f,0), 0.1f, 4, true);
-	GetAnimator()->CreateAnimation(L"FennelAtt", m_pImg2, fPoint(0, 0), fPoint(100.f, 55.f), fPoint(100.f, 0), 0.1f, 22, true);
+	GetAnimator()->CreateAnimation(L"FennelAtt", m_pImg2, fPoint(0, 0), fPoint(102.f, 66.f), fPoint(102.f, 0), 0.1f, 22, true);
 	
 	CreateGravity();
 	CreateRigidBody();
@@ -80,15 +80,15 @@ void CFennel::update_move()
 	fPoint fptBossPos = GetPos();
 
 	fVec2 fvDiff = fptPlayerPos - fptBossPos;
-	float fLen = fvDiff.Length();
 	
-	if (fLen > m_fAttRange)
+	
+	if (fvDiff.x > m_fAttRange)
 	{
-	/*	GetRigidBody()->SetVelocity(fVec2(-500.f, GetRigidBody()->GetVelocity().y));
-	*/}
-	else if (fLen <= m_fAttRange)
+		m_CurState = Boss_Pattern::SWORDATTACK;
+	}
+	else if (fvDiff.x <= m_fAttRange)
 	{
-		GetAnimator()->Play(L"FennelAtt");
+		m_CurState = Boss_Pattern::IDEL;
 	}
 	
 }
@@ -97,13 +97,36 @@ void CFennel::update_state()
 {
 	if (50 >= m_fHP)
 	{
-		m_CurState = Boss_PHASE::PHASE_2;
+		Boss_PHASE::PHASE_2;
 	}
 }
 
 void CFennel::update_animation()
 {
-	GetAnimator()->Play(L"FennelIdle");
+	switch (m_CurState)
+	{
+	case Boss_Pattern::IDEL:
+	{
+		GetAnimator()->Play(L"FennelIdle");
+	}
+		break;
+	case Boss_Pattern::SWORDATTACK:
+	{
+		GetAnimator()->Play(L"FennelAtt");
+	}
+		break;
+	case Boss_Pattern::LIGTHNING:
+	{
+
+	}
+		break;
+	case Boss_Pattern::SWORDSTRIKE:
+	{
+
+	}
+		break;
+	}
+	
 }
 
 void CFennel::CreateLightning()

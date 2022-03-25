@@ -11,6 +11,14 @@ enum class Boss_PHASE
 	PHASE_2,
 };
 
+enum class Boss_Pattern
+{
+	IDEL,
+	SWORDATTACK,
+	LIGTHNING,
+	SWORDSTRIKE,
+};
+
 class CFennel : public CGameObject
 {
 	
@@ -31,7 +39,7 @@ private:
 	float m_fHP = 100;
 	float m_fAttRange = 100;
 
-	Boss_PHASE m_CurState;
+	Boss_Pattern m_CurState;
 
 public:
 	CFennel();

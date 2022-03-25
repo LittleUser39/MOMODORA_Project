@@ -270,6 +270,9 @@
     <ClInclude Include="CBHitBox.h">
       <Filter>Object\Character\Monster\BOSS</Filter>
     </ClInclude>
+    <ClInclude Include="CLightning.h">
+      <Filter>Object\Character\Monster\BOSS</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WinApi2D.cpp">
@@ -432,6 +435,9 @@
       <Filter>Object\Character\Player</Filter>
     </ClCompile>
     <ClCompile Include="CBHitBox.cpp">
+      <Filter>Object\Character\Monster\BOSS</Filter>
+    </ClCompile>
+    <ClCompile Include="CLightning.cpp">
       <Filter>Object\Character\Monster\BOSS</Filter>
     </ClCompile>
   </ItemGroup>

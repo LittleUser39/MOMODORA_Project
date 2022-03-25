@@ -20,7 +20,6 @@ private:
 
 	CD2DImage* m_pImg;
 	CD2DImage* m_pImg2;
-	CD2DImage* m_pImg3;
 	
 	MON_STATE m_eCurState;	//현재상태
 	MON_STATE m_ePerState;	//이전상태
