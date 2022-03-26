@@ -2,7 +2,6 @@
 #include "CAttState.h"
 #include "CKaho.h"
 #include "CMonster.h"
-#include "CD2DImage.h"
 #include "CAnimator.h"
 #include "CHitBox.h"
 #include "CAnimator.h"

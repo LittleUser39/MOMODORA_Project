@@ -76,9 +76,6 @@
     <Filter Include="Object\Character\Monster">
       <UniqueIdentifier>{4d2c97c5-48d8-420d-9342-ec2c98372dd5}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Object\Character\Monster\AI">
-      <UniqueIdentifier>{8a2521d6-f251-42cf-9e49-f18e0d798e80}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Object\Character\Player">
       <UniqueIdentifier>{8ebcbc8d-bb7e-4123-b0f3-fe80f9235baa}</UniqueIdentifier>
     </Filter>
@@ -87,6 +84,12 @@
     </Filter>
     <Filter Include="Object\Character\Monster\BOSS">
       <UniqueIdentifier>{21cc186b-fa54-46e3-8f5b-f0114ead9806}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\Character\Monster\BOSS\AI">
+      <UniqueIdentifier>{b1185e44-496d-4d15-9c59-17b28f88bfa8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\Character\Monster\Common\AI">
+      <UniqueIdentifier>{8a2521d6-f251-42cf-9e49-f18e0d798e80}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -220,19 +223,19 @@
       <Filter>Object\Map</Filter>
     </ClInclude>
     <ClInclude Include="AI.h">
-      <Filter>Object\Character\Monster\AI</Filter>
+      <Filter>Object\Character\Monster\Common\AI</Filter>
     </ClInclude>
     <ClInclude Include="CIdleState.h">
-      <Filter>Object\Character\Monster\AI</Filter>
+      <Filter>Object\Character\Monster\Common\AI</Filter>
     </ClInclude>
     <ClInclude Include="CState.h">
-      <Filter>Object\Character\Monster\AI</Filter>
+      <Filter>Object\Character\Monster\Common\AI</Filter>
     </ClInclude>
     <ClInclude Include="CTraceState.h">
-      <Filter>Object\Character\Monster\AI</Filter>
+      <Filter>Object\Character\Monster\Common\AI</Filter>
     </ClInclude>
     <ClInclude Include="CAttState.h">
-      <Filter>Object\Character\Monster\AI</Filter>
+      <Filter>Object\Character\Monster\Common\AI</Filter>
     </ClInclude>
     <ClInclude Include="CScene_Select.h">
       <Filter>Scene</Filter>
@@ -270,7 +273,22 @@
     <ClInclude Include="CBHitBox.h">
       <Filter>Object\Character\Monster\BOSS</Filter>
     </ClInclude>
-    <ClInclude Include="CLightning.h">
+    <ClInclude Include="BossAI.h">
+      <Filter>Object\Character\Monster\BOSS\AI</Filter>
+    </ClInclude>
+    <ClInclude Include="CBIdleState.h">
+      <Filter>Object\Character\Monster\BOSS\AI</Filter>
+    </ClInclude>
+    <ClInclude Include="CBState.h">
+      <Filter>Object\Character\Monster\BOSS\AI</Filter>
+    </ClInclude>
+    <ClInclude Include="CBAttState.h">
+      <Filter>Object\Character\Monster\BOSS\AI</Filter>
+    </ClInclude>
+    <ClInclude Include="CBLightning.h">
+      <Filter>Object\Character\Monster\BOSS\AI</Filter>
+    </ClInclude>
+    <ClInclude Include="CLight.h">
       <Filter>Object\Character\Monster\BOSS</Filter>
     </ClInclude>
   </ItemGroup>
@@ -387,19 +405,19 @@
       <Filter>Object\Map</Filter>
     </ClCompile>
     <ClCompile Include="AI.cpp">
-      <Filter>Object\Character\Monster\AI</Filter>
+      <Filter>Object\Character\Monster\Common\AI</Filter>
     </ClCompile>
     <ClCompile Include="CIdleState.cpp">
-      <Filter>Object\Character\Monster\AI</Filter>
+      <Filter>Object\Character\Monster\Common\AI</Filter>
     </ClCompile>
     <ClCompile Include="CState.cpp">
-      <Filter>Object\Character\Monster\AI</Filter>
+      <Filter>Object\Character\Monster\Common\AI</Filter>
     </ClCompile>
     <ClCompile Include="CTraceState.cpp">
-      <Filter>Object\Character\Monster\AI</Filter>
+      <Filter>Object\Character\Monster\Common\AI</Filter>
     </ClCompile>
     <ClCompile Include="CAttState.cpp">
-      <Filter>Object\Character\Monster\AI</Filter>
+      <Filter>Object\Character\Monster\Common\AI</Filter>
     </ClCompile>
     <ClCompile Include="CScene_Select.cpp">
       <Filter>Scene</Filter>
@@ -437,7 +455,22 @@
     <ClCompile Include="CBHitBox.cpp">
       <Filter>Object\Character\Monster\BOSS</Filter>
     </ClCompile>
-    <ClCompile Include="CLightning.cpp">
+    <ClCompile Include="BossAI.cpp">
+      <Filter>Object\Character\Monster\BOSS\AI</Filter>
+    </ClCompile>
+    <ClCompile Include="CBIdleState.cpp">
+      <Filter>Object\Character\Monster\BOSS\AI</Filter>
+    </ClCompile>
+    <ClCompile Include="CBState.cpp">
+      <Filter>Object\Character\Monster\BOSS\AI</Filter>
+    </ClCompile>
+    <ClCompile Include="CBAttState.cpp">
+      <Filter>Object\Character\Monster\BOSS\AI</Filter>
+    </ClCompile>
+    <ClCompile Include="CBLightning.cpp">
+      <Filter>Object\Character\Monster\BOSS\AI</Filter>
+    </ClCompile>
+    <ClCompile Include="CLight.cpp">
       <Filter>Object\Character\Monster\BOSS</Filter>
     </ClCompile>
   </ItemGroup>

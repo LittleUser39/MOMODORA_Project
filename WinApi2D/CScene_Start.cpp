@@ -43,8 +43,9 @@ void CScene_Start::Enter()
 	// Player 추가
 	CKaho* pPlayer = new CKaho;
 	pPlayer->SetPos(fPoint(200, 200));
-	AddObject(pPlayer, GROUP_GAMEOBJ::PLAYER);
 	pPlayer->RegisterPlayer();
+	AddObject(pPlayer, GROUP_GAMEOBJ::PLAYER);
+	
 
 	//몬스터 추가
 	//CMonster* pMonster = new CMonster;
@@ -65,9 +66,7 @@ void CScene_Start::Enter()
 	map->SetPos(fPoint(-200.f, -300.f));
 	AddObject(map, GROUP_GAMEOBJ::MAP);
 
-	CFennel* pFennel = new CFennel;
-	pFennel->SetPos(fPoint(800.f, 300.f));
-	AddObject(pFennel, GROUP_GAMEOBJ::BOSS);
+	
 
 
 	CCollisionManager::getInst()->CheckGroup(GROUP_GAMEOBJ::PLAYER, GROUP_GAMEOBJ::MONSTER);
@@ -89,6 +88,9 @@ void CScene_Start::Enter()
 	AddObject(pMon, GROUP_GAMEOBJ::MONSTER);
 	CMonster* pMon2 = CMonster::Create(MON_TYPE::NORMAL, fPoint(500.f, 300.f));
 	AddObject(pMon2, GROUP_GAMEOBJ::MONSTER);
+	
+	CFennel* pFennel = CFennel::Create(Boss_PHASE::PHASE_1, fPoint(900.f, 300.f));
+	AddObject(pFennel, GROUP_GAMEOBJ::BOSS);
 }
 
 void CScene_Start::Exit()

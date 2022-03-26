@@ -3,7 +3,7 @@
 #include "CGameObject.h"
 #include "CScene.h"
 #include "AI.h"
-
+#include "BossAI.h"
 CEventManager::CEventManager()
 {
 
@@ -112,6 +112,16 @@ void CEventManager::EventChangeScene(GROUP_SCENE scene)
 }
 
 void CEventManager::EventChangeAIState(AI* ai, MON_STATE state)
+{
+	tEvent event = {};
+	event.eEven = TYPE_EVENT::CHANGE_AI_STATE;
+	event.lParam = (DWORD_PTR)ai;
+	event.wParam = (DWORD_PTR)state;
+
+	CEventManager::getInst()->AddEvent(event);
+}
+
+void CEventManager::EventChangeBossAIState(BossAI* ai, Boss_Pattern state)
 {
 	tEvent event = {};
 	event.eEven = TYPE_EVENT::CHANGE_AI_STATE;

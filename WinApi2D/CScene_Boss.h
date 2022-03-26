@@ -1,7 +1,6 @@
 #pragma once
 #include "CScene.h"
-class CScene_Boss :
-    public CScene
+class CScene_Boss : public CScene
 {
 };
 

@@ -2,8 +2,16 @@
 #include "CGameObject.h"
 
 class CD2DImage;
-class AI;
-class CState;
+class BossAI;
+class CBState;
+
+struct tBossInfo
+{
+	float fHP;
+	float fMaxHP;
+	float fAttRange;
+	
+};
 
 enum class Boss_PHASE
 {
@@ -11,19 +19,14 @@ enum class Boss_PHASE
 	PHASE_2,
 };
 
-enum class Boss_Pattern
-{
-	IDEL,
-	SWORDATTACK,
-	LIGTHNING,
-	SWORDSTRIKE,
-};
-
 class CFennel : public CGameObject
 {
 	
 private:
-	
+	tBossInfo m_tInfo;
+	BossAI* m_pAI;
+	CBState* m_mState;
+
 	CD2DImage* m_pImg;	//캐릭터 이미지
 	CD2DImage* m_pImg2;
 	CD2DImage* m_pImg3;
@@ -36,11 +39,17 @@ private:
 	CD2DImage* m_pImg10;
 	CD2DImage* m_pImg11;
 
-	float m_fHP = 100;
-	float m_fAttRange = 100;
+	
 
-	Boss_Pattern m_CurState;
+	const float m_fDelaytime = 0.5f; //딜레이 
 
+	float m_fRollCoolTime = 1.f;
+	float m_fRollTime = 0;
+
+	float m_fDelay = 0; //공격 딜레이
+
+	bool m_bDash;
+	bool m_bBack;
 public:
 	CFennel();
 	virtual ~CFennel();
@@ -54,14 +63,16 @@ public:
 
 	void CreateHitBox();	//히트 박스 충돌체 만듦
 
-	void SetPhase();
-	void update_move();
-	void update_state();
-	void update_animation();
+	static CFennel* Create(Boss_PHASE type, fPoint pos);
 
-	void CreateLightning();
-	void SwordStrike();
-	void SwordAtt();
+	void SetMonInfo(const tBossInfo& info);
+	const tBossInfo& GetMonInfo();
+
+	void SetAI(BossAI* ai);
+
+	void Dash();
+	void Back();
+	void CreateLighting();
 };
 
 

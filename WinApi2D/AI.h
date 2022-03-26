@@ -2,7 +2,7 @@
 
 class CMonster;
 class CState;
-class CFennel;
+
 
 class AI
 {

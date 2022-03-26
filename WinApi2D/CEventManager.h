@@ -2,6 +2,8 @@
 
 class CGameObject;
 class AI;
+class BossAI;
+
 struct tEvent
 {
 	TYPE_EVENT	eEven;		// 이벤트 타입
@@ -27,5 +29,6 @@ public:
 	void EventDeleteObject(CGameObject* pObj);
 	void EventChangeScene(GROUP_SCENE scene);
 	void EventChangeAIState(AI* ai, MON_STATE state);
+	void EventChangeBossAIState(BossAI* ai, Boss_Pattern state);
 };
 

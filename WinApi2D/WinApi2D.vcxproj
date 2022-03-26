@@ -150,12 +150,17 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="AI.h" />
+    <ClInclude Include="BossAI.h" />
     <ClInclude Include="CAnimation.h" />
     <ClInclude Include="CAnimator.h" />
     <ClInclude Include="CArrow.h" />
     <ClInclude Include="CAttState.h" />
     <ClInclude Include="CBackGround.h" />
+    <ClInclude Include="CBAttState.h" />
     <ClInclude Include="CBHitBox.h" />
+    <ClInclude Include="CBIdleState.h" />
+    <ClInclude Include="CBLightning.h" />
+    <ClInclude Include="CBState.h" />
     <ClInclude Include="CButtonUI.h" />
     <ClInclude Include="CCameraManager.h" />
     <ClInclude Include="CCollisionManager.h" />
@@ -173,7 +178,7 @@
     <ClInclude Include="CImp.h" />
     <ClInclude Include="CKaho.h" />
     <ClInclude Include="CKeyManager.h" />
-    <ClInclude Include="CLightning.h" />
+    <ClInclude Include="CLight.h" />
     <ClInclude Include="CMap.h" />
     <ClInclude Include="CMHitBox.h" />
     <ClInclude Include="CMonster.h" />
@@ -213,12 +218,17 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AI.cpp" />
+    <ClCompile Include="BossAI.cpp" />
     <ClCompile Include="CAnimation.cpp" />
     <ClCompile Include="CAnimator.cpp" />
     <ClCompile Include="CArrow.cpp" />
     <ClCompile Include="CAttState.cpp" />
     <ClCompile Include="CBackGround.cpp" />
+    <ClCompile Include="CBAttState.cpp" />
     <ClCompile Include="CBHitBox.cpp" />
+    <ClCompile Include="CBIdleState.cpp" />
+    <ClCompile Include="CBLightning.cpp" />
+    <ClCompile Include="CBState.cpp" />
     <ClCompile Include="CButtonUI.cpp" />
     <ClCompile Include="CCameraManager.cpp" />
     <ClCompile Include="CCollisionManager.cpp" />
@@ -236,7 +246,7 @@
     <ClCompile Include="CImp.cpp" />
     <ClCompile Include="CKaho.cpp" />
     <ClCompile Include="CKeyManager.cpp" />
-    <ClCompile Include="CLightning.cpp" />
+    <ClCompile Include="CLight.cpp" />
     <ClCompile Include="CMap.cpp" />
     <ClCompile Include="CMHitBox.cpp" />
     <ClCompile Include="CMonster.cpp" />

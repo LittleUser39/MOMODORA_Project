@@ -88,6 +88,15 @@ enum class MON_STATE
 	SIZE,
 };
 
+enum class Boss_Pattern
+{
+	IDLE,
+	DASH,
+	BACK,
+	SWORDATTACK,
+	LIGTHNING,
+	SWORDSTRIKE,
+};
 //========================================
 //## 이벤트 타입					##
 //========================================
@@ -139,7 +148,7 @@ enum class TYPE_EVENT
 #define DeleteObj(pObj)			CEventManager::getInst()->EventDeleteObject(pObj)
 #define ChangeScn(scene)		CEventManager::getInst()->EventChangeScene(scene)
 #define ChangeAIState(ai, state)	CEventManager::getInst()->EventChangeAIState(ai, state)
-
+#define ChangeBossAIState(ai, state)	CEventManager::getInst()->EventChangeBossAIState(ai, state)
 //========================================
 //## 전역변수(인스턴스, 윈도우 핸들)	##
 //========================================

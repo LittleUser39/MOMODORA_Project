@@ -40,11 +40,13 @@ public:
 	virtual void update();
 
 	float GetSpeed();
-	const tMonInfo& GetMonInfo();
+	
 
 	void SetSpeed(float speed);
 	void SetAI(AI* ai);
+
 	void SetMonInfo(const tMonInfo& info);
+	const tMonInfo& GetMonInfo();
 
 	void OnCollisionEnter(CCollider* pOther);
 
