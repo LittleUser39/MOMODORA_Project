@@ -3,6 +3,9 @@
 class CBAttState :
     public CBState
 {
+	bool m_bNext;
+	bool m_bFlip;
+	bool m_bDash;
 	bool m_bCanAtt;
 	float b_fDT;
 

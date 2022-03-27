@@ -24,6 +24,10 @@ CFennel::CFennel()
 	m_pImg = CResourceManager::getInst()->LoadD2DImage(L"FennelIdle",L"texture\\sFennelIdle_Full.png");
 	m_pImg2 = CResourceManager::getInst()->LoadD2DImage(L"FenneAtt", L"texture\\sFennelAtt_Full.png");
 	m_pImg3 = CResourceManager::getInst()->LoadD2DImage(L"FenneDash", L"texture\\sFennelDash_0.png");
+	m_pImg4 = CResourceManager::getInst()->LoadD2DImage(L"FennelLight", L"texture\\sFennelLight_Full.png");
+	m_pImg5 = CResourceManager::getInst()->LoadD2DImage(L"Fennelflip", L"texture\\sFennelBackflip_Full.png");
+
+	
 
 	m_bBack = true;
 	m_bDash = true;
@@ -35,14 +39,20 @@ CFennel::CFennel()
 	//자른 크기 55,55,100,100
 	//공격 자른크기 100,55,60,105
 	CreateAnimator();
-	GetAnimator()->CreateAnimation(L"FennelIdleL", m_pImg, fPoint(0,0), fPoint(55.f,55.f), fPoint(55.f,0), 0.1f, 4, false);
-	GetAnimator()->CreateAnimation(L"FennelIdleR", m_pImg, fPoint(0, 0), fPoint(55.f, 55.f), fPoint(55.f, 0), 0.1f, 4, false, true);
+	GetAnimator()->CreateAnimation(L"FennelIdleL", m_pImg, fPoint(0,0), fPoint(55.f,55.f), fPoint(55.f,0), 0.1f, 4, true);
+	GetAnimator()->CreateAnimation(L"FennelIdleR", m_pImg, fPoint(0, 0), fPoint(55.f, 55.f), fPoint(55.f, 0), 0.1f, 4, true, true);
 	
-	GetAnimator()->CreateAnimation(L"FennelDashL", m_pImg3, fPoint(0, 0), fPoint(55.f, 55.f), fPoint(55.f, 0), 0.1f, 1, false);
-	GetAnimator()->CreateAnimation(L"FennelDashR", m_pImg3, fPoint(0, 0), fPoint(55.f, 55.f), fPoint(55.f, 0), 0.1f, 1, false, true);
+	GetAnimator()->CreateAnimation(L"FennelDashL", m_pImg3, fPoint(0, 0), fPoint(55.f, 55.f), fPoint(55.f, 0), 0.1f, 1, true);
+	GetAnimator()->CreateAnimation(L"FennelDashR", m_pImg3, fPoint(0, 0), fPoint(55.f, 55.f), fPoint(55.f, 0), 0.1f, 1, true, true);
 
 	GetAnimator()->CreateAnimation(L"FennelAttL", m_pImg2, fPoint(0, 0), fPoint(102.f, 66.f), fPoint(102.f, 0), 0.1f, 22, false);
 	GetAnimator()->CreateAnimation(L"FennelAttR", m_pImg2, fPoint(0, 0), fPoint(102.f, 66.f), fPoint(102.f, 0), 0.1f, 22, false , true);
+
+	GetAnimator()->CreateAnimation(L"FennelLightL", m_pImg4, fPoint(0, 0), fPoint(48.f, 64.f), fPoint(48.f, 0), 0.1f, 21, false);
+	GetAnimator()->CreateAnimation(L"FennelLightR", m_pImg4, fPoint(0, 0), fPoint(48.f, 64.f), fPoint(48.f, 0), 0.1f, 21, false,true);
+
+	GetAnimator()->CreateAnimation(L"FennelflipL", m_pImg5, fPoint(0, 0), fPoint(61.f, 72.f), fPoint(61.f, 0), 0.1f, 12, false);
+	GetAnimator()->CreateAnimation(L"FennelflipR", m_pImg5, fPoint(0, 0), fPoint(61.f, 72.f), fPoint(61.f, 0), 0.1f, 12, false,true);
 
 	GetAnimator()->Play(L"FennelIdleL");
 
@@ -74,13 +84,6 @@ void CFennel::update()
 		GetAnimator()->update();
 	if (nullptr != m_pAI)
 		m_pAI->update();
-	
-	m_fDelay += fDT;
-	if (5.f <= m_fDelay)
-	{
-		CreateLighting();
-		m_fDelay = 0;
-	}
 }
 
 void CFennel::OnCollisionEnter(CCollider * pOther)
@@ -141,48 +144,7 @@ void CFennel::SetAI(BossAI* ai)
 	m_pAI = ai;
 	m_pAI->m_pOwner = this;
 }
-//
-//void CFennel::update_state()
-//{
-//	//CKaho* pPlayer = CKaho::GetPlayer();
-//	//fPoint fptPlayerPos = pPlayer->GetPos();
-//
-//	//fPoint fptBossPos = GetPos();
-//
-//	//// 플레이어 위치 - 보스 위치
-//	//fVec2 fvDiff = fptPlayerPos - fptBossPos;
-//	//float fLen = fvDiff.Length();
-//	//
-//	//if (50 >= m_fHP)
-//	//{
-//	//	Boss_PHASE::PHASE_2;
-//	//}
-//	//if (fLen <= m_fAttRange)
-//	//{
-//	//	m_CurState = Boss_Pattern::SWORDATTACK;
-//	//	
-//	//}
-//	//else if (fLen > m_fAttRange)
-//	//{
-//	//	m_CurState = Boss_Pattern::DASH;
-//	//}
-//
-//}
-//
-//void CFennel::SwordStrike()
-//{
-//	//대쉬 후 2번 연속 공격 , 일정범위안 이면 그냥 2번공격
-//	Dash();
-//
-//	if (0.f == GetRigidBody()->GetSpeed())
-//	{
-//		GetAnimator()->Play(L"FennelAttL");
-//		m_bDash = true;
-//	}
-//	
-//	
-//}
-//
+
 void CFennel::Dash()
 {
 	CKaho* pPlayer = CKaho::GetPlayer();

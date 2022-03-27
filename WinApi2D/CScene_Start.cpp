@@ -56,14 +56,14 @@ void CScene_Start::Enter()
 	//pCloneMonster->SetPos(fPoint(500, 350));
 	//AddObject(pCloneMonster, GROUP_GAMEOBJ::MONSTER);
 
-	CImp* pImp = new CImp;
+	/*CImp* pImp = new CImp;
 	pImp->SetPos(fPoint(700.f, 300.f));
-	AddObject(pImp, GROUP_GAMEOBJ::MONSTER);
+	AddObject(pImp, GROUP_GAMEOBJ::MONSTER);*/
 
 	//맵 생성
 	CMap* map = new CMap;
-	map->Load(L"Map_Start", L"texture\\map\\stage_1.png");
-	map->SetPos(fPoint(-200.f, -300.f));
+	map->Load(L"Map_Start", L"texture\\map\\BackGround12.png");
+	map->SetPos(fPoint(-200.f,0.f));
 	AddObject(map, GROUP_GAMEOBJ::MAP);
 
 	
@@ -75,9 +75,9 @@ void CScene_Start::Enter()
 	CCollisionManager::getInst()->CheckGroup(GROUP_GAMEOBJ::MONSTER, GROUP_GAMEOBJ::TILE);
 	CCollisionManager::getInst()->CheckGroup(GROUP_GAMEOBJ::HITBOX_PLAYER, GROUP_GAMEOBJ::MONSTER);
 	CCollisionManager::getInst()->CheckGroup(GROUP_GAMEOBJ::BOSS, GROUP_GAMEOBJ::TILE);
-
+	
 	// Camera Look 지정
-	CCameraManager::getInst()->SetLookAt(fPoint(WINSIZEX / 2.f, WINSIZEY / 2.f));
+	CCameraManager::getInst()->SetLookAt(fPoint(WINSIZEX/2.f,WINSIZEY/2.f));
 	CCameraManager::getInst()->SetTargetObj(pPlayer);
 	//화면 전환시 검정색
 	CCameraManager::getInst()->FadeOut(1.f);
@@ -89,8 +89,8 @@ void CScene_Start::Enter()
 	CMonster* pMon2 = CMonster::Create(MON_TYPE::NORMAL, fPoint(500.f, 300.f));
 	AddObject(pMon2, GROUP_GAMEOBJ::MONSTER);
 	
-	CFennel* pFennel = CFennel::Create(Boss_PHASE::PHASE_1, fPoint(900.f, 300.f));
-	AddObject(pFennel, GROUP_GAMEOBJ::BOSS);
+	//CFennel* pFennel = CFennel::Create(Boss_PHASE::PHASE_1, fPoint(900.f, 300.f));
+	//AddObject(pFennel, GROUP_GAMEOBJ::BOSS);
 }
 
 void CScene_Start::Exit()

@@ -124,12 +124,11 @@ void CImp::update_state()
 	fVec2 fvDiff = fptPlayerPos - fpImp;
 	float fLen = fvDiff.Length();
 
-	if (!bAttcking)
+	if (fLen > m_tInfo.fAttRange)
 	{
 		m_eCurState = MON_STATE::IDLE;
 	}
-
-	if (fLen < m_tInfo.fAttRange)
+	else if (fLen < m_tInfo.fAttRange)
 	{
 		m_eCurState = MON_STATE::ATT;
 		bAttcking = true;

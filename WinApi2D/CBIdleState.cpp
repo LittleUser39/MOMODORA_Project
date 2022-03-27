@@ -3,6 +3,7 @@
 #include "framework.h"
 #include "CKaho.h"
 #include "CAnimator.h"
+#include "CAnimation.h"
 #include "CFennel.h"
 
 CBIdleState::CBIdleState(Boss_Pattern state)
@@ -23,6 +24,12 @@ void CBIdleState::update()
 	CFennel* pBoss = GetMonster();
 	fPoint fptMonsterPos = pBoss->GetPos();
 	fVec2 fvDiff = fptPlayerPos - fptMonsterPos;
+
+	pBoss->GetAnimator()->FindAnimation(L"FennelLightL")->SetFrame(0);
+	pBoss->GetAnimator()->FindAnimation(L"FennelAttL")->SetFrame(0);
+	pBoss->GetAnimator()->FindAnimation(L"FennelflipL")->SetFrame(0);
+	pBoss->GetAnimator()->FindAnimation(L"FennelflipR")->SetFrame(0);
+
 	m_bfDT += fDT;
 	int Pattern = rand() % 2 ;
 	if (2.f <= m_bfDT)
@@ -31,10 +38,10 @@ void CBIdleState::update()
 		{
 			ChangeBossAIState(GetOwnerAI(), Boss_Pattern::SWORDATTACK);
 		}
-		/*else if (1 == Pattern)
+		if (0 == Pattern)
 		{
 			ChangeBossAIState(GetOwnerAI(), Boss_Pattern::LIGTHNING);
-		}*/
+		}
 	}
 	if (0 < fvDiff.x)
 		pBoss->GetAnimator()->Play(L"FennelIdleR");
