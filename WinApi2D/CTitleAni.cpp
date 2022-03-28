@@ -7,8 +7,8 @@
 CTitleAni::CTitleAni()
 {
 	m_pImg = CResourceManager::getInst()->LoadD2DImage(L"sTitleKaho_Full",L"texture\\background\\sTitleKaho_Full.png");
-	SetScale(fPoint(750,230));
-	SetPos(fPoint(1115,630));
+	SetScale(fPoint(600,200));
+	SetPos(fPoint(1000,640));
 	
 	CreateCollider();
 	GetCollider()->SetScale(fPoint(10,10));

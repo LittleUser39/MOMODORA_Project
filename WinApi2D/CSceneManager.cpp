@@ -5,6 +5,7 @@
 #include "CScene_Start.h"
 #include "CScene_Tool.h"
 #include "CScene_Select.h"
+#include "CScene_Boss.h"
 
 CSceneManager::CSceneManager()
 {
@@ -59,6 +60,9 @@ void CSceneManager::init()
 
 	m_arrScene[(size_t)GROUP_SCENE::TOOL] = new CScene_Tool;
 	m_arrScene[(size_t)GROUP_SCENE::TOOL]->SetName(L"Tool_Scene");
+
+	m_arrScene[(size_t)GROUP_SCENE::BOSS] = new CScene_Boss;
+	m_arrScene[(size_t)GROUP_SCENE::BOSS]->SetName(L"Boss_Scene");
 
 	//여기서 시작위치 정함
 	m_pCurScene = m_arrScene[(size_t)GROUP_SCENE::TITLE];

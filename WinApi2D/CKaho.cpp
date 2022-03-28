@@ -5,6 +5,7 @@
 
 #include "CAnimator.h"
 #include "CAnimation.h"
+#include "CSound.h"
 
 #include "CRigidBody.h"
 
@@ -87,6 +88,11 @@ CKaho::CKaho() : m_eCurState(PLAYER_STATE::IDLE)
 	GetAnimator()->CreateAnimation(L"KahoBrakeR", m_pImg11, fPoint(0.f, 0.f), fPoint(48.f, 48.f), fPoint(48.f, 0.f), 0.2f, 6, false);
 	GetAnimator()->CreateAnimation(L"KahoBrakeL", m_pImg11, fPoint(0.f, 0.f), fPoint(48.f, 48.f), fPoint(48.f, 0.f), 0.2f, 6, false, true);
 	
+	CSoundManager::getInst()->AddSound(L"Att1", L"sound\\Kaho\\Attack1.wav");
+	CSoundManager::getInst()->AddSound(L"Att2", L"sound\\Kaho\\Attack2.wav");
+	CSoundManager::getInst()->AddSound(L"Att3", L"sound\\Kaho\\Attack3.wav");
+	CSoundManager::getInst()->AddSound(L"Bow",	L"sound\\Kaho\\sndArrow.wav");
+	
 	//강체 만들기
 	CreateRigidBody();
 	//중력 생성
@@ -96,6 +102,7 @@ CKaho::CKaho() : m_eCurState(PLAYER_STATE::IDLE)
 CKaho::~CKaho()
 {
 	instance = nullptr;
+
 }
 
 CKaho* CKaho::Clone()
@@ -365,10 +372,12 @@ void CKaho::update_animation()	//애니메이션에 관한거 - 상태에 따른 애니메이션 출
 		if (-1 == m_iCurDir && m_onfloor)
 		{
 			GetAnimator()->Play(L"KahoAttack1L");
+			CSoundManager::getInst()->Play(L"Att1");
 		}
 		else if (1 == m_iCurDir && m_onfloor)
 		{
 			GetAnimator()->Play(L"KahoAttack1R");
+			CSoundManager::getInst()->Play(L"Att1");
 		}
 	}
 	break;
@@ -378,10 +387,12 @@ void CKaho::update_animation()	//애니메이션에 관한거 - 상태에 따른 애니메이션 출
 		if (-1 == m_iCurDir && m_onfloor)
 		{
 			GetAnimator()->Play(L"KahoAttack2L");
+			CSoundManager::getInst()->Play(L"Att2");
 		}
 		else if (1 == m_iCurDir && m_onfloor)
 		{
 			GetAnimator()->Play(L"KahoAttack2R");
+			CSoundManager::getInst()->Play(L"Att2");
 		}
 	}
 	break;
@@ -391,10 +402,12 @@ void CKaho::update_animation()	//애니메이션에 관한거 - 상태에 따른 애니메이션 출
 		if (-1 == m_iCurDir && m_onfloor)
 		{
 			GetAnimator()->Play(L"KahoAttack3L");
+			CSoundManager::getInst()->Play(L"Att3");
 		}
 		else if (1 == m_iCurDir && m_onfloor)
 		{
 			GetAnimator()->Play(L"KahoAttack3R");
+			CSoundManager::getInst()->Play(L"Att3");
 		}
 	}
 	break;
@@ -403,10 +416,12 @@ void CKaho::update_animation()	//애니메이션에 관한거 - 상태에 따른 애니메이션 출
 		if (1 == m_iCurDir)
 		{
 			GetAnimator()->Play(L"KahoBowR");
+			CSoundManager::getInst()->Play(L"Bow");
 		}
 		else if (-1 == m_iCurDir)
 		{
 			GetAnimator()->Play(L"KahoBowL");
+			CSoundManager::getInst()->Play(L"Bow");
 		}	
 	}
 	break;
@@ -435,7 +450,9 @@ void CKaho::update_animation()	//애니메이션에 관한거 - 상태에 따른 애니메이션 출
 	break;
 	
 	case PLAYER_STATE::DEAD:
-	{}
+	{
+
+	}
 	break;
 
 	}

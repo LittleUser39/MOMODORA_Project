@@ -61,7 +61,7 @@ enum class GROUP_SCENE
 	SELECT,
 	START,
 	STAGE_01,
-	STAGE_02,
+	BOSS,
 
 	SIZE,
 };

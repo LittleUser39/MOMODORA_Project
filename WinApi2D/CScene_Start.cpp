@@ -35,6 +35,10 @@ void CScene_Start::update()
 
 void CScene_Start::Enter()
 {
+	CSoundManager::getInst()->AddSound(L"stage1_BGM", L"sound\\BGM\\21 Hallowed_Ground.mp3", true);
+	CSoundManager::getInst()->Play(L"stage1_BGM");
+	
+
 	// 타일 로딩
 	wstring path = CPathManager::getInst()->GetContentPath();
 	path += L"tile\\Start.tile";
@@ -63,7 +67,7 @@ void CScene_Start::Enter()
 	//맵 생성
 	CMap* map = new CMap;
 	map->Load(L"Map_Start", L"texture\\map\\BackGround12.png");
-	map->SetPos(fPoint(-200.f,0.f));
+	map->SetPos(fPoint(-200.f,200.f));
 	AddObject(map, GROUP_GAMEOBJ::MAP);
 
 	

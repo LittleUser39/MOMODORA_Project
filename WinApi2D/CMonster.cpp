@@ -7,6 +7,7 @@
 #include "CD2DImage.h"
 #include "CAnimator.h"
 #include "CMHitBox.h"
+#include "CSound.h"
 
 #include "AI.h"
 #include "CIdleState.h"
@@ -26,6 +27,7 @@ CMonster::CMonster()
 	SetScale(fPoint(50.f, 50.f));
 	
 	CD2DImage* m_pImgAtt = CResourceManager::getInst()->LoadD2DImage(L"MonsterAtt", L"texture\\sMonkeyAttack_Full1.png");
+	CSoundManager::getInst()->AddSound(L"MonsterDeath", L"sound\\Monster\\MonsterDeath.wav");
 	CreateCollider();
 	GetCollider()->SetScale(fPoint(50.f, 50.f));
 
@@ -149,12 +151,15 @@ void CMonster::OnCollisionEnter(CCollider* pOther)
 {
 	CGameObject* pOtherObj = pOther->GetObj();
 
-	if (pOtherObj->GetName() == L"Missile_Player1"||pOtherObj->GetName()==L"Player_hitbox")
+	if (pOtherObj->GetName() == L"Missile_Player1" || pOtherObj->GetName() == L"Player_hitbox")
 	{
-		
+
 		m_tInfo.fHP -= 1;
 		if (m_tInfo.fHP <= 0)
+		{
+			CSoundManager::getInst()->Play(L"MonsterDeath");
 			DeleteObj(this);
+		}
 	}
 }
 

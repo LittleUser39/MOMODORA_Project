@@ -14,6 +14,8 @@ void CScene_Title::update()
 		ChangeScn(GROUP_SCENE::SELECT);
 	if (KeyDown(VK_TAB))
 		ChangeScn(GROUP_SCENE::START);
+	if (KeyDown('A'))
+		ChangeScn(GROUP_SCENE::BOSS);
 	
 }
 
@@ -42,9 +44,6 @@ void CScene_Title::Enter()
 	//todo 타이틀 애니 구현해야함
 	//생각 네모 박스 객체 하나 만들어서 위치 구현후 거기다가 애니메이션 덮어씀
 
-	CTitleAni* titleAni = new CTitleAni;
-	AddObject(titleAni, GROUP_GAMEOBJ::BACKGROUND);
-	
 }
 
 
