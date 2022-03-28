@@ -12,6 +12,10 @@ CScene_Select::~CScene_Select()
 {
 
 }
+void ChangeStart(DWORD_PTR param1, DWORD_PTR param2)
+{
+	ChangeScn(GROUP_SCENE::START);
+}
 
 void CScene_Select::update()
 {
@@ -47,6 +51,7 @@ void CScene_Select::CreateSelectButton()
 	StartButton->SetScale(fPoint(300.f, 100.f));
 	StartButton->SetPos(fPoint(630.f, 350.f));
 	StartButton->SetImage(pImg);
+	StartButton->SetClickedCallBack(ChangeStart,0,0);
 	StartButton->SetText(L"게임 시작"); 
 	
 	CButtonUI* ToolButton = new CButtonUI;

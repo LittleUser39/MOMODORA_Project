@@ -243,9 +243,6 @@
     <ClInclude Include="CSelectButton.h">
       <Filter>Object\UI</Filter>
     </ClInclude>
-    <ClInclude Include="CScene_Death.h">
-      <Filter>Scene</Filter>
-    </ClInclude>
     <ClInclude Include="CArrow.h">
       <Filter>Object\Character\Player</Filter>
     </ClInclude>
@@ -290,6 +287,9 @@
     </ClInclude>
     <ClInclude Include="CLight.h">
       <Filter>Object\Character\Monster\BOSS</Filter>
+    </ClInclude>
+    <ClInclude Include="CBossWarp.h">
+      <Filter>Object</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -425,9 +425,6 @@
     <ClCompile Include="CSelectButton.cpp">
       <Filter>Object\UI</Filter>
     </ClCompile>
-    <ClCompile Include="CScene_Death.cpp">
-      <Filter>Scene</Filter>
-    </ClCompile>
     <ClCompile Include="CArrow.cpp">
       <Filter>Object\Character\Player</Filter>
     </ClCompile>
@@ -472,6 +469,9 @@
     </ClCompile>
     <ClCompile Include="CLight.cpp">
       <Filter>Object\Character\Monster\BOSS</Filter>
+    </ClCompile>
+    <ClCompile Include="CBossWarp.cpp">
+      <Filter>Object</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

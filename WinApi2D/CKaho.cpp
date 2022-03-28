@@ -62,8 +62,9 @@ CKaho::CKaho() : m_eCurState(PLAYER_STATE::IDLE)
 	GetAnimator()->CreateAnimation(L"RightWalkFull", m_pImg2, fPoint(96.f, 0.f), fPoint(48.f, 48.f), fPoint(48.f, 0.f), 0.1f, 7,true);
 	GetAnimator()->CreateAnimation(L"LeftWalkFull", m_pImg2, fPoint(96.f, 0.f), fPoint(48.f, 48.f), fPoint(48.f, 0.f), 0.1f, 7, true, true);
 	
-	GetAnimator()->CreateAnimation(L"KahoJump", m_pImg3, fPoint(0.f, 0.f), fPoint(48.f, 48.f), fPoint(48.f, 0.f), 0.1f, 2, false);
-	
+	GetAnimator()->CreateAnimation(L"KahoJumpR", m_pImg3, fPoint(0.f, 0.f), fPoint(48.f, 48.f), fPoint(48.f, 0.f), 0.1f, 2, false);
+	GetAnimator()->CreateAnimation(L"KahoJumpL", m_pImg3, fPoint(0.f, 0.f), fPoint(48.f, 48.f), fPoint(48.f, 0.f), 0.1f, 2, false,true);
+
 	GetAnimator()->CreateAnimation(L"KahoAttack1R", m_pImg4, fPoint(0.f, 0.f), fPoint(48.f, 48.f), fPoint(48.f, 0.f), 0.1f, 6, false);
 	GetAnimator()->CreateAnimation(L"KahoAttack1L", m_pImg4, fPoint(0.f, 0.f), fPoint(48.f, 48.f), fPoint(48.f, 0.f), 0.1f, 6, false, true);
 
@@ -137,6 +138,10 @@ void CKaho::update_state() //현재 상태에 관한거
 	{
 		m_eCurState = PLAYER_STATE::IDLE;
 	}
+	else if (m_eCurState == PLAYER_STATE::JUMP && m_onfloor)
+	{
+		m_eCurState = PLAYER_STATE::IDLE;
+	}
 	if (Key(VK_DOWN))
 	{
 		m_bCrouch = true;
@@ -185,10 +190,11 @@ void CKaho::update_state() //현재 상태에 관한거
 		if (GetRigidBody()&&!m_bJump)
 		{
 			m_bJump = true;
+			m_onfloor = false;
 		}
 	}
 	//todo 공격 딜레이 만들어야함
-	if (KeyDown('A'))
+	if (KeyDown('A')&& !m_bCrouch)
 	{
 		//공격상태
 		m_bAttacking = true;
@@ -451,7 +457,13 @@ void CKaho::update_animation()	//애니메이션에 관한거 - 상태에 따른 애니메이션 출
 
 	}
 	break;
-	
+	case PLAYER_STATE::JUMP:
+	{
+		if (1 == m_iCurDir)
+			GetAnimator()->Play(L"KahoJumpR");
+		else if (-1 == m_iCurDir)
+			GetAnimator()->Play(L"KahoJumpL");
+	}
 	case PLAYER_STATE::DEAD:
 	{
 
@@ -541,6 +553,7 @@ void CKaho::OnCollision(CCollider* pOther)
 	if (L"tile" == pOtherObj->GetName())
 	{
 		 m_bJump = false;
+		 m_onfloor = true;
 	}
 }
 

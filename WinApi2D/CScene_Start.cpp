@@ -13,7 +13,6 @@
 #include "CSound.h"
 #include "CD2DImage.h"
 
-
 CScene_Start::CScene_Start()
 {
 }
@@ -30,12 +29,14 @@ void CScene_Start::update()
 	{
 		ChangeScn(GROUP_SCENE::TOOL);
 	}
+	if (KeyDown('B'))
+		ChangeScn(GROUP_SCENE::BOSS);
 	
 }
 
 void CScene_Start::Enter()
 {
-	CSoundManager::getInst()->AddSound(L"stage1_BGM", L"sound\\BGM\\21 Hallowed_Ground.mp3", true);
+	CSoundManager::getInst()->AddSound(L"stage1_BGM", L"sound\\BGM\\21 Hallowed_Ground.mp3", false,true	);
 	CSoundManager::getInst()->Play(L"stage1_BGM");
 	
 
@@ -50,7 +51,7 @@ void CScene_Start::Enter()
 	pPlayer->RegisterPlayer();
 	AddObject(pPlayer, GROUP_GAMEOBJ::PLAYER);
 	
-
+	
 	//몬스터 추가
 	//CMonster* pMonster = new CMonster;
 	//pMonster->SetPos(fPoint(1100, 350));
@@ -60,9 +61,9 @@ void CScene_Start::Enter()
 	//pCloneMonster->SetPos(fPoint(500, 350));
 	//AddObject(pCloneMonster, GROUP_GAMEOBJ::MONSTER);
 
-	/*CImp* pImp = new CImp;
+	CImp* pImp = new CImp;
 	pImp->SetPos(fPoint(700.f, 300.f));
-	AddObject(pImp, GROUP_GAMEOBJ::MONSTER);*/
+	AddObject(pImp, GROUP_GAMEOBJ::MONSTER);
 
 	//맵 생성
 	CMap* map = new CMap;
@@ -82,7 +83,7 @@ void CScene_Start::Enter()
 	
 	// Camera Look 지정
 	CCameraManager::getInst()->SetLookAt(fPoint(WINSIZEX/2.f,WINSIZEY/2.f));
-	CCameraManager::getInst()->SetTargetObj(pPlayer);
+	/*CCameraManager::getInst()->SetTargetObj(pPlayer);*/
 	//화면 전환시 검정색
 	CCameraManager::getInst()->FadeOut(1.f);
 	CCameraManager::getInst()->FadeIn(1.f);
@@ -99,7 +100,7 @@ void CScene_Start::Enter()
 
 void CScene_Start::Exit()
 {
+	CSoundManager::getInst()->Stop(L"stage1_BGM");
 	DeleteAll();
-
 	CCollisionManager::getInst()->Reset();
 }

@@ -108,7 +108,7 @@ void CImp::update_move()
 {
 	m_fAttTime += fDT;
 
-	if (bAttcking&&m_fAttCoolTime <= m_fAttTime)
+	if (m_eCurState==MON_STATE::ATT && m_fAttCoolTime <= m_fAttTime)
 	{
 		m_fAttTime = 0;
 		CreateDagger();
