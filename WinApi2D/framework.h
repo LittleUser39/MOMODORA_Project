@@ -50,6 +50,7 @@ enum class GROUP_GAMEOBJ
 	PLAYER,
 	HITBOX_MONSTER,
 	HITBOX_PLAYER,
+	WARP,
 	UI,		// UI는 모든 게임오브젝트 중 최상단 Layer에 위치
 	SIZE,
 };

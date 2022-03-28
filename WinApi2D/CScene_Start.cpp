@@ -12,7 +12,7 @@
 
 #include "CSound.h"
 #include "CD2DImage.h"
-
+#include "CBossWarp.h"
 CScene_Start::CScene_Start()
 {
 }
@@ -80,10 +80,10 @@ void CScene_Start::Enter()
 	CCollisionManager::getInst()->CheckGroup(GROUP_GAMEOBJ::MONSTER, GROUP_GAMEOBJ::TILE);
 	CCollisionManager::getInst()->CheckGroup(GROUP_GAMEOBJ::HITBOX_PLAYER, GROUP_GAMEOBJ::MONSTER);
 	CCollisionManager::getInst()->CheckGroup(GROUP_GAMEOBJ::BOSS, GROUP_GAMEOBJ::TILE);
-	
+	CCollisionManager::getInst()->CheckGroup(GROUP_GAMEOBJ::PLAYER, GROUP_GAMEOBJ::WARP);
 	// Camera Look 지정
 	CCameraManager::getInst()->SetLookAt(fPoint(WINSIZEX/2.f,WINSIZEY/2.f));
-	/*CCameraManager::getInst()->SetTargetObj(pPlayer);*/
+	CCameraManager::getInst()->SetTargetObj(pPlayer);
 	//화면 전환시 검정색
 	CCameraManager::getInst()->FadeOut(1.f);
 	CCameraManager::getInst()->FadeIn(1.f);
@@ -94,6 +94,11 @@ void CScene_Start::Enter()
 	CMonster* pMon2 = CMonster::Create(MON_TYPE::NORMAL, fPoint(500.f, 300.f));
 	AddObject(pMon2, GROUP_GAMEOBJ::MONSTER);
 	
+	//포탈 배치
+	CBossWarp* warp = new CBossWarp;
+	warp->SetPos(fPoint(1000, 600));
+	AddObject(warp, GROUP_GAMEOBJ::WARP);
+
 	//CFennel* pFennel = CFennel::Create(Boss_PHASE::PHASE_1, fPoint(900.f, 300.f));
 	//AddObject(pFennel, GROUP_GAMEOBJ::BOSS);
 }
