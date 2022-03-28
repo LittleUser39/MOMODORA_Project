@@ -126,16 +126,16 @@ void CKaho::update_state() //현재 상태에 관한거
 	m_fDelay += fDT;
 
 	//속도가 없을때 대기상태로 만들어야함 그래서 속도를 가져옴
-	if (0.f == GetRigidBody()->GetSpeed())
+	if (0.f == GetRigidBody()->GetSpeed()&& m_fDelaytime + 0.5f <= m_fDelay && m_bAttacking)
 	{
-		if (m_fDelaytime + 0.5f <= m_fDelay && m_bAttacking)
-			//내가 설정한 딜레이 보다 내가 아무것도 안한상태가 더 크면 (나의 딜레이가 더 크면 대기상태)
-		{
-			m_bAttacking = false;
-			m_bBow = false;
-			m_eCurState = PLAYER_STATE::IDLE;
-		}
-		
+		//내가 설정한 딜레이 보다 내가 아무것도 안한상태가 더 크면 (나의 딜레이가 더 크면 대기상태)
+		m_bAttacking = false;
+		m_bBow = false;
+		m_eCurState = PLAYER_STATE::IDLE;
+	}
+	else if (0.f == GetRigidBody()->GetSpeed() && m_fDelaytime + 0.5f <= m_fDelay && m_eCurState == PLAYER_STATE::ROLL)
+	{
+		m_eCurState = PLAYER_STATE::IDLE;
 	}
 	if (Key(VK_DOWN))
 	{
@@ -233,7 +233,7 @@ void CKaho::update_state() //현재 상태에 관한거
 		}
 	}
 	//발사 시간 일정하게 조정 
-	if (KeyDown('D')&& m_fDelaytime + 0.1f < m_fDelay)
+	if (KeyDown('D')&& m_fDelaytime + 0.5f < m_fDelay)
 	{
 		m_fDelay = 0;
 		CreateArrow();
@@ -297,16 +297,19 @@ void CKaho::update_move() //행동에 관한거
 	}
 
 	//todo 구르기 손봐야함 쿨타임
-	if (KeyDown('F'))
+	if (KeyDown('F') && m_fDelaytime + 1.f < m_fDelay)
 	{
 		if (m_iCurDir == 1)
 		{
 			GetRigidBody()->SetVelocity(fVec2(300.f, GetRigidBody()->GetVelocity().y));
+			m_fDelay = 0;
 		}
 		else if (m_iCurDir == -1)
 		{
 			GetRigidBody()->SetVelocity(fVec2(-300.f, GetRigidBody()->GetVelocity().y));
+			m_fDelay = 0;
 		}
+		
 	}
 	
 	

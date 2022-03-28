@@ -67,7 +67,7 @@ void CScene_Start::Enter()
 	//¸Ê »ý¼º
 	CMap* map = new CMap;
 	map->Load(L"Map_Start", L"texture\\map\\BackGround12.png");
-	map->SetPos(fPoint(-200.f,200.f));
+	map->SetPos(fPoint(-100,-100));
 	AddObject(map, GROUP_GAMEOBJ::MAP);
 
 	

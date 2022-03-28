@@ -44,11 +44,11 @@ void CScene_Boss::Enter()
 	pPlayer->RegisterPlayer();
 	AddObject(pPlayer, GROUP_GAMEOBJ::PLAYER);
 
-	//甘 积己
-	CMap* map = new CMap;
-	map->Load(L"Map_Start", L"texture\\map\\BackGround12.png");
-	map->SetPos(fPoint(-200.f, 0.f));
-	AddObject(map, GROUP_GAMEOBJ::MAP);
+	////甘 积己
+	//CMap* map = new CMap;
+	//map->Load(L"Map_Start", L"texture\\map\\BackGround12.png");
+	//map->SetPos(fPoint(-200.f, 0.f));
+	//AddObject(map, GROUP_GAMEOBJ::MAP);
 
 
 

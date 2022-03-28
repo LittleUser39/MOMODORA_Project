@@ -6,7 +6,8 @@
 #include "CAnimation.h"
 #include "CImageObject.h"
 #include "CTitleAni.h"
-
+#include "CD2DImage.h"
+#include "CSound.h"
 void CScene_Title::update()
 {
 	CScene::update();
@@ -21,6 +22,8 @@ void CScene_Title::update()
 
 void CScene_Title::Enter()
 {	
+	CSoundManager::getInst()->AddSound(L"Title", L"sound\\BGM\\02 Title.mp3",false,true	);
+	CSoundManager::getInst()->Play(L"Title");
 	//타이틀 배경
 	CBackGround* backGround = new CBackGround;
 	backGround->Load(L"BackGround_Start", L"texture\\background\\sTitleScreenBG_0.png");
@@ -41,8 +44,11 @@ void CScene_Title::Enter()
 	title->SetScale(fPoint(800.f, 800.f));
 	AddObject(title, GROUP_GAMEOBJ::BACKGROUND);
 	
-	//todo 타이틀 애니 구현해야함
-	//생각 네모 박스 객체 하나 만들어서 위치 구현후 거기다가 애니메이션 덮어씀
+	CBackGround* Press = new CBackGround;
+	Press->Load(L"Press", L"texture\\background\\startscene_text.png");
+	Press->SetPos(fPoint(title->GetPos().x + 100, title->GetPos().y + 600));
+	Press->SetScale(fPoint(600.f, 60.f));
+	AddObject(Press, GROUP_GAMEOBJ::BACKGROUND);
 
 }
 
@@ -50,4 +56,5 @@ void CScene_Title::Enter()
 void CScene_Title::Exit()
 {
 	DeleteAll();
+	
 }

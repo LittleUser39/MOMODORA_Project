@@ -16,7 +16,8 @@ CMap::~CMap()
 void CMap::Load(wstring strKey, wstring strPath)
 {
     m_pImg = CResourceManager::getInst()->LoadD2DImage(strKey, strPath);
-    SetScale(fPoint(m_pImg->GetWidth(), m_pImg->GetHeight() * 1.5));
+    SetName(strKey);
+    SetScale(fPoint(m_pImg->GetWidth()*1.2f, m_pImg->GetHeight()*1.7f));
 }
 
 CMap* CMap::Clone()
@@ -37,8 +38,7 @@ void CMap::render()
     }
     fPoint pos = GetPos();
     fPoint scale = GetScale();
-    pos = CCameraManager::getInst()->GetRenderPos(pos);
-
+   
     CRenderManager::getInst()->RenderImage(
         m_pImg,
         pos.x,
