@@ -196,7 +196,7 @@ void CKaho::update_state() //현재 상태에 관한거
 		}
 	}
 	
-	if (KeyDown('A')&& !m_bCrouch && m_fDelaytime + 0.2f<= m_fDelay)
+	if (KeyDown('A')&& !m_bCrouch && m_fDelaytime + 0.2f<= m_fDelay&& !m_bJump)
 	{
 		//공격상태
 		m_bAttacking = true;

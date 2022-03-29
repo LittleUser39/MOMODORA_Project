@@ -35,7 +35,7 @@ void CScene_Boss::Enter()
 
 	// 타일 로딩
 	wstring path = CPathManager::getInst()->GetContentPath();
-	path += L"tile\\Start.tile";
+	path += L"tile\\boss.tile";
 	LoadTile(path);
 
 	// Player 추가
@@ -61,8 +61,8 @@ void CScene_Boss::Enter()
 	CCollisionManager::getInst()->CheckGroup(GROUP_GAMEOBJ::BOSS, GROUP_GAMEOBJ::TILE);
 
 	// Camera Look 지정
-	CCameraManager::getInst()->SetLookAt(fPoint(WINSIZEX / 2.f, WINSIZEY / 2.f));
-	CCameraManager::getInst()->SetTargetObj(pPlayer);
+	CCameraManager::getInst()->SetLookAt(fPoint(WINSIZEX / 2.f, 550));
+	/*CCameraManager::getInst()->SetTargetObj(pPlayer);*/
 	//화면 전환시 검정색
 	CCameraManager::getInst()->FadeOut(1.f);
 	CCameraManager::getInst()->FadeIn(1.f);

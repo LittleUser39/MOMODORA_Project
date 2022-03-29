@@ -3,7 +3,7 @@
 #include "CAnimator.h"
 #include "CGameObject.h"
 #include "CTexture.h"
-
+#include "CD2DImage.h"
 CAnimation::CAnimation()
 {
     m_strName = L"";
