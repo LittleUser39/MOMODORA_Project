@@ -19,13 +19,6 @@ enum class PLAYER_STATE
 	DEAD,
 	END
 };
-struct Player_Info //플레이어 정보 설정
-{
-	float m_fPMAXHP;
-	float m_fPHP;
-	float m_fPAtt;
-	float m_fPArrowDamge;
-};
 
 class CKaho : public CGameObject
 {
@@ -49,6 +42,9 @@ private:
 	
 	int          m_iCurDir;	  //현재방향
 	int          m_iPreDir;	  //이전방향
+
+	float m_fPMAXHP;
+	float m_fPHP;
 
 	const float m_fDelaytime = 0.5f; //딜레이 
 	const float m_fCombotime = 1.f; //콤보 시간 - 이안에 눌러야 연결
@@ -82,7 +78,7 @@ public:
 
 	void CreateArrow();		//화살 충돌체 만듦
 	void CreateHitBox();	//히트 박스 충돌체 만듦
-
+	float GetHP();
 	virtual void OnCollision(CCollider* pOther);		//충돌중 일때
 	virtual void OnCollisionEnter(CCollider* pOther);	//층돌에 들어갈때
 	virtual void OnCollisionExit(CCollider* pOther);	//충돌에서 나갈때 
@@ -91,5 +87,6 @@ public:
 
 	virtual void RegisterPlayer();
 	static CKaho* GetPlayer();	// 게임 내에 하나만 있는 플레이어 객체 확인(임의로 싱글톤 선언)
+	void RenderPlayerInfo();
 };
 

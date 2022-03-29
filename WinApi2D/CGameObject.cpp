@@ -151,7 +151,7 @@ void CGameObject::component_render()
 	{
 		m_pAnimator->render();
 	}
-	if (nullptr != m_pCollider)
+	if (nullptr != m_pCollider&& CCore::getInst()->GetDebugMode())
 	{
 		m_pCollider->render();
 	}

@@ -151,10 +151,7 @@ void CScene::LoadTile(const wstring& strPath)
         newTile->SetD2DImage(pImg);
         newTile->SetPos(fPoint((float)(newTile->GetX() * CTile::SIZE_TILE), (float)(newTile->GetY() * CTile::SIZE_TILE)));
   
-        //if (GROUP_TILE::SLOPE == newTile->GetGroup())
-        //{
-        //    // TODO : OBB 충돌체 추가
-        //}
+      
         if (GROUP_TILE::NONE != newTile->GetGroup())
         {
             newTile->CreateCollider();

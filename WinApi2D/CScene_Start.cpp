@@ -15,6 +15,7 @@
 #include "CBossWarp.h"
 CScene_Start::CScene_Start()
 {
+	
 }
 
 CScene_Start::~CScene_Start()
@@ -24,7 +25,7 @@ CScene_Start::~CScene_Start()
 void CScene_Start::update()
 {
 	CScene::update();
-
+	
 	if (KeyDown(VK_TAB))
 	{
 		ChangeScn(GROUP_SCENE::TOOL);
@@ -82,8 +83,9 @@ void CScene_Start::Enter()
 	CCollisionManager::getInst()->CheckGroup(GROUP_GAMEOBJ::BOSS, GROUP_GAMEOBJ::TILE);
 	CCollisionManager::getInst()->CheckGroup(GROUP_GAMEOBJ::PLAYER, GROUP_GAMEOBJ::WARP);
 	// Camera Look 지정
-	CCameraManager::getInst()->SetLookAt(fPoint(WINSIZEX/2.f,WINSIZEY/2.f));
+	CCameraManager::getInst()->SetLookAt(fPoint(0,400));
 	CCameraManager::getInst()->SetTargetObj(pPlayer);
+	
 	//화면 전환시 검정색
 	CCameraManager::getInst()->FadeOut(1.f);
 	CCameraManager::getInst()->FadeIn(1.f);

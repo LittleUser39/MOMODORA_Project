@@ -27,5 +27,7 @@ public:
 		float duration, UINT frmCount, bool isLoop, bool reverse = false);
 	CAnimation* FindAnimation(const wstring& strName);
 	void Play(const wstring& strName);
+
+	CAnimation* GetCurAni() { return m_pCurAni; }
 };
 

@@ -29,7 +29,9 @@ CKaho::CKaho() : m_eCurState(PLAYER_STATE::IDLE)
 	m_onfloor = true;		//바닥에 있는 상태
 	m_bJump = false;		//점프 상태
 	m_bCrouch = false;
-	
+	m_fPMAXHP = 100;
+	m_fPHP = 100;
+
 	m_pImg = CResourceManager::getInst()->LoadD2DImage(L"KahoImage", L"texture\\sKahoidle_Full.png");
     SetName(L"Kaho");
     SetScale(fPoint(70.f, 70.f));
@@ -193,8 +195,8 @@ void CKaho::update_state() //현재 상태에 관한거
 			m_onfloor = false;
 		}
 	}
-	//todo 공격 딜레이 만들어야함
-	if (KeyDown('A')&& !m_bCrouch)
+	
+	if (KeyDown('A')&& !m_bCrouch && m_fDelaytime + 0.2f<= m_fDelay)
 	{
 		//공격상태
 		m_bAttacking = true;
@@ -302,7 +304,7 @@ void CKaho::update_move() //행동에 관한거
 		GetRigidBody()->SetVelocity(fVec2(GetRigidBody()->GetVelocity().x, -300.f));
 	}
 
-	//todo 구르기 손봐야함 쿨타임
+	
 	if (KeyDown('F') && m_fDelaytime + 1.f < m_fDelay)
 	{
 		if (m_iCurDir == 1)
@@ -476,6 +478,7 @@ void CKaho::update_animation()	//애니메이션에 관한거 - 상태에 따른 애니메이션 출
 void CKaho::render()
 {
 	component_render();
+	RenderPlayerInfo();
 }
 
 float CKaho::GetDirect()
@@ -590,3 +593,73 @@ CKaho* CKaho::GetPlayer()
 	return instance;
 }
 
+void CKaho::RenderPlayerInfo()
+{
+	if (CCore::getInst()->GetDebugMode())
+	{
+		CD2DImage* pImg = CResourceManager::getInst()->LoadD2DImage(L"BackInfo", L"texture\\BackInfo.png");
+		fPoint vPos = GetPos();
+		vPos = CCameraManager::getInst()->GetRenderPos(vPos);
+
+		wstring stateName = {};
+		wstring curAni = {};
+	
+		switch (m_eCurState)
+		{
+		case PLAYER_STATE::IDLE:stateName = L"대기";
+			break;
+		case PLAYER_STATE::WALK:stateName = L"걷기";
+			break;
+		case PLAYER_STATE::BRAKE:stateName = L"멈추기";
+			break;
+		case PLAYER_STATE::CROUCH:stateName = L"웅크리기";
+			break;
+		case PLAYER_STATE::ROLL:stateName = L"구르기";
+			break;
+		case PLAYER_STATE::BOW:stateName = L"활 공격";
+			break;
+		case PLAYER_STATE::CROUCHBOW:stateName = L"웅크려서 활 공격";
+			break;
+		case PLAYER_STATE::ATTACK1:stateName = L"공격1";
+			break;
+		case PLAYER_STATE::ATTACK2:stateName = L"공격2";
+			break;
+		case PLAYER_STATE::ATTACK3:stateName = L"공격3";
+			break;
+		case PLAYER_STATE::JUMP:stateName = L"점프";
+			break;
+		case PLAYER_STATE::DEAD:
+			break;
+		default:
+			break;
+		}
+		CRenderManager::getInst()->RenderImage(
+			pImg,
+			vPos.x + 30.f,
+			vPos.y + -40.f,
+			vPos.x + 200.f,
+			vPos.y + 100.f,
+			0.3f);
+
+		curAni = GetAnimator()->GetCurAni()->GetName();
+		CRenderManager::getInst()->RenderText(
+			L" 이름  :  " + GetName() + L"\n" +
+			L" HP    :  " + std::to_wstring(GetHP()) + L"\n" +
+			L" 상태  :  " + stateName + L"\n" +
+			L" 현재 애니메이션 : " + curAni + L"\n" +
+			L" 현재 X 좌표 : " + std::to_wstring(GetPos().x) + L"\n" +
+			L" 현재 Y 좌표 : " + std::to_wstring(GetPos().y) + L"\n" 
+			, vPos.x + 30.f
+			, vPos.y + -40.f
+			, vPos.x + 200.f
+			, vPos.y + 100.f
+			, 16.f
+			, RGB(255, 255, 255));
+	}
+
+}
+
+float CKaho::GetHP()
+{
+	return m_fPHP;
+}

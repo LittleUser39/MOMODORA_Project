@@ -100,7 +100,7 @@ void CAnimation::render()
     fptPos = fptPos + frm.fptOffset;
     fptPos = CCameraManager::getInst()->GetRenderPos(fptPos);
 
-
+	//todo 이곳에서 수정 애니메이션 그자체의 크기를 가져와서 그리도록
     if (m_bReverse)
     {
         CRenderManager::getInst()->RenderRevFrame(

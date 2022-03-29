@@ -146,11 +146,15 @@ void CTile::OnCollision(CCollider* _pOther)
 		fPoint vScale = GetCollider()->GetScale();
 
 
-		float fLen = abs(vObjPos.y - vPos.y);
-		float fValue = (vObjScale.y / 2.f + vScale.y / 2.f) - fLen;
+		float fYLen = abs(vObjPos.y - vPos.y);
+		float fXLen = abs(vObjPos.x - vPos.x);
 
+		float fYValue = (vObjScale.y / 2.f + vScale.y / 2.f) - fYLen;
+		float fXValue = (vObjScale.x / 2.f + vScale.x / 2.f) - fXLen;
+		
 		vObjPos = pOtherObj->GetPos();
-		vObjPos.y -= fValue;
+		vObjPos.y -= fYValue;
+
 		pOtherObj->SetPos(vObjPos);
 	}
 }
@@ -164,16 +168,19 @@ void CTile::OnCollisionEnter(CCollider* _pOther)
 
 		fPoint vObjPos = _pOther->GetFinalPos();
 		fPoint vObjScale = _pOther->GetScale();
-
 		fPoint vPos = GetCollider()->GetFinalPos();
 		fPoint vScale = GetCollider()->GetScale();
 
+		float fYLen = abs(vObjPos.y - vPos.y);
+		float fXLen = abs(vObjPos.x - vPos.x);
 
-		float fLen = abs(vObjPos.y - vPos.y);
-		float fValue = (vObjScale.y / 2.f + vScale.y / 2.f) - fLen;
+		float fYValue = (vObjScale.y / 2.f + vScale.y / 2.f) - fYLen;
+		float fXValue = (vObjScale.x / 2.f + vScale.x / 2.f) - fXLen;
 
 		vObjPos = pOtherObj->GetPos();
-		vObjPos.y -= fValue;
+	
+		vObjPos.y -= fYValue;
+		
 		pOtherObj->SetPos(vObjPos);
 	}
 }

@@ -5,7 +5,7 @@
 
 CCore::CCore()
 {
-	
+	M_bDebug = false;
 }
 
 CCore::~CCore()
@@ -26,6 +26,8 @@ void CCore::update()
 	CCollisionManager::getInst()->update();
 	CCameraManager::getInst()->update();
 	CUIManager::getInst()->update();
+	if (KeyDown(VK_F11))
+		M_bDebug = !M_bDebug;
 }
 
 void CCore::render()
